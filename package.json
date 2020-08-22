@@ -1,0 +1,23 @@
+{
+  "name": "wu-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wu-node/wu-cli.git"
+  },
+  "keywords": [
+    "wu-cli",
+    "wu-node"
+  ],
+  "author": "Haolin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wu-node/wu-cli/issues"
+  },
+  "homepage": "https://github.com/wu-node/wu-cli#readme"
+}
