@@ -9,6 +9,7 @@ module.exports = [
 	},
 	{
 		command: 'dev',
+		option: ['-d, --debug', 'dev command with [debug] mode'],
 		description: 'develop project with wu-cli-config and wu-cli-template',
 		action: dev,
 	},

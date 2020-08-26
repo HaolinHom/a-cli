@@ -32,6 +32,6 @@
     "download-git-repo": "^3.0.2",
     "enquirer": "^2.3.6",
     "ora": "^5.0.0",
-    "wu-utils": "0.0.3"
+    "wu-utils": "0.0.4"
   }
 }
