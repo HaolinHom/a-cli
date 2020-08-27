@@ -6,7 +6,7 @@ const packageInstall = require('../../utils/packageInstall');
 
 async function dev(command) {
   const isDebug = command.debug;
-  const commandJsPath = getCommandPath();
+  const commandJsPath = getCommandPath('dev');
   if (commandJsPath === false) {
     return;
   }
@@ -15,7 +15,6 @@ async function dev(command) {
     if (isDebug) {
       packageInstall();
     }
-    // TODO: change to fork child_process
     commandJs(getContext(), getArgs());
   } else {
     std.error(`This file is not export a function(${commandJsPath})`);

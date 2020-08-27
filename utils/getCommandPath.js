@@ -7,7 +7,6 @@ const { std } = require('wu-utils');
 * @return {string|bool} filePath or false
 * */
 function getCommandPath(command) {
-  command = command || process.argv[2];
   if (!command) {
     std.error('wucli [command] is invalid');
     return false;
