@@ -10,12 +10,17 @@ module.exports = [
 	},
 	{
 		command: 'dev',
-		option: ['-d, --debug', 'dev command with [debug] mode'],
+		options: [
+			['-d, --debug', 'dev command with [debug] mode'],
+		],
 		description: 'develop project with wu-cli-config and wu-cli-template',
 		action: dev,
 	},
 	{
 		command: 'run',
+		options: [
+			['-d, --debug', 'run customize command  with [debug] mode'],
+		],
 		description: 'run customize command',
 		action: run,
 	},
