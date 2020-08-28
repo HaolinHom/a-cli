@@ -1,23 +1,38 @@
+const path = require('path');
 const { std } = require('wu-utils');
-const getCommandPath = require('../../utils/getCommandPath');
+const CONFIG = require('../../dict/common/CONFIG');
 const getContext = require('../../utils/getContext');
+const getExistPath = require('../../utils/getExistPath');
+const validateConfig = require('../../utils/validateConfig');
 
-async function run(command) {
-  const runCommand = process.argv[3];
-  if (!runCommand) {
-    return std.error('Please input the customize command you want to run!');
+async function run(script, options) {
+  if (!script) {
+    return std.error(`Missing required argument 'script' (wucli run [script])`);
   }
 
-  const commandJsPath = getCommandPath(runCommand);
-  if (commandJsPath === false) {
+  const currentPath = process.cwd();
+
+  const configPath = await getExistPath(path.resolve(currentPath, CONFIG.WU_CLI_CONFIG));
+  if (!configPath) {
     return;
   }
 
-  const commandJs = require(commandJsPath);
-  if (typeof commandJs === 'function') {
-    commandJs(getContext(), [`debug=${command.debug}`]);
-  } else {
-    std.error(`This file is not export a function(${commandJsPath})`);
+  const config = require(configPath);
+  if (!validateConfig(config)) {
+    return;
+  }
+
+  const tagJsPath = await getExistPath(path.resolve(currentPath, `${config.name}/${script}.js`));
+
+  if (tagJsPath) {
+    const runJs = require(tagJsPath);
+
+    if (typeof runJs === 'function') {
+      runJs(getContext({ config }), process.argv.slice(4));
+    } else {
+      std.error('Can not find command implement script');
+      throw new Error('Can not find command implement script');
+    }
   }
 }
 

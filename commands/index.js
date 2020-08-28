@@ -17,7 +17,7 @@ module.exports = [
 		action: dev,
 	},
 	{
-		command: 'run',
+		command: 'run [script]>',
 		options: [
 			['-d, --debug', 'run customize command  with [debug] mode'],
 		],
