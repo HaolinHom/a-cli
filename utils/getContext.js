@@ -1,4 +1,4 @@
-const { chalk, std } = require('wu-utils');
+const { chalk, std, parseArgs } = require('wu-utils');
 const enquirer = require('enquirer');
 
 /*
@@ -9,6 +9,7 @@ function getContext(ctx) {
   let context = {
     utils: {
       std,
+      parseArgs,
     },
     packages: {
       chalk,
