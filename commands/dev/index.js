@@ -7,8 +7,8 @@ const getExistPath = require('../../utils/getExistPath');
 const validateConfig = require('../../utils/validateConfig');
 const CONFIG = require('../../dict/common/CONFIG');
 
-async function dev(command) {
-  const isDebugMode = command.debug === true;
+async function dev(options) {
+  const isDebugMode = options.debug === true;
   const currentPath = process.cwd();
 
   const configPath = await getExistPath(path.resolve(currentPath, CONFIG.WU_CLI_CONFIG));
