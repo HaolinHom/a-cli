@@ -33,7 +33,7 @@ async function dev(command) {
 
   const devArguments = [
     devServerPath,
-    [ `tagPath=${commandJsPath}`, `debug=${isDebugMode}` ],
+    [ `tagPath=${commandJsPath}`, `configPath=${configPath}`, `debug=${isDebugMode}` ],
     { stdio: 'inherit' },
   ];
 
