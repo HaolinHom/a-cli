@@ -2,6 +2,7 @@ const init = require('./init');
 const dev = require('./dev');
 const run = require('./run');
 const build = require('./build');
+const publish = require('./publish');
 
 module.exports = [
 	{
@@ -32,5 +33,13 @@ module.exports = [
 		],
 		description: 'build project with wu-cli-config',
 		action: build,
+	},
+	{
+		command: 'publish',
+		options: [
+			['-d, --debug', 'publish command with [debug] mode'],
+		],
+		description: 'publish project with wu-cli-config',
+		action: publish,
 	},
 ];
