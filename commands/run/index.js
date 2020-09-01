@@ -4,6 +4,7 @@ const CONFIG = require('../../dict/common/CONFIG');
 const getContext = require('../../utils/getContext');
 const getExistPath = require('../../utils/getExistPath');
 const validateConfig = require('../../utils/validateConfig');
+const typeOf = require('../../utils/typeOf');
 
 async function run(script, options, fnBeforeRun) {
   if (!script) {
@@ -28,10 +29,14 @@ async function run(script, options, fnBeforeRun) {
     const runJs = require(tagJsPath);
 
     if (typeof runJs === 'function') {
+    	let ctx = { config };
       if (fnBeforeRun && typeof fnBeforeRun === 'function') {
-        await fnBeforeRun(options, config);
+        const ctxExtend = await fnBeforeRun(options, config);
+        if (typeOf(ctxExtend) === 'object') {
+        	ctx = { ...ctxExtend, config };
+				}
       }
-      runJs(getContext({ config }), process.argv.slice(4));
+      runJs(getContext(ctx), process.argv.slice(4));
     } else {
       std.error('Can not find command implement script');
       throw new Error('Can not find command implement script');
