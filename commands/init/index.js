@@ -53,7 +53,11 @@ async function init() {
       fs.writeFileSync(
         path.resolve(currentPath, 'wu-cli-config.json'),
 `{
-  "name": "${tagDirName}"
+  "name": "${tagDirName}",
+  "publish": {
+  	"options": [],
+  	"config": null
+  }
 }`,
         { encoding: 'utf8' }
         );
