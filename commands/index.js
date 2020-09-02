@@ -45,6 +45,7 @@ module.exports = [
 	},
 	{
 		command: 'setting',
+		option: ['-h, --help', 'print setting help information'],
 		description: 'open the cli setting file',
 		action: setting,
 	},
