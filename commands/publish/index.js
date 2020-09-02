@@ -1,6 +1,6 @@
 const run = require('../run');
 const packageInstall = require('../../utils/packageInstall');
-const typeOf = require('../../utils/typeOf')
+const typeOf = require('../../utils/typeOf');
 const { prompt } = require('enquirer');
 
 async function publishOptionPrompt(options, target) {
@@ -9,7 +9,7 @@ async function publishOptionPrompt(options, target) {
 	}
 
 	const choices = options.map((opt) => {
-		const type = typeOf(opt)
+		const type = typeOf(opt);
 		if (type === 'string') {
 			return opt;
 		} else if (type === 'object' && opt.name) {
