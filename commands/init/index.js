@@ -17,7 +17,7 @@ function templateFilter(item) {
 }
 
 async function getTemplateRepo(defaultTemplate = CONFIG.DEFAULT_TEMPLATE) {
-  const settingPath = path.resolve(__dirname, '../../local/setting.js');
+  const settingPath = path.resolve(__dirname, '../../local/setting.json');
 
   if (getExistPath(settingPath)) {
     const setting = require(settingPath);

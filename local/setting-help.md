@@ -1,4 +1,9 @@
-module.exports = {
+# setting help
+
+## Usage
+
+```
+{
   // Add custom templates to this array
   "templates": [
     {
@@ -9,4 +14,5 @@ module.exports = {
       "repo": "wu-node/wu-cli-template"
     },
   ]
-};
+}
+```

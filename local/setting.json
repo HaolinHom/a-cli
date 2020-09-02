@@ -1,0 +1,8 @@
+{
+  "templates": [
+    {
+      "name": "wu-cli-template",
+      "repo": "wu-node/wu-cli-template"
+    }
+  ]
+}
