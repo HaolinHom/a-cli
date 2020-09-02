@@ -3,6 +3,7 @@ const dev = require('./dev');
 const run = require('./run');
 const build = require('./build');
 const publish = require('./publish');
+const setting = require('./setting');
 
 module.exports = [
 	{
@@ -41,5 +42,10 @@ module.exports = [
 		],
 		description: 'publish project with wu-cli-config',
 		action: publish,
+	},
+	{
+		command: 'setting',
+		description: 'open the cli setting file',
+		action: setting,
 	},
 ];
