@@ -4,6 +4,7 @@ const run = require('./run');
 const build = require('./build');
 const publish = require('./publish');
 const setting = require('./setting');
+const plugin = require('./plugin');
 
 module.exports = [
 	{
@@ -49,4 +50,9 @@ module.exports = [
 		description: 'open the cli setting file',
 		action: setting,
 	},
+	{
+		command: 'plugin [command]',
+		description: 'wucli plugin manager',
+		action: plugin,
+	}
 ];
