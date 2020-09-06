@@ -21,8 +21,8 @@ async function plugin(command) {
     return std.error(`Please input the right plugin 'command' (commands: [${actions.join(', ')}])`);
   }
 
-  const actionJsPath = path.resolve(__dirname, `actions/${command}.js`);
-  if (getExistPath(actionJsPath)) {
+  const actionJsPath = await getExistPath(path.resolve(__dirname, `actions/${command}.js`));
+  if (actionJsPath) {
     const actionJs = require(actionJsPath);
     if (typeof actionJs === 'function') {
       actionJs();
