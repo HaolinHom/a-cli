@@ -15,7 +15,6 @@ module.exports = async function() {
 		fsExtra.ensureDir(pluginsPath);
 		const linkToPath = path.resolve(pluginsPath, wuCliJson.pluginName);
 
-
 		if (fs.existsSync(linkToPath)) {
 			const stats = fs.lstatSync(linkToPath);
 			if (stats.isSymbolicLink()) {
@@ -24,6 +23,7 @@ module.exports = async function() {
 				// TODO: delete installed plugin
 			}
 		}
+
 		return fs.symlink(currentPath, linkToPath, 'junction', function(err) {
 			if (err) {
 				return std.error(`failed to link plugin ${wuCliJson.pluginName}`);
