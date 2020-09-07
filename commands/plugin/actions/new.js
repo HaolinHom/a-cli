@@ -40,7 +40,7 @@ async function getTemplate(defaultTemplate = CONFIG.DEFAULT_TEMPLATE) {
   return defaultTemplate;
 }
 
-function updatePackageName(packageName, rootPath) {
+function updatePackage(packageName, rootPath) {
   const packagePath = path.resolve(rootPath, 'package.json');
 
   let pkg;
@@ -58,6 +58,19 @@ function updatePackageName(packageName, rootPath) {
   }
 
   fs.writeFileSync(packagePath, JSON.stringify(pkg, null, 2), { encoding: 'utf8' });
+
+  return pkg;
+}
+
+function initialWuCliJson(pluginName, rootPath) {
+  const jsonPath = path.resolve(rootPath, 'wu-cli.json');
+
+  const wuCliJson = {
+    pluginName,
+    pluginVersion: '1.0.0',
+  };
+
+  fs.writeFileSync(jsonPath, JSON.stringify(wuCliJson, null, 2), { encoding: 'utf8' });
 }
 
 module.exports = async function () {
@@ -102,7 +115,9 @@ module.exports = async function () {
 
     loading.succeed(`download ${template.name} succeed`);
 
-    updatePackageName(pluginName, tagPath);
+    updatePackage(pluginName, tagPath);
+
+    initialWuCliJson(pluginName, tagPath);
 
     std.success(`Finish plugin(${pluginName}) initial.`);
   });
