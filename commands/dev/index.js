@@ -11,7 +11,7 @@ async function dev(options) {
   const isDebugMode = options.debug === true;
   const currentPath = process.cwd();
 
-  const configPath = await getExistPath(path.resolve(currentPath, CONFIG.WU_CLI_CONFIG));
+  const configPath = await getExistPath(path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
   if (!configPath) {
     return;
   }
