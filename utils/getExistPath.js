@@ -11,7 +11,7 @@ function getExistPath(path) {
       resolve(path);
     } else {
       std.error(`${path} is not exist!`);
-      reject('');
+      resolve('');
     }
   });
 }
