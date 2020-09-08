@@ -2,26 +2,27 @@ const path = require('path');
 const { fork } = require('child_process');
 const fs = require('fs');
 const { std } = require('wu-utils');
+const getProjectConfig = require('../../utils/getProjectConfig');
+const getPluginPath = require('../../utils/getPluginPath');
 const packageInstall = require('../../utils/packageInstall');
 const getExistPath = require('../../utils/getExistPath');
-const validateConfig = require('../../utils/validateConfig');
 const CONFIG = require('../../dict/common/CONFIG');
 
 async function dev(options) {
   const isDebugMode = options.debug === true;
-  const currentPath = process.cwd();
+  const configPath = path.resolve(process.cwd(), CONFIG.PROJECT_CONFIG);
 
-  const configPath = await getExistPath(path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
-  if (!configPath) {
+  const config = await getProjectConfig(configPath);
+  if (!config) {
     return;
   }
 
-  const config = require(configPath);
-  if (!validateConfig(config)) {
+  const pluginPath = await getPluginPath(config.name);
+  if (!pluginPath) {
     return;
   }
 
-  const commandJsPath = await getExistPath(path.resolve(currentPath, `${config.name}/dev.js`));
+  const commandJsPath = await getExistPath(path.resolve(pluginPath, 'dev.js'));
   if (!commandJsPath) {
     return;
   }
