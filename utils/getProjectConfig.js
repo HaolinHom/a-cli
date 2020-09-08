@@ -12,9 +12,9 @@ function validateConfig(cfg) {
   return true;
 }
 
-async function getProjectConfig() {
+async function getProjectConfig(cfgPath) {
   const currentPath = process.cwd();
-  const projectCfgPath = await getExistPath(path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
+  const projectCfgPath = await getExistPath(cfgPath || path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
   if (!projectCfgPath) {
     return std.error(`Can not find ${CONFIG.PROJECT_CONFIG} in ${currentPath}`);
   }
