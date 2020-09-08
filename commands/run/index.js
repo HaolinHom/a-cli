@@ -1,9 +1,9 @@
 const path = require('path');
 const { std } = require('wu-utils');
-const CONFIG = require('../../dict/common/CONFIG');
+const getProjectConfig = require('../../utils/getProjectConfig');
+const getPluginPath = require('../../utils/getPluginPath');
 const getContext = require('../../utils/getContext');
 const getExistPath = require('../../utils/getExistPath');
-const validateConfig = require('../../utils/validateConfig');
 const typeOf = require('../../utils/typeOf');
 
 async function run(script, options, fnBeforeRun) {
@@ -11,36 +11,34 @@ async function run(script, options, fnBeforeRun) {
     return std.error(`Missing required argument 'script' (wucli run [script])`);
   }
 
-  const currentPath = process.cwd();
-
-  const configPath = await getExistPath(path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
-  if (!configPath) {
+  const config = await getProjectConfig();
+  if (!config) {
     return;
   }
 
-  const config = require(configPath);
-  if (!validateConfig(config)) {
+  const pluginPath = await getPluginPath(config.name);
+  if (!pluginPath) {
     return;
   }
 
-  const tagJsPath = await getExistPath(path.resolve(currentPath, `${config.name}/${script}.js`));
+  const tagJsPath = await getExistPath(path.resolve(pluginPath, `${script}.js`));
+  if (!tagJsPath) {
+    return;
+  }
 
-  if (tagJsPath) {
-    const runJs = require(tagJsPath);
-
-    if (typeof runJs === 'function') {
-    	let ctx = { config };
-      if (fnBeforeRun && typeof fnBeforeRun === 'function') {
-        const ctxExtend = await fnBeforeRun(options, config);
-        if (typeOf(ctxExtend) === 'object') {
-        	ctx = { ...ctxExtend, config };
-				}
+  const runJs = require(tagJsPath);
+  if (typeof runJs === 'function') {
+    let ctx = { config };
+    if (fnBeforeRun && typeof fnBeforeRun === 'function') {
+      const ctxExtend = await fnBeforeRun(options, config);
+      if (typeOf(ctxExtend) === 'object') {
+        ctx = { ...ctxExtend, config };
       }
-      runJs(getContext(ctx), process.argv.slice(4));
-    } else {
-      std.error('Can not find command implement script');
-      throw new Error('Can not find command implement script');
     }
+    runJs(getContext(ctx), process.argv.slice(4));
+  } else {
+    std.error('Can not find command implement script');
+    throw new Error('Can not find command implement script');
   }
 }
 
