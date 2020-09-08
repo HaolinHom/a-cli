@@ -1,13 +1,17 @@
-module.exports = `
+const { chalk } = require('wu-utils');
+
+module.exports = chalk.whiteBright(
+`
 {
-  // Add custom templates to this array
+  ${chalk.gray('// Add custom templates to this array')}
   "templates": [
     {
-      // template name
+      ${chalk.gray('// template name')}
       "name": "wu-cli-template",
-      // template repository
-      // To learn more about repo value, visit https://www.npmjs.com/package/download-git-repo
+      ${chalk.gray('// template repository')}
+      ${chalk.gray(`// To learn more about repo value, visit: ${chalk.blueBright('https://www.npmjs.com/package/download-git-repo')}`)}
       "repo": "wu-node/wu-cli-template"
     },
   ]
-}`;
+}`
+);
