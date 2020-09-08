@@ -9,7 +9,7 @@ const plugin = require('./plugin');
 module.exports = [
 	{
 		command: 'init',
-		description: 'initial project with wu-cli-config and wu-cli-template',
+		description: 'initial project with wu-cli-config',
 		action: init,
 	},
 	{
