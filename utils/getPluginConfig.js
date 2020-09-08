@@ -11,7 +11,7 @@ function validateWuCliJson(wuCliJson) {
 	return true;
 }
 
-async function getWuCliJson() {
+async function getPluginConfig() {
 	const currentPath = process.cwd();
 	const wuCliJsonPath = await getExistPath(path.resolve(currentPath, 'wu-cli.json'));
 	if (!wuCliJsonPath) {
@@ -26,4 +26,4 @@ async function getWuCliJson() {
 	}
 }
 
-module.exports = getWuCliJson;
+module.exports = getPluginConfig;

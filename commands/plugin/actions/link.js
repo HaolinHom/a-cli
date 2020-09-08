@@ -4,10 +4,10 @@ const {
 	std,
 	fsExtra,
 } = require('wu-utils');
-const getWuCliJson = require('../../../utils/getWuCliJson');
+const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function() {
-	const wuCliJson = await getWuCliJson();
+	const wuCliJson = await getPluginConfig();
 
 	if (wuCliJson) {
 		const currentPath = process.cwd();

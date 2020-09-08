@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const { std } = require('wu-utils');
-const getWuCliJson = require('../../../utils/getWuCliJson');
+const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function () {
-  const wuCliJson = await getWuCliJson();
+  const wuCliJson = await getPluginConfig();
 
   if (wuCliJson) {
     const pluginPath = path.resolve(__dirname, `../../../plugins/${wuCliJson.pluginName}`);
