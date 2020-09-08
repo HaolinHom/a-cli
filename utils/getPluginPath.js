@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const { chalk, std } = require('wu-utils');
-const getExistPath = require('./getExistPath');
 
 async function getPluginPath(pluginName) {
   if (!pluginName) {
@@ -11,10 +10,14 @@ async function getPluginPath(pluginName) {
     throw new Error(chalk.redBright('The parameter must be a string in getPluginPath()!'));
   }
 
-  const pluginPath = await getExistPath(path.resolve(__dirname, `../plugins/${pluginName}`));
-  if (!pluginPath) {
-    return;
-  }
+	// prefer to use the plugins in the wu-cli/plugins directory, convenient to develop and debug plugins
+  let pluginPath = path.resolve(__dirname, `../plugins/${pluginName}`);
+  if (!fs.existsSync(pluginPath)) {
+		pluginPath = path.resolve(process.cwd(), `node_modules/${pluginName}`);
+		if (!fs.existsSync(pluginPath)) {
+			return std.error(`${pluginName} is not exist.`);
+		}
+	}
 
   const stats = fs.statSync(pluginPath);
   if (stats.isDirectory()) {
