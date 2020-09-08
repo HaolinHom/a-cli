@@ -28,7 +28,7 @@ module.exports = async function() {
 			if (err) {
 				return std.error(`failed to link plugin ${wuCliJson.pluginName}`);
 			}
-			std.success(`${wuCliJson.pluginName} linked completed`);
+			std.green.print(` LINK COMPLETED `);
 		});
 	}
 };
