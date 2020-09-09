@@ -52,7 +52,7 @@ module.exports = [
 	},
 	{
 		command: 'plugin [command]',
-		description: 'wucli plugin manager',
+		description: 'wucli plugin manager(command include "new", "link", "unlink", "publish")',
 		action: plugin,
 	}
 ];
