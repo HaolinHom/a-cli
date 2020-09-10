@@ -7,6 +7,7 @@ const getPluginPath = require('../../utils/getPluginPath');
 const packageInstall = require('../../utils/packageInstall');
 const getExistPath = require('../../utils/getExistPath');
 const CONFIG = require('../../dict/common/CONFIG');
+const DEV = require('../../dict/command/DEV');
 
 async function dev(options) {
   const isDebugMode = options.debug === true;
@@ -45,7 +46,7 @@ async function dev(options) {
   });
 
   fs.watchFile(configPath, () => {
-    std.info('Detected wu-cli-config.json change, devServer restarting now.');
+    std.yellow(DEV.INFO.RESTART_DEV_SERVER);
     devProcess.kill();
     devProcess = fork(...devArguments);
   });

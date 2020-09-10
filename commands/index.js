@@ -5,11 +5,12 @@ const build = require('./build');
 const publish = require('./publish');
 const setting = require('./setting');
 const plugin = require('./plugin');
+const DESCRIPTION = require('../dict/command/DESCRIPTION');
 
 module.exports = [
 	{
 		command: 'init',
-		description: 'initial project with wu-cli-config',
+		description: DESCRIPTION.INIT,
 		action: init,
 	},
 	{
@@ -17,7 +18,7 @@ module.exports = [
 		options: [
 			['-d, --debug', 'dev command with [debug] mode'],
 		],
-		description: 'develop project with wu-cli-config',
+		description: DESCRIPTION.DEV,
 		action: dev,
 	},
 	{
@@ -25,7 +26,7 @@ module.exports = [
 		options: [
 			['-d, --debug', 'run customize command  with [debug] mode'],
 		],
-		description: 'run customize command',
+		description: DESCRIPTION.RUN,
 		action: run,
 	},
 	{
@@ -33,7 +34,7 @@ module.exports = [
 		options: [
 			['-d, --debug', 'build command with [debug] mode'],
 		],
-		description: 'build project with wu-cli-config',
+		description: DESCRIPTION.BUILD,
 		action: build,
 	},
 	{
@@ -41,18 +42,18 @@ module.exports = [
 		options: [
 			['-d, --debug', 'publish command with [debug] mode'],
 		],
-		description: 'publish project with wu-cli-config',
+		description: DESCRIPTION.PUBLISH,
 		action: publish,
 	},
 	{
 		command: 'setting',
 		option: ['-h, --help', 'print setting help information'],
-		description: 'open the cli setting file',
+		description: DESCRIPTION.SETTING,
 		action: setting,
 	},
 	{
 		command: 'plugin [command]',
-		description: 'wucli plugin manager(command include "new", "link", "unlink", "publish")',
+		description: DESCRIPTION.PLUGIN,
 		action: plugin,
 	}
 ];

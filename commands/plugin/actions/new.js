@@ -7,6 +7,8 @@ const download = require('download-git-repo');
 const CONFIG = require('../../../dict/common/CONFIG');
 const getExistPath = require('../../../utils/getExistPath');
 const typeOf = require('../../../utils/typeOf');
+const DEFAULT_PLUGIN_CONFIG = require('../../../dict/common/DEFAULT_PLUGIN_CONFIG');
+const PLUGIN_NEW = require('../../../dict/command/PLUGIN_NEW');
 
 function templateFilter(item) {
   return (
@@ -27,7 +29,7 @@ async function getTemplate(defaultTemplate = CONFIG.DEFAULT_TEMPLATE) {
         const { templateName } = await prompt({
           name: 'templateName',
           type: 'select',
-          message: 'Please select the cli template that you want:',
+          message: PLUGIN_NEW.PROMPT.SELECT_PLUGIN_TEMPLATE,
           choices: _templates.map(item => item.name),
         });
         return _templates.find(item => item.name === templateName);
@@ -63,12 +65,10 @@ function updatePackage(packageName, rootPath) {
 }
 
 function initialWuCliJson(pluginName, rootPath) {
-  const jsonPath = path.resolve(rootPath, 'wu-cli.json');
+  const jsonPath = path.resolve(rootPath, CONFIG.PLUGIN_CONFIG);
 
-  const wuCliJson = {
-    pluginName,
-    pluginVersion: '1.0.0',
-  };
+  let wuCliJson = Object.assign({}, DEFAULT_PLUGIN_CONFIG);
+  wuCliJson.pluginName = pluginName;
 
   fs.writeFileSync(jsonPath, JSON.stringify(wuCliJson, null, 2), { encoding: 'utf8' });
 }
@@ -79,7 +79,7 @@ module.exports = async function () {
   const { pluginName } = await prompt({
     name: 'pluginName',
     type: 'input',
-    message: 'Please input the cli plugin name:',
+    message: PLUGIN_NEW.PROMPT.TYPE_PLUGIN_NAME,
     initial: 'my-project-cli-plugin',
   });
   const tagPath = path.resolve(currentPath, pluginName);
@@ -87,11 +87,11 @@ module.exports = async function () {
   if (fs.existsSync(tagPath)) {
     const fileList = fs.readdirSync(tagPath);
     if (fileList.length > 0) {
-      std.warn(`There are some File already exists in ${tagPath}`);
+      std.warn(`${PLUGIN_NEW.WARN.FILE_ALREADY_EXIST} in ${tagPath}`);
       const { isOverwrite } = await prompt({
         name: 'isOverwrite',
         type: 'toggle',
-        message: 'Are you sure to overwrite :',
+        message: PLUGIN_NEW.PROMPT.OVERWRITE_PLUGIN,
         enabled: 'YES',
         disabled: 'NO',
       });
@@ -110,7 +110,7 @@ module.exports = async function () {
   return download(template.repo, tagPath, (err) => {
     if (err) {
       loading.stop();
-      return std.error(`Fail to initial plugin(${pluginName}): `, err);
+      return std.error(PLUGIN_NEW.ERROR.FAIL_INIT_PLUGIN, err);
     }
 
     loading.succeed(`download ${template.name} succeed`);
@@ -119,6 +119,6 @@ module.exports = async function () {
 
     initialWuCliJson(pluginName, tagPath);
 
-    std.success(`Finish plugin(${pluginName}) initial.`);
+    std.success(PLUGIN_NEW.SUCCESS.SUCCESS_INIT_PLUGIN);
   });
 };

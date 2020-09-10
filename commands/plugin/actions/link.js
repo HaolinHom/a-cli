@@ -1,9 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const {
-	std,
-	fsExtra,
-} = require('wu-utils');
+const { std, fsExtra } = require('wu-utils');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function() {
@@ -26,7 +23,7 @@ module.exports = async function() {
 
 		return fs.symlink(currentPath, linkToPath, 'junction', function(err) {
 			if (err) {
-				return std.error(`failed to link plugin ${wuCliJson.pluginName}`);
+				return std.error(`Failed to link plugin ${wuCliJson.pluginName}`);
 			}
 			std.green.print(` LINK COMPLETED `);
 		});

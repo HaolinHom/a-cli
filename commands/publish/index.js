@@ -2,6 +2,7 @@ const run = require('../run');
 const packageInstall = require('../../utils/packageInstall');
 const typeOf = require('../../utils/typeOf');
 const { prompt } = require('enquirer');
+const PUBLISH = require('../../dict/command/PUBLISH');
 
 async function publishOptionPrompt(options, target) {
 	if (!Array.isArray(options) || options.length === 0) {
@@ -21,7 +22,7 @@ async function publishOptionPrompt(options, target) {
 	const { key } = await prompt({
 		name: 'key',
 		type: 'select',
-		message: 'Please choice mode option for project publish action:',
+		message: PUBLISH.PROMPT.CHOICE_MODE_OPTION,
 		choices,
 	});
 	target.keys.push(key);

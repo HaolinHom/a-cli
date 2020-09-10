@@ -5,8 +5,8 @@ const { std } = require('wu-utils');
 
 async function setting() {
   if (['-h', '--help'].includes(process.argv[3])) {
-    const help = require('./help');
-    return std.print(' SETTING HELP ', null, help);
+    const SETTING_HELP = require('../../dict/help/SETTING_HELP');
+    return std.print(' SETTING HELP ', null, SETTING_HELP);
   }
   const settingPath = await getExistPath(path.resolve(__dirname, '../../local/setting.json'));
   if (settingPath) {
