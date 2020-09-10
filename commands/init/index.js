@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { std } = require('wu-utils');
 const { prompt } = require('enquirer');
+const defaultConfig = require('./defaultConfig');
 
 async function init() {
   const currentPath = process.cwd();
@@ -28,15 +29,12 @@ async function init() {
     initial: `${path.parse(currentPath).name}-cli-plugin`,
   });
 
+  let config = Object.assign({}, defaultConfig);
+  config.name = pluginName;
+
   fs.writeFileSync(
     tagCfgPath,
-`{
-  "name": "${pluginName}",
-  "publish": {
-  	"options": [],
-  	"config": null
-  }
-}`,
+    JSON.stringify(config, null, 2),
     { encoding: 'utf8' }
   );
 }
