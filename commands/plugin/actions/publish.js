@@ -4,6 +4,7 @@ const path = require('path');
 const { std } = require('wu-utils');
 const ora = require('ora');
 const { prompt } = require('enquirer');
+const typeOf = require('../../../utils/typeOf');
 const CONFIG = require('../../../dict/common/CONFIG');
 
 function checkNpmAuthToken() {
@@ -44,8 +45,10 @@ async function updatePluginVersion() {
 function updateVersion(filePath, version) {
 	if (fs.existsSync(filePath)) {
 		const tagFile = require(filePath);
-		tagFile.version = version;
-		fs.writeFileSync(filePath, JSON.stringify(tagFile,null, 2), { encoding: 'utf8' });
+		if (typeOf(tagFile) === 'object' && tagFile.version) {
+      tagFile.version = version;
+      fs.writeFileSync(filePath, JSON.stringify(tagFile,null, 2), { encoding: 'utf8' });
+    }
 	}
 }
 
