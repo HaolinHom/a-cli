@@ -7,7 +7,6 @@ const { prompt } = require('enquirer');
 const typeOf = require('../../../utils/typeOf');
 const CONFIG = require('../../../dict/common/CONFIG');
 const getPluginConfig = require('../../../utils/getPluginConfig');
-const PLUGIN_PUBLISH = require('../../../dict/command/PLUGIN_PUBLISH');
 
 function checkNpmAuthToken() {
 	const checking = ora('checking npm auth token...').start();
@@ -59,7 +58,7 @@ module.exports = async function() {
 	if (wuCliJson) {
 		const isHadNpmAuthToken = checkNpmAuthToken();
 		if (!isHadNpmAuthToken) {
-			return std.error(PLUGIN_PUBLISH.ERROR.NEED_LOGIN_NPM);
+			return std.error('Please login npm before plugin publish!');
 		}
 
 		await updatePluginVersion();

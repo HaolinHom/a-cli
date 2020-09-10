@@ -1,6 +1,5 @@
 const { std, parseArgs } = require('wu-utils');
 const getContext = require('../../utils/getContext');
-const DEV = require('../../dict/command/DEV');
 
 (async function () {
   const args = process.argv.slice(2);
@@ -13,7 +12,7 @@ const DEV = require('../../dict/command/DEV');
 
     devJs(getContext({ config }), args);
   } else {
-    std.error(DEV.ERROR.NOT_FOUND_SCRIPT);
-    throw new Error(DEV.ERROR.NOT_FOUND_SCRIPT);
+    std.error('Can not find command implement script');
+    throw new Error('Can not find command implement script');
   }
 })();

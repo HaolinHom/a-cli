@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { std, pathExtra } = require('wu-utils');
 const getExistPath = require('../../utils/getExistPath');
-const PLUGIN = require('../../dict/command/PLUGIN');
 
 function getActions() {
   const actionsDirPath = path.resolve(__dirname, 'actions');
@@ -15,11 +14,11 @@ function getActions() {
 
 async function plugin(command) {
   if (!command) {
-    return std.error(PLUGIN.ERROR.MISSING_ARGUMENT_COMMAND);
+    return std.error(`Missing required argument 'command' (wucli plugin [command])`);
   }
   const actions = getActions();
   if (!actions.includes(command)) {
-    return std.error(`${PLUGIN.ERROR.TYPE_INVALID_COMMAND} [${actions.join(', ')})`);
+    return std.error(`Please type the valid plugin [command] (${actions.join(', ')})`);
   }
 
   const actionJsPath = await getExistPath(path.resolve(__dirname, `actions/${command}.js`));

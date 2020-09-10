@@ -5,11 +5,10 @@ const getPluginPath = require('../../utils/getPluginPath');
 const getContext = require('../../utils/getContext');
 const getExistPath = require('../../utils/getExistPath');
 const typeOf = require('../../utils/typeOf');
-const RUN = require('../../dict/command/RUN');
 
 async function run(script, options, fnBeforeRun) {
   if (!script) {
-    return std.error(RUN.ERROR.MISSING_ARGUMENT_SCRIPT);
+    return std.error(`Missing required argument 'script' (wucli run [script])`);
   }
 
   const config = await getProjectConfig();
@@ -38,8 +37,8 @@ async function run(script, options, fnBeforeRun) {
     }
     runJs(getContext(ctx), process.argv.slice(4));
   } else {
-    std.error(RUN.ERROR.NOT_FOUND_SCRIPT);
-    throw new Error(RUN.ERROR.NOT_FOUND_SCRIPT);
+    std.error('Can not find command implement script');
+    throw new Error('Can not find command implement script');
   }
 }
 

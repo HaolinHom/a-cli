@@ -8,7 +8,6 @@ const CONFIG = require('../../../dict/common/CONFIG');
 const getExistPath = require('../../../utils/getExistPath');
 const typeOf = require('../../../utils/typeOf');
 const DEFAULT_PLUGIN_CONFIG = require('../../../dict/common/DEFAULT_PLUGIN_CONFIG');
-const PLUGIN_NEW = require('../../../dict/command/PLUGIN_NEW');
 
 function templateFilter(item) {
   return (
@@ -29,7 +28,7 @@ async function getTemplate(defaultTemplate = CONFIG.DEFAULT_TEMPLATE) {
         const { templateName } = await prompt({
           name: 'templateName',
           type: 'select',
-          message: PLUGIN_NEW.PROMPT.SELECT_PLUGIN_TEMPLATE,
+          message: 'Please select the cli plugin template that you want: ',
           choices: _templates.map(item => item.name),
         });
         return _templates.find(item => item.name === templateName);
@@ -79,7 +78,7 @@ module.exports = async function () {
   const { pluginName } = await prompt({
     name: 'pluginName',
     type: 'input',
-    message: PLUGIN_NEW.PROMPT.TYPE_PLUGIN_NAME,
+    message: 'Please type the cli plugin name: ',
     initial: 'my-project-cli-plugin',
   });
   const tagPath = path.resolve(currentPath, pluginName);
@@ -87,11 +86,11 @@ module.exports = async function () {
   if (fs.existsSync(tagPath)) {
     const fileList = fs.readdirSync(tagPath);
     if (fileList.length > 0) {
-      std.warn(`${PLUGIN_NEW.WARN.FILE_ALREADY_EXIST} in ${tagPath}`);
+      std.warn(`There are some Files already exists in ${tagPath}`);
       const { isOverwrite } = await prompt({
         name: 'isOverwrite',
         type: 'toggle',
-        message: PLUGIN_NEW.PROMPT.OVERWRITE_PLUGIN,
+        message: 'Do you want to overwrite: ',
         enabled: 'YES',
         disabled: 'NO',
       });
@@ -110,7 +109,7 @@ module.exports = async function () {
   return download(template.repo, tagPath, (err) => {
     if (err) {
       loading.stop();
-      return std.error(PLUGIN_NEW.ERROR.FAIL_INIT_PLUGIN, err);
+      return std.error(`Fail to initial plugin ${pluginName}`, err);
     }
 
     loading.succeed(`download ${template.name} succeed`);
@@ -119,6 +118,6 @@ module.exports = async function () {
 
     initialWuCliJson(pluginName, tagPath);
 
-    std.success(PLUGIN_NEW.SUCCESS.SUCCESS_INIT_PLUGIN);
+    std.success(`Plugin ${pluginName} initial complete`);
   });
 };

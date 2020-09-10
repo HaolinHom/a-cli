@@ -4,7 +4,6 @@ const { std } = require('wu-utils');
 const { prompt } = require('enquirer');
 const DEFAULT_PROJECT_CONFIG = require('../../dict/common/DEFAULT_PROJECT_CONFIG');
 const CONFIG = require('../../dict/common/CONFIG');
-const INIT = require('../../dict/command/INIT');
 
 async function init() {
   const currentPath = process.cwd();
@@ -15,7 +14,7 @@ async function init() {
     const { isOverwrite } = await prompt({
       name: 'isOverwrite',
       type: 'toggle',
-      message: INIT.PROMPT.OVERWRITE_PROJECT_CONFIG,
+      message: 'Do you want to overwrite: ',
       enabled: 'YES',
       disabled: 'NO',
     });
@@ -27,7 +26,7 @@ async function init() {
   const { pluginName } = await prompt({
     name: 'pluginName',
     type: 'input',
-    message: INIT.PROMPT.TYPE_PLUGIN_NAME,
+    message: 'Please type the plugin name: ',
     initial: `${path.parse(currentPath).name}-cli-plugin`,
   });
 
