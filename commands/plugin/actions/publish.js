@@ -8,23 +8,18 @@ const CONFIG = require('../../../dict/common/CONFIG');
 
 function checkNpmAuthToken() {
 	const checking = ora('checking npm auth token...').start();
-	let check = false;
+	let check = [];
 
-	let npmCfg = execSync('npm config list --json', { encoding: 'utf8' });
-	npmCfg = JSON.parse(npmCfg);
-
-	const npmrcPath = npmCfg.userconfig;
-	if (npmrcPath && fs.existsSync(npmrcPath)) {
-		const npmrc = fs.readFileSync(npmrcPath, { encoding: 'utf8' });
-
-		let tokenList = execSync('npm token --json', { encoding: 'utf8' });
-		tokenList = JSON.parse(tokenList)
-
-		check = tokenList.some(item => new RegExp(`_authToken=${item.token}`).test(npmrc));
+	try {
+		check = execSync('npm token --json', { encoding: 'utf8' });
+		check = JSON.parse(check);
+	} catch (e) {
+		checking.stop();
+		return false;
 	}
 
 	checking.stop();
-	return check;
+	return check.length > 0;
 }
 
 async function updatePluginVersion() {
