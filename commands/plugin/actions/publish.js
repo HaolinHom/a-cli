@@ -6,6 +6,7 @@ const ora = require('ora');
 const { prompt } = require('enquirer');
 const typeOf = require('../../../utils/typeOf');
 const CONFIG = require('../../../dict/common/CONFIG');
+const getPluginConfig = require('../../../utils/getPluginConfig');
 
 function checkNpmAuthToken() {
 	const checking = ora('checking npm auth token...').start();
@@ -53,14 +54,17 @@ function updateVersion(filePath, version) {
 }
 
 module.exports = async function() {
-	const isHadNpmAuthToken = checkNpmAuthToken();
-	if (!isHadNpmAuthToken) {
-		return std.error('Please login npm before plugin publish!');
+	const wuCliJson = await getPluginConfig();
+	if (wuCliJson) {
+		const isHadNpmAuthToken = checkNpmAuthToken();
+		if (!isHadNpmAuthToken) {
+			return std.error('Please login npm before plugin publish!');
+		}
+
+		await updatePluginVersion();
+
+		const publishArgs = process.argv.slice(4);
+
+		execSync(`npm publish ${publishArgs.join(' ')}`, { stdio: 'inherit' });
 	}
-
-	await updatePluginVersion();
-
-	const publishArgs = process.argv.slice(4);
-
-	execSync(`npm publish ${publishArgs.join(' ')}`, { stdio: 'inherit' });
 };
