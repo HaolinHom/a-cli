@@ -2,9 +2,9 @@
   "name": "wu-cli",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "wucli.js",
   "bin": {
-    "wucli": "index.js"
+    "wucli": "wucli.js"
   },
   "engines": {
     "node": ">=10.0.0",
