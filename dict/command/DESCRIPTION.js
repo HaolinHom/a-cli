@@ -8,4 +8,5 @@ module.exports = {
   PUBLISH: chalk.color.green('publish project with wu-cli-config'),
   SETTING: chalk.color.lime('open the cli setting file'),
   PLUGIN: chalk.color.amber('plugin manager(include "new", "link", "unlink", "publish" commands)'),
+  INSTALL: chalk.color.deepOrange(`install the wu-cli-plugin that published on "npm"`),
 };

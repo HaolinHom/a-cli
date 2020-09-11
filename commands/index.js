@@ -5,6 +5,7 @@ const build = require('./build');
 const publish = require('./publish');
 const setting = require('./setting');
 const plugin = require('./plugin');
+const install = require('./install');
 const DESCRIPTION = require('../dict/command/DESCRIPTION');
 
 module.exports = [
@@ -55,5 +56,14 @@ module.exports = [
 		command: 'plugin [command]',
 		description: DESCRIPTION.PLUGIN,
 		action: plugin,
-	}
+	},
+	{
+		command: 'install',
+		options: [
+			['-s, --save', 'npm install --save'],
+			['-d, --dev', 'npm install --save-dev'],
+		],
+		description: DESCRIPTION.INSTALL,
+		action: install,
+	},
 ];
