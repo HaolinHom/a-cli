@@ -13,11 +13,14 @@ module.exports = async function() {
 		const linkToPath = path.resolve(pluginsPath, wuCliJson.pluginName);
 
 		if (fs.existsSync(linkToPath)) {
-			const stats = fs.lstatSync(linkToPath);
-			if (stats.isSymbolicLink()) {
+			const lStats = fs.lstatSync(linkToPath);
+			if (lStats.isSymbolicLink()) {
 				fs.unlinkSync(linkToPath);
 			} else {
-				// TODO: delete installed plugin
+				const stats = fs.statSync(linkToPath);
+				if (stats.isDirectory() || stats.isFile()) {
+					fsExtra.remove(linkToPath);
+				}
 			}
 		}
 
