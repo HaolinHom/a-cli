@@ -16,33 +16,25 @@ module.exports = [
 	},
 	{
 		command: 'dev',
-		options: [
-			['-d, --debug', 'dev command with [debug] mode'],
-		],
+		option: ['-d, --debug', 'dev command with [debug] mode'],
 		description: DESCRIPTION.DEV,
 		action: dev,
 	},
 	{
 		command: 'run [script]',
-		options: [
-			['-d, --debug', 'run customize command  with [debug] mode'],
-		],
+		option: ['-d, --debug', 'run customize command  with [debug] mode'],
 		description: DESCRIPTION.RUN,
 		action: run,
 	},
 	{
 		command: 'build',
-		options: [
-			['-d, --debug', 'build command with [debug] mode'],
-		],
+		option: ['-d, --debug', 'build command with [debug] mode'],
 		description: DESCRIPTION.BUILD,
 		action: build,
 	},
 	{
 		command: 'publish',
-		options: [
-			['-d, --debug', 'publish command with [debug] mode'],
-		],
+		option: ['-d, --debug', 'publish command with [debug] mode'],
 		description: DESCRIPTION.PUBLISH,
 		action: publish,
 	},
