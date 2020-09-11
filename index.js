@@ -10,6 +10,7 @@ const cliCommands = require('./commands');
 const program = new Command();
 
 program
+	.name('wucli')
 	.version(packageJson.version)
 	.usage(chalk.greenBright('[command]'))
 	.description(packageJson.description);

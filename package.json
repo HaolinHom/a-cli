@@ -4,7 +4,7 @@
   "description": "",
   "main": "wucli.js",
   "bin": {
-    "wucli": "wucli.js"
+    "wucli": "index.js"
   },
   "engines": {
     "node": ">=10.0.0",
