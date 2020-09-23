@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const { prompt } = require('enquirer');
 const ora = require('ora');
 const download = require('download-git-repo');

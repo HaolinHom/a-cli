@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function () {
@@ -12,7 +12,7 @@ module.exports = async function () {
       const stats = fs.lstatSync(pluginPath);
       if (stats.isSymbolicLink()) {
         fs.unlinkSync(pluginPath);
-        std.green.print(` UNLINK COMPLETED `);
+        std.green.label('UNLINK COMPLETED')();
       }
     } else {
       std.warn(`No plugin ${wuCliJson.pluginName} need to unlink`)

@@ -1,7 +1,7 @@
 const path = require('path');
 const { fork } = require('child_process');
 const fs = require('fs');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const getProjectConfig = require('../../utils/getProjectConfig');
 const getPluginPath = require('../../utils/getPluginPath');
 const packageInstall = require('../../utils/packageInstall');

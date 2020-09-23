@@ -1,5 +1,5 @@
 const path = require('path');
-const { std } = require('wu-utils');
+const std= require('std-terminal-logger');
 const getProjectConfig = require('../../utils/getProjectConfig');
 const getPluginPath = require('../../utils/getPluginPath');
 const getContext = require('../../utils/getContext');

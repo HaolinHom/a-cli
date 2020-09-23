@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 
 /*
 * @param {string} path

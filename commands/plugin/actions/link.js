@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { std, fsExtra } = require('wu-utils');
+const { fsExtra } = require('wu-utils');
+const std = require('std-terminal-logger');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function() {
@@ -28,7 +29,7 @@ module.exports = async function() {
 			if (err) {
 				return std.error(`Failed to link plugin ${wuCliJson.pluginName}`);
 			}
-			std.green.print(` LINK COMPLETED `);
+			std.green.label('LINK COMPLETED')();
 		});
 	}
 };

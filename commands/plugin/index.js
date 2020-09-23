@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { std, pathExtra } = require('wu-utils');
+const { pathExtra } = require('wu-utils');
+const std = require('std-terminal-logger');
 const getExistPath = require('../../utils/getExistPath');
 
 function getActions() {

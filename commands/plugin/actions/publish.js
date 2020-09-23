@@ -1,7 +1,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const ora = require('ora');
 const { prompt } = require('enquirer');
 const typeOf = require('../../../utils/typeOf');

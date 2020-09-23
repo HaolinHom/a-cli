@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 
 function packageInstall(options) {
   std.info('packages installing...');

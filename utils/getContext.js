@@ -1,4 +1,5 @@
-const { chalk, std, parseArgs } = require('wu-utils');
+const { chalk, parseArgs } = require('wu-utils');
+const std = require('std-terminal-logger');
 const enquirer = require('enquirer');
 
 /*

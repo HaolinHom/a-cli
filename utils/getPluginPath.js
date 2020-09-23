@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const { chalk, std } = require('wu-utils');
+const { chalk } = require('wu-utils');
+const std = require('std-terminal-logger');
 
 async function getPluginPath(pluginName) {
   if (!pluginName) {

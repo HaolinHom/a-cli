@@ -1,5 +1,5 @@
 const path = require('path');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const getExistPath = require('./getExistPath');
 const typeOf = require('./typeOf');
 const CONFIG = require('../dict/common/CONFIG');

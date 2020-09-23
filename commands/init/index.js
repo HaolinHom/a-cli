@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { std } = require('wu-utils');
+const std = require('std-terminal-logger');
 const { prompt } = require('enquirer');
 const DEFAULT_PROJECT_CONFIG = require('../../dict/common/DEFAULT_PROJECT_CONFIG');
 const CONFIG = require('../../dict/common/CONFIG');
