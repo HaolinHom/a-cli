@@ -1,4 +1,4 @@
-const { chalk } = require('wu-utils');
+const chalk = require('chalk');
 
 module.exports = chalk.whiteBright(
 `

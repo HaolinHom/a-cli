@@ -1,12 +1,12 @@
-const { chalk } = require('wu-utils');
+const chalk = require('chalk');
 
 module.exports = {
-  INIT: chalk.color.pink('initial project with wu-cli-config'),
-  DEV: chalk.color.deepPurple('develop project with wu-cli-config'),
-  RUN: chalk.color.blue('run customize command'),
-  BUILD: chalk.color.cyan('build project with wu-cli-config'),
-  PUBLISH: chalk.color.green('publish project with wu-cli-config'),
-  SETTING: chalk.color.lime('open the cli setting file'),
-  PLUGIN: chalk.color.amber('plugin manager(include "new", "link", "unlink", "publish" commands)'),
-  INSTALL: chalk.color.deepOrange(`install the wu-cli-plugin that published on "npm"`),
+  INIT: chalk.keyword('crimson')('initial project with wu-cli-config'),
+  DEV: chalk.keyword('darkviolet')('develop project with wu-cli-config'),
+  RUN: chalk.keyword('royalblue')('run customize command'),
+  BUILD: chalk.keyword('deepskyblue')('build project with wu-cli-config'),
+  PUBLISH: chalk.keyword('mediumseagreen')('publish project with wu-cli-config'),
+  SETTING: chalk.keyword('greenyellow')('open the cli setting file'),
+  PLUGIN: chalk.keyword('yellow')('plugin manager(include "new", "link", "unlink", "publish" commands)'),
+  INSTALL: chalk.keyword('orange')(`install the wu-cli-plugin that published on "npm"`),
 };
