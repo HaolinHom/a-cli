@@ -42,8 +42,8 @@ wucli init
 {
   "name": "cli-plugin-name",
   "publish": {
-  	"options": [],
-  	"config": null
+    "options": [],
+    "config": null
   }
 }
 ```
@@ -205,11 +205,11 @@ wucli publish -d
 ```json
 {
   "publish": {
-  	"options": [
-  	  {
-  	    "name": "Test",
-  	    "value": "Valid json value(Default null)"
-  	  },
+    "options": [
+      {
+        "name": "Test",
+        "value": "Valid json value(Default null)"
+      },
   	  {
         "name": "Pre-release",
         "value": "Valid json value(Default null)"
@@ -218,7 +218,7 @@ wucli publish -d
         "name": "Production",
         "value": "Valid json value(Default null)"
       }
-  	]
+    ]
   }
 }
 ```
@@ -228,23 +228,23 @@ wucli publish -d
 ```json
 {
   "publish": {
-  	"options": [
-  	  {
-  	    "name": "foo-level-1",
-  	    "options": [
-  	      {
+    "options": [
+      {
+        "name": "foo-level-1",
+        "options": [
+          {
             "name": "foo-level-1-1",
-          	"options": [
-          	  "you can set more options..."
-          	]
+            "options": [
+              "you can set more options..."
+            ]
           },
           {
             "name": "foo-level-1-2",
             "value": "Valid json value(Default null)"
           }
-  	    ]
-  	  },
-  	  {
+        ]
+      },
+      {
         "name": "bar-level-1",
         "options": [
           {
@@ -257,7 +257,7 @@ wucli publish -d
           }
         ]
       }
-  	]
+    ]
   }
 }
 ```
@@ -271,9 +271,9 @@ wucli publish -d
 ```json
 {
   "publish": {
-  	"config": {
-  	  "remote": "git@github.com:wu-cli/wu-cli.git"
-  	}
+    "config": {
+      "remote": "git@github.com:wu-cli/wu-cli.git"
+    }
   }
 }
 ```

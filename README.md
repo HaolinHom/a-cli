@@ -43,8 +43,8 @@ The configuration file (`wu-cli-config.json`) support the options listed below:
 {
   "name": "cli-plugin-name",
   "publish": {
-  	"options": [],
-  	"config": null
+    "options": [],
+    "config": null
   }
 }
 ```
@@ -211,11 +211,11 @@ and then the selected results are passed into the `publish.js` file as parameter
 ```json
 {
   "publish": {
-  	"options": [
-  	  {
-  	    "name": "Test",
-  	    "value": "Valid json value(Default null)"
-  	  },
+    "options": [
+      {
+        "name": "Test",
+        "value": "Valid json value(Default null)"
+      },
   	  {
         "name": "Pre-release",
         "value": "Valid json value(Default null)"
@@ -224,7 +224,7 @@ and then the selected results are passed into the `publish.js` file as parameter
         "name": "Production",
         "value": "Valid json value(Default null)"
       }
-  	]
+    ]
   }
 }
 ```
@@ -234,23 +234,23 @@ Support multi-level nested option configuration:
 ```json
 {
   "publish": {
-  	"options": [
-  	  {
-  	    "name": "foo-level-1",
-  	    "options": [
-  	      {
+    "options": [
+      {
+        "name": "foo-level-1",
+        "options": [
+          {
             "name": "foo-level-1-1",
-          	"options": [
-          	  "you can set more options..."
-          	]
+            "options": [
+              "you can set more options..."
+            ]
           },
           {
             "name": "foo-level-1-2",
             "value": "Valid json value(Default null)"
           }
-  	    ]
-  	  },
-  	  {
+        ]
+      },
+      {
         "name": "bar-level-1",
         "options": [
           {
@@ -263,7 +263,7 @@ Support multi-level nested option configuration:
           }
         ]
       }
-  	]
+    ]
   }
 }
 ```
@@ -279,9 +279,9 @@ Any configuration that needs to be used when publishing can be set in the config
 ```json
 {
   "publish": {
-  	"config": {
-  	  "remote": "git@github.com:wu-cli/wu-cli.git"
-  	}
+    "config": {
+      "remote": "git@github.com:wu-cli/wu-cli.git"
+    }
   }
 }
 ```
