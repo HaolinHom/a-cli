@@ -16,8 +16,8 @@ wu-cli is a Front-end engineering development tools.
     - [dev command](#dev)
     - [build command](#build)
     - [publish command](#publish)
-      - [publish.options](#publish-options)
-      - [publish.config](#publish-config)
+      - [publish.options](#publishoptions)
+      - [publish.config](#publishconfig)
     - [run command](#run)
 
 ## Installation

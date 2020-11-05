@@ -16,8 +16,8 @@ wu-cli是一个前端工程开发工具。
     - [dev命令](#dev)
     - [build命令](#build)
     - [publish命令](#publish)
-      - [publish.options](#publish-options)
-      - [publish.config](#publish-config)
+      - [publish.options](#publishoptions)
+      - [publish.config](#publishconfig)
     - [run命令](#run)
 
 ## 安装
