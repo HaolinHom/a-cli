@@ -18,7 +18,6 @@ wu-cli是一个前端工程开发工具。
     - [publish命令](#publish)
       - [publish.options](#publish-options)
       - [publish.config](#publish-config)
-      - [use publishOptions](#use-publishOptions)
     - [run命令](#run)
 
 ## 安装
@@ -145,7 +144,7 @@ wucli install -d
 
 ### dev
 
-开发项目。其运行是基于cli插件中的`dev.js`文件，并在运行时由devServer启动。
+开发项目。其运行是基于CLI插件中的`dev.js`文件，并在运行时由devServer启动。
 
 运行时会在项目内执行npm install。
 
@@ -163,7 +162,7 @@ wucli dev -d
 
 ### build
 
-构建项目代码。其运行是基于cli插件中的`build.js`文件。
+构建项目代码。其运行是基于CLI插件中的`build.js`文件。
 
 提供了一个debug选项，可以在跳过npm install:
 
@@ -181,7 +180,7 @@ wucli build -d
 
 ### publish
 
-发布项目代码。其运行是基于cli插件中的`publish.js`文件。
+发布项目代码。其运行是基于CLI插件中的`publish.js`文件。
 
 运行时会在项目内执行npm install。
 
@@ -281,7 +280,7 @@ wucli publish -d
 
 ### run
 
-运行自定义命令。cli插件目录中任何可执行的Javascript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
+运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
 
 ```bash
 wucli run [script]

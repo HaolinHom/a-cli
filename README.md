@@ -18,7 +18,6 @@ wu-cli is a Front-end engineering development tools.
     - [publish command](#publish)
       - [publish.options](#publish-options)
       - [publish.config](#publish-config)
-      - [use publishOptions](#use-publishOptions)
     - [run command](#run)
 
 ## Installation
@@ -91,8 +90,8 @@ wucli plugin [command]
 
 ### plugin new
 
-Create a new cli-plugin, 
-you can download the cli-plugin template as a new plugin through the optional template option in the local settings(`local/setting.json`).
+Create a new CLI plugin, 
+you can download the CLI plugin template as a new plugin through the optional template option in the local settings(`local/setting.json`).
 
 ```bash
 wucli plugin new
@@ -126,7 +125,7 @@ wucli plugin publish
 
 ### install
 
-Install the wu-cli-plugin that published on "npm".
+Install the CLI plugin that published on "npm".
 
 ```bash
 wucli install
@@ -289,7 +288,7 @@ Any configuration that needs to be used when publishing can be set in the config
 
 ### run
 
-Run custom commands. Any executable Javascript file in the cli-plugin directory can be run as a custom command, 
+Run custom commands. Any executable JavaScript file in the CLI plugin directory can be run as a custom command, 
 and its file name will be used as the name of the custom command.
 
 ```bash
