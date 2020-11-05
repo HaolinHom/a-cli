@@ -1,6 +1,9 @@
 # wu-cli
 
-wu-cli is a Front-end engineering development tools.
+wu-cli is a front-end engineering development tool for rapid development, build, and publish of projects.
+
+It can realize the decoupling of front-end projects and project engineering by 
+integrating engineering-related codes into CLI plugin, and then executing them by global CLI commands.
 
 - [wu-cli](#wu-cli)
   - [Installation](#Installation)
@@ -19,12 +22,18 @@ wu-cli is a Front-end engineering development tools.
       - [publish.options](#publishoptions)
       - [publish.config](#publishconfig)
     - [run command](#run)
+  - [Develop CLI plugin](#Develop-CLI-plugin)
+    - [Development Process](#Development-Process)
+    - [Plugin calls way](#Plugin-calls-way)
+    - [AOP function and params](#AOP-function-and-params)
+
 
 ## Installation
 
 ```bash
 npm install wu-cli -g
 ```
+
 
 ## Command usage
 
@@ -296,3 +305,76 @@ wucli run [script]
 ```
 
 Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
+
+## Develop CLI plugin
+
+### Development Process
+
+1. Create a new CLI plugin through execute `wucli plugin new`
+2. Execute `wucli plugin link` to link the plugin to the plugins/ directory by symlink
+3. Execute `wucli init` in the target project to create a configuration file (wu-cli-config.json), 
+and set its `name` property to the corresponding CLI plug-in name
+4. Development and debugging
+5. After the development is completed, it can be published to npm through execute `wucli plugin publish`
+6. (Optional) Execute `wucli plugin unlink` on the local CLI plugin path to remove the symlink in plugins/
+
+### Plugin calls way
+
+The CLI plugin called in AOP mode. There are currently 2 ways to be called:
+
+* the plugin that create a symlink in the plugins/ folder by `wucli plugin link`
+* the plugin that install in node_modules folder of the project
+
+something important: If the above 2 ways exist for the same plugin, 
+symlink-plugin has a higher priority than node_modules-plugin,
+it is designed to facilitate the maintenance and upgrade of CLI plugins in the future.
+
+### AOP function and params
+
+AOP functions are all Common JS modules, exported as function, 
+and receive two parameters `context` and `args` injected by `wu-cli`.
+
+```javascript
+/**
+* AOP function
+* @param context {Object} context cbject
+* @param args {Array} Command line params
+* */
+module.exports = function (context, args) {
+  // useful utils
+  const {
+    // [Console print terminal with string styling](https://github.com/HaolinHom/std-terminal-logger)
+    std,
+    // [Parse process argv to object:](https://github.com/wu-cli/wu-utils#parseArgs)
+    parseArgs,
+  } = context.utils;
+  
+  // useful packages
+  const { 
+    // [Terminal string styling](https://github.com/chalk/chalk)
+    chalk,
+    // [CLI prompts](https://github.com/enquirer/enquirer)
+    enquirer,
+  } = context.packages;
+  
+  // Only the dev command has this attribute!
+  const {
+    // Complete cli config object (wu-cli-config.json) 
+  } = context.config;
+  
+  // Only publish command has this attribute!
+  const {
+    // publish option object
+    option: {
+      // An array of all selected option names
+      keys, 
+      // The value of the last (level) option
+      value,
+    },
+    // publish config
+    config,
+  } = context.publishOptions;
+
+  // enjoy your code...
+};
+```

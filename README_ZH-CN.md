@@ -1,6 +1,8 @@
 # wu-cli
 
-wu-cli是一个前端工程开发工具。
+wu-cli是一个前端工程开发工具，用于快速开发、构建、发布项目。
+
+其通过将工程化相关的代码整合为CLI插件，再由全局的CLI命令进行执行，可实现前端项目与项目工程化的解耦。
 
 - [wu-cli](#wu-cli)
   - [安装](#安装)
@@ -19,12 +21,18 @@ wu-cli是一个前端工程开发工具。
       - [publish.options](#publishoptions)
       - [publish.config](#publishconfig)
     - [run命令](#run)
+  - [开发CLI插件](#开发CLI插件)
+    - [开发流程](#开发流程)
+    - [调用方式](#调用方式)
+    - [AOP函数及参数](#AOP函数及参数)
+
 
 ## 安装
 
 ```bash
 npm install wu-cli -g
 ```
+
 
 ## 命令的使用
 
@@ -287,3 +295,74 @@ wucli run [script]
 ```
 
 run命令提供了一个debug选项，但不会做特殊处理，只会将其传递到自定义命令的执行文件内。
+
+
+## 开发CLI插件
+
+### 开发流程
+
+1. 通过`wucli plugin new`创建一个新的CLI插件
+2. 执行`wucli plugin link`将该插件链接到 plugins/ 目录下
+3. 在目标项目内执行`wucli init`来创建配置文件(wu-cli-config.json)，并将其`name`属性设为对应的CLI插件名称
+4. 开发及调试
+5. 开发完成后可通过`wucli plugin publish`将其发布到npm上
+6. (可选)在本地CLI插件路径上执行`wucli plugin unlink`将 plugins/ 内的链接移除
+
+### 调用方式
+
+CLI插件是以AOP模式进行调用的，目前有2种被调用的方式：
+
+* 通过`wucli plugin link`命令将本地插件以symlink的方式链接到plugins/目录下的插件
+* 安装在项目内的 node_modules 目录下的插件 
+
+这里有个需要注意的地方：同一个插件如果同时存在以上2种方式时，链接后的本地插件优先级高于安装在node_modules内的，
+这是为了方便日后对CLI插件进行维护及升级而设计的。
+
+### AOP函数及参数
+
+AOP函数都是CommonJS模块，导出为函数，接收由`wu-cli`对其注入的两个参数`context`和`args`。
+
+```javascript
+/**
+* AOP函数
+* @param context {Object} context对象
+* @param args {Array} 命令行参数
+* */
+module.exports = function (context, args) {
+  // 实用工具
+  const {
+    // [Console print terminal with string styling](https://github.com/HaolinHom/std-terminal-logger)
+    std,
+    // [Parse process argv to object:](https://github.com/wu-cli/wu-utils#parseArgs)
+    parseArgs,
+  } = context.utils;
+  
+  // 实用包
+  const { 
+    // [Terminal string styling](https://github.com/chalk/chalk)
+    chalk,
+    // [CLI prompts](https://github.com/enquirer/enquirer)
+    enquirer,
+  } = context.packages;
+  
+  // 仅dev命令有该属性！
+  const {
+    // 完整的cli配置(wu-cli-config.json)对象
+  } = context.config;
+  
+  // 仅publish命令有该属性！
+  const {
+    // 发布选项
+    option: {
+      // 所有选定的选项名称组成的数组
+      keys, 
+      // 最后一个(层级)选项的值
+      value,
+    },
+    // 发布配置
+    config,
+  } = context.publishOptions;
+
+  // enjoy your code...
+};
+```
