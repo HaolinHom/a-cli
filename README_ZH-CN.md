@@ -24,7 +24,7 @@ wu-cli是一个前端工程开发工具，用于快速开发、构建、发布�
   - [开发CLI插件](#开发CLI插件)
     - [开发流程](#开发流程)
     - [调用方式](#调用方式)
-    - [AOP函数及参数](#AOP函数及参数)
+    - [CLI函数及参数](#CLI函数及参数)
 
 
 ## 安装
@@ -318,13 +318,13 @@ CLI插件是以AOP模式进行调用的，目前有2种被调用的方式：
 这里有个需要注意的地方：同一个插件如果同时存在以上2种方式时，链接后的本地插件优先级高于安装在node_modules内的，
 这是为了方便日后对CLI插件进行维护及升级而设计的。
 
-### AOP函数及参数
+### CLI函数及参数
 
-AOP函数都是CommonJS模块，导出为函数，接收由`wu-cli`对其注入的两个参数`context`和`args`。
+CLI函数都是CommonJS模块，导出为函数，接收由`wu-cli`对其注入的两个参数`context`和`args`。
 
 ```javascript
 /**
-* AOP函数
+* CLI函数
 * @param context {Object} context对象
 * @param args {Array} 命令行参数
 * */

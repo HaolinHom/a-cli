@@ -1,6 +1,6 @@
 # wu-cli
 
-wu-cli is a front-end engineering development tool for rapid development, build, and publish of projects.
+wu-cli is a front-end engineering development tool for rapid development, build, and publish projects.
 
 It can realize the decoupling of front-end projects and project engineering by 
 integrating engineering-related codes into CLI plugin, and then executing them by global CLI commands.
@@ -24,8 +24,8 @@ integrating engineering-related codes into CLI plugin, and then executing them b
     - [run command](#run)
   - [Develop CLI plugin](#Develop-CLI-plugin)
     - [Development Process](#Development-Process)
-    - [Plugin calls way](#Plugin-calls-way)
-    - [AOP function and params](#AOP-function-and-params)
+    - [Plugin calls the way](#Plugin-calls-the-way)
+    - [CLI function and params](#CLI-function-and-params)
 
 
 ## Installation
@@ -39,7 +39,7 @@ npm install wu-cli -g
 
 ### init
 
-The init command is used to create a cli configuration file in the project.
+The init command is used to create a CLI configuration file in the project.
 The execution of all other commands depends on the configuration file.
 
 ```bash
@@ -134,7 +134,7 @@ wucli plugin publish
 
 ### install
 
-Install the CLI plugin that published on "npm".
+Install the CLI plugin that was published on "npm".
 
 ```bash
 wucli install
@@ -158,7 +158,7 @@ wucli install -d
 
 ### dev
 
-Development project. Its operation is based on the `dev.js` file in the cli plugin, and started by a devServer at runtime.
+Development project. Its operation is based on the `dev.js` file in the CLI plugin and started by a dev server at runtime.
 
 During runtime, npm install will be executed in the project.
 
@@ -176,7 +176,7 @@ wucli dev -d
 
 ### build
 
-Building project code. Its operation is based on the `build.js` file in the cli plugin.
+Building project code. Its operation is based on the `build.js` file in the CLI plugin.
 
 During runtime, npm install will be executed in the project.
 
@@ -194,8 +194,8 @@ wucli build -d
 
 ### publish
 
-Publish project code.
-Its operation is based on the `publish.js` file in the cli plugin.
+Publish the project code.
+Its operation is based on the `publish.js` file in the CLI plugin.
 
 ```bash
 wucli publish
@@ -225,7 +225,7 @@ and then the selected results are passed into the `publish.js` file as parameter
         "name": "Test",
         "value": "Valid json value(Default null)"
       },
-  	  {
+      {
         "name": "Pre-release",
         "value": "Valid json value(Default null)"
       },
@@ -306,37 +306,38 @@ wucli run [script]
 
 Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
 
+
 ## Develop CLI plugin
 
 ### Development Process
 
-1. Create a new CLI plugin through execute `wucli plugin new`
-2. Execute `wucli plugin link` to link the plugin to the plugins/ directory by symlink
+1. Create a new CLI plugin through executing `wucli plugin new`
+2. Execute `wucli plugin link` to link the plugin to the plugins/ directory by the symlink
 3. Execute `wucli init` in the target project to create a configuration file (wu-cli-config.json), 
 and set its `name` property to the corresponding CLI plug-in name
 4. Development and debugging
-5. After the development is completed, it can be published to npm through execute `wucli plugin publish`
+5. After the development is completed, it can be published to npm through executing `wucli plugin publish`
 6. (Optional) Execute `wucli plugin unlink` on the local CLI plugin path to remove the symlink in plugins/
 
-### Plugin calls way
+### Plugin calls the way
 
-The CLI plugin called in AOP mode. There are currently 2 ways to be called:
+The CLI plugin is called in the AOP mode. There are currently 2 ways to be called:
 
-* the plugin that create a symlink in the plugins/ folder by `wucli plugin link`
-* the plugin that install in node_modules folder of the project
+* the plugin that creates a symlink in the plugins/ folder by `wucli plugin link`
+* the plugin that installs in node_modules folder of the project
 
 something important: If the above 2 ways exist for the same plugin, 
 symlink-plugin has a higher priority than node_modules-plugin,
 it is designed to facilitate the maintenance and upgrade of CLI plugins in the future.
 
-### AOP function and params
+### CLI function and params
 
-AOP functions are all Common JS modules, exported as function, 
+CLI functions are all Common JS modules, exported as function, 
 and receive two parameters `context` and `args` injected by `wu-cli`.
 
 ```javascript
 /**
-* AOP function
+* CLI function
 * @param context {Object} context cbject
 * @param args {Array} Command line params
 * */
