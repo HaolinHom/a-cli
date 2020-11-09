@@ -2,7 +2,7 @@
   "name": "wucli",
   "version": "1.0.0",
   "description": "wu-cli is a front-end engineering development tool",
-  "main": "wucli.js",
+  "main": "cli.js",
   "bin": {
     "wucli": "index.js"
   },
