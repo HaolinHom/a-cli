@@ -17,6 +17,7 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
       - [plugin link](#plugin-link)
       - [plugin unlink](#plugin-unlink)
       - [plugin publish](#plugin-publish)
+      - [plugin list](#plugin-list)
     - [install command](#install)
     - [dev command](#dev)
     - [build command](#build)
@@ -136,6 +137,14 @@ Publishes a plugin to the npm registry so that it can be installed by name.
 
 ```bash
 wucli plugin publish
+```
+
+### plugin list
+
+Get the list of local plugins in the plugins/ directory.
+
+```bash
+wucli plugin list
 ```
 
 ### install

@@ -16,6 +16,7 @@ wu-cli是一个前端工程开发工具，用于快速开发、构建、发布�
       - [plugin link](#plugin-link)
       - [plugin unlink](#plugin-unlink)
       - [plugin publish](#plugin-publish)
+      - [plugin list](#plugin-list)
     - [install命令](#install)
     - [dev命令](#dev)
     - [build命令](#build)
@@ -130,6 +131,14 @@ wucli plugin unlink
 
 ```bash
 wucli plugin publish
+```
+
+### plugin list
+
+获取 plugins/ 目录下的本地插件列表。
+
+```bash
+wucli plugin list
 ```
 
 ### install
