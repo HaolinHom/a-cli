@@ -98,7 +98,7 @@ wucli setting -h
 ### plugin
 
 The plugin command integrates related functions for scaffolding plug-in development,
-including new, link, unlink, publish, etc.
+including new, link, unlink, publish, list, etc.
 
 ```bash
 wucli plugin [command]

@@ -95,7 +95,7 @@ wucli setting -h
 
 ### plugin
 
-plugin命令集成了用于脚手架插件开发的相关功能，包括new、link、unlink、publish等。
+plugin命令集成了用于脚手架插件开发的相关功能，包括new、link、unlink、publish、list等。
 
 ```bash
 wucli plugin [command]
