@@ -71,7 +71,7 @@ wucli setting
 
 setting.json:
 
-```json
+```
 {
   // Add custom templates to this array
   "templates": [

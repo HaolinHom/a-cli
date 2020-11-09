@@ -69,7 +69,7 @@ wucli setting
 
 setting.json:
 
-```json
+```
 {
   // 将自定义模板添加到此数组
   "templates": [
