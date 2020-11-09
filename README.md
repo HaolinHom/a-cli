@@ -5,6 +5,8 @@ wu-cli is a front-end engineering development tool for rapid development, build,
 It can realize the decoupling of front-end projects and project engineering by 
 integrating engineering-related codes into CLI plugin, and then executing them by global CLI commands.
 
+Read this in other languages: English | [简体中文](./README_ZH-CN.md)
+
 - [wu-cli](#wu-cli)
   - [Installation](#Installation)
   - [Command usage](#Command-usage)
