@@ -318,6 +318,7 @@ and set its `name` property to the corresponding CLI plug-in name
 4. Development and debugging
 5. After the development is completed, it can be published to npm through executing `wucli plugin publish`
 6. (Optional) Execute `wucli plugin unlink` on the local CLI plugin path to remove the symlink in plugins/
+7. (Optional) Execute `wucli install` in the target project to install the CLI plugin that has been published on npm
 
 ### Plugin calls the way
 

@@ -307,6 +307,7 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 4. 开发及调试
 5. 开发完成后可通过`wucli plugin publish`将其发布到npm上
 6. (可选)在本地CLI插件路径上执行`wucli plugin unlink`将 plugins/ 内的链接移除
+7. (可选)在目标项目内执行`wucli install`将已经发布到npm上的CLI插件安装为项目开发依赖
 
 ### 调用方式
 
