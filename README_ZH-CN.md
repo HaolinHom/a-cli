@@ -71,9 +71,13 @@ setting.json:
 
 ```json
 {
+  // 将自定义模板添加到此数组
   "templates": [
     {
+      // 模板名称
       "name": "wu-cli-template",
+      // 模板库
+      // 可访问 https://www.npmjs.com/package/download-git-repo 了解更多关于repo属性的信息
       "repo": "wu-cli/wu-cli-template"
     }
   ]
