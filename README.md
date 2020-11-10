@@ -362,7 +362,7 @@ module.exports = function (context, args) {
   const {
     // [Console print terminal with string styling](https://github.com/HaolinHom/std-terminal-logger)
     std,
-    // [Parse process argv to object:](https://github.com/a-cli/wu-utils#parseArgs)
+    // [Parse process argv to object:](https://github.com/a-cli/a-cli-utils#parseArgs)
     parseArgs,
   } = context.utils;
   

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { pathExtra } = require('wu-utils');
+const { pathExtra } = require('a-cli-utils');
 const std = require('std-terminal-logger');
 const getExistPath = require('../../utils/getExistPath');
 

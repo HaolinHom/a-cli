@@ -1,4 +1,4 @@
-const { parseArgs } = require('wu-utils');
+const { parseArgs } = require('a-cli-utils');
 const std = require('std-terminal-logger');
 const getContext = require('../../utils/getContext');
 

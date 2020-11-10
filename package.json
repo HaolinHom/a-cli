@@ -33,6 +33,6 @@
     "open": "^7.2.1",
     "ora": "^5.1.0",
     "std-terminal-logger": "^1.0.0",
-    "wu-utils": "0.2.3"
+    "a-cli-utils": "0.2.3"
   }
 }

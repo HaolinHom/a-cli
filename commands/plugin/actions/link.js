@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { fsExtra } = require('wu-utils');
+const { fsExtra } = require('a-cli-utils');
 const std = require('std-terminal-logger');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
