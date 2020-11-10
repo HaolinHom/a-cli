@@ -15,5 +15,5 @@ yarn-error.log*
 # Dependencies
 /node_modules
 
-# wu-cli plugins
+# a-cli plugins
 /plugins

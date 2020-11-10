@@ -15,7 +15,7 @@ function getActions() {
 
 async function plugin(command) {
   if (!command) {
-    return std.error(`Missing required argument 'command' (wucli plugin [command])`);
+    return std.error(`Missing required argument 'command' (acli plugin [command])`);
   }
   const actions = getActions();
   if (!actions.includes(command)) {

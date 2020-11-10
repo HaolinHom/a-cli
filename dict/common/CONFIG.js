@@ -1,9 +1,9 @@
 module.exports = {
-  ORGANIZATION: 'wu-cli',
-  PROJECT_CONFIG: 'wu-cli-config.json',
-  PLUGIN_CONFIG: 'wu-cli.json',
+  ORGANIZATION: 'a-cli',
+  PROJECT_CONFIG: 'a-cli-config.json',
+  PLUGIN_CONFIG: 'a-cli.json',
   DEFAULT_TEMPLATE: {
-    name: 'wu-cli-template',
-    repo: 'wu-cli/wu-cli-template',
+    name: 'a-cli-template',
+    repo: 'a-cli/a-cli-template',
   },
 };

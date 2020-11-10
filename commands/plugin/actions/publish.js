@@ -54,8 +54,8 @@ function updateVersion(filePath, version) {
 }
 
 module.exports = async function() {
-	const wuCliJson = await getPluginConfig();
-	if (wuCliJson) {
+	const aCliJson = await getPluginConfig();
+	if (aCliJson) {
 		const isHadNpmAuthToken = checkNpmAuthToken();
 		if (!isHadNpmAuthToken) {
 			return std.error('Please login npm before plugin publish!');

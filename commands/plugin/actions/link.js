@@ -5,13 +5,13 @@ const std = require('std-terminal-logger');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function() {
-	const wuCliJson = await getPluginConfig();
+	const aCliJson = await getPluginConfig();
 
-	if (wuCliJson) {
+	if (aCliJson) {
 		const currentPath = process.cwd();
 		const pluginsPath = path.resolve(__dirname, '../../../plugins');
 		fsExtra.ensureDir(pluginsPath);
-		const linkToPath = path.resolve(pluginsPath, wuCliJson.pluginName);
+		const linkToPath = path.resolve(pluginsPath, aCliJson.pluginName);
 
 		if (fs.existsSync(linkToPath)) {
 			const lStats = fs.lstatSync(linkToPath);
@@ -27,7 +27,7 @@ module.exports = async function() {
 
 		return fs.symlink(currentPath, linkToPath, 'junction', function(err) {
 			if (err) {
-				return std.error(`Failed to link plugin ${wuCliJson.pluginName}`);
+				return std.error(`Failed to link plugin ${aCliJson.pluginName}`);
 			}
 			std.green.label('LINK COMPLETED')();
 		});

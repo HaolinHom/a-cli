@@ -66,10 +66,10 @@ function updatePackage(packageName, rootPath) {
 function initialWuCliJson(pluginName, rootPath) {
   const jsonPath = path.resolve(rootPath, CONFIG.PLUGIN_CONFIG);
 
-  let wuCliJson = Object.assign({}, DEFAULT_PLUGIN_CONFIG);
-  wuCliJson.pluginName = pluginName;
+  let aCliJson = Object.assign({}, DEFAULT_PLUGIN_CONFIG);
+  aCliJson.pluginName = pluginName;
 
-  fs.writeFileSync(jsonPath, JSON.stringify(wuCliJson, null, 2), { encoding: 'utf8' });
+  fs.writeFileSync(jsonPath, JSON.stringify(aCliJson, null, 2), { encoding: 'utf8' });
 }
 
 module.exports = async function () {

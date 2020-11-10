@@ -8,7 +8,7 @@ const typeOf = require('../../utils/typeOf');
 
 async function run(script, options, fnBeforeRun) {
   if (!script) {
-    return std.error(`Missing required argument 'script' (wucli run [script])`);
+    return std.error(`Missing required argument 'script' (acli run [script])`);
   }
 
   const config = await getProjectConfig();

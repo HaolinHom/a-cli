@@ -12,7 +12,7 @@ module.exports = function (extraCommands, actionWrap) {
 	const program = new Command();
 
 	program
-		.name('wucli')
+		.name('acli')
 		.version(packageJson.version)
 		.usage(chalk.greenBright('[command]'))
 		.description(packageJson.description);

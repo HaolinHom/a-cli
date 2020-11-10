@@ -1,8 +1,8 @@
 {
   "templates": [
     {
-      "name": "wu-cli-template",
-      "repo": "wu-cli/wu-cli-template"
+      "name": "a-cli-template",
+      "repo": "a-cli/a-cli-template"
     }
   ]
 }
