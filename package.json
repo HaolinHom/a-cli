@@ -1,5 +1,5 @@
 {
-  "name": "wucli",
+  "name": "@wu-cli/wu-cli",
   "version": "1.0.0",
   "description": "wu-cli is a front-end engineering development tool",
   "main": "cli.js",
@@ -10,15 +10,14 @@
     "node": ">=12.0.0",
     "npm": ">=6.0.0"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wu-cli/wu-cli.git"
   },
   "keywords": [
-    "wu-cli"
+    "wu-cli",
+    "wucli",
+    "cli"
   ],
   "author": "Haolin",
   "license": "MIT",
