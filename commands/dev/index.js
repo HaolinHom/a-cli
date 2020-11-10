@@ -45,7 +45,7 @@ async function dev(options) {
   });
 
   fs.watchFile(configPath, () => {
-    std.yellow('Detected wu-cli-config.json change, devServer restarting now.');
+    std.yellow('Detected a-cli-config.json change, devServer restarting now.');
     devProcess.kill();
     devProcess = fork(...devArguments);
   });

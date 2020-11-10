@@ -1,13 +1,13 @@
-# wu-cli
+# a-cli
 
-wu-cli is a front-end engineering development tool for rapid development, build, and publish projects.
+a-cli is a front-end engineering development tool for rapid development, build, and publish projects.
 
 It can realize the decoupling of front-end projects and project engineering by 
 integrating engineering-related codes into CLI plugin, and then executing them by global CLI commands.
 
 Read this in other languages: English | [简体中文](./README_ZH-CN.md)
 
-- [wu-cli](#wu-cli)
+- [a-cli](#a-cli)
   - [Installation](#Installation)
   - [Command usage](#Command-usage)
     - [init command](#init)
@@ -34,7 +34,7 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
 ## Installation
 
 ```bash
-npm install @wu-cli/wu-cli -g
+npm install @a-cli/a-cli -g
 ```
 
 
@@ -46,10 +46,10 @@ The init command is used to create a CLI configuration file in the project.
 The execution of all other commands depends on the configuration file.
 
 ```bash
-wucli init
+acli init
 ```
 
-The configuration file (`wu-cli-config.json`) support the options listed below:
+The configuration file (`a-cli-config.json`) support the options listed below:
 
 ```json
 {
@@ -63,11 +63,11 @@ The configuration file (`wu-cli-config.json`) support the options listed below:
 
 ### setting
 
-`wu-cli` has a local configuration file, 
+`a-cli` has a local configuration file, 
 you can open the file manually (./local/setting.json) or quickly open the file through the setting command to modify it.
 
 ```bash
-wucli setting
+acli setting
 ```
 
 setting.json:
@@ -78,10 +78,10 @@ setting.json:
   "templates": [
     {
       // template name
-      "name": "wu-cli-template",
+      "name": "a-cli-template",
       // template repository
       // To learn more about repo value, visit: https://www.npmjs.com/package/download-git-repo
-      "repo": "wu-cli/wu-cli-template"
+      "repo": "a-cli/a-cli-template"
     }
   ]
 }
@@ -90,9 +90,9 @@ setting.json:
 The setting command also provides an option to display help content related to setting.json.
 
 ```bash
-wucli setting --help
+acli setting --help
 
-wucli setting -h
+acli setting -h
 ```
 
 ### plugin
@@ -101,7 +101,7 @@ The plugin command integrates related functions for scaffolding plug-in developm
 including new, link, unlink, publish, list, etc.
 
 ```bash
-wucli plugin [command]
+acli plugin [command]
 ```
 
 ### plugin new
@@ -110,25 +110,25 @@ Create a new CLI plugin,
 you can download the CLI plugin template as a new plugin through the optional template option in the local settings(`local/setting.json`).
 
 ```bash
-wucli plugin new
+acli plugin new
 ```
 
 ### plugin link
 
-Create a symlink in the wu-cli folder plugins/<plugin> 
+Create a symlink in the a-cli folder plugins/<plugin> 
 that links to the plugin where the plugin link command was executed.
 
 ```bash
-wucli plugin link
+acli plugin link
 ```
 
 ### plugin unlink
 
-Remove a symlink in the wu-cli folder plugins/<plugin> 
+Remove a symlink in the a-cli folder plugins/<plugin> 
 that links to the plugin where the plugin unlink command was executed.
 
 ```bash
-wucli plugin unlink
+acli plugin unlink
 ```
 
 ### plugin publish
@@ -136,7 +136,7 @@ wucli plugin unlink
 Publishes a plugin to the npm registry so that it can be installed by name.
 
 ```bash
-wucli plugin publish
+acli plugin publish
 ```
 
 ### plugin list
@@ -144,7 +144,7 @@ wucli plugin publish
 Get the list of local plugins in the plugins/ directory.
 
 ```bash
-wucli plugin list
+acli plugin list
 ```
 
 ### install
@@ -152,23 +152,23 @@ wucli plugin list
 Install the CLI plugin that was published on "npm".
 
 ```bash
-wucli install
+acli install
 ```
 
 install as dependencies(npm i -S):
 
 ```bash
-wucli install --save
+acli install --save
 
-wucli install -s
+acli install -s
 ```
 
 install as devDependencies(npm i -D):
 
 ```bash
-wucli install --dev
+acli install --dev
 
-wucli install -d
+acli install -d
 ```
 
 ### dev
@@ -178,15 +178,15 @@ Development project. Its operation is based on the `dev.js` file in the CLI plug
 During runtime, npm install will be executed in the project.
 
 ```bash
-wucli dev
+acli dev
 ```
 
 Provides a debug option that can skip npm install:
 
 ```bash
-wucli dev --debug
+acli dev --debug
 
-wucli dev -d
+acli dev -d
 ```
 
 ### build
@@ -196,15 +196,15 @@ Building project code. Its operation is based on the `build.js` file in the CLI 
 During runtime, npm install will be executed in the project.
 
 ```bash
-wucli build
+acli build
 ```
 
 Provides a debug option that can skip npm install:
 
 ```bash
-wucli build --debug
+acli build --debug
 
-wucli build -d
+acli build -d
 ```
 
 ### publish
@@ -213,18 +213,18 @@ Publish the project code.
 Its operation is based on the `publish.js` file in the CLI plugin.
 
 ```bash
-wucli publish
+acli publish
 ```
 
 Provides a debug option that can skip npm install:
 
 ```bash
-wucli publish --debug
+acli publish --debug
 
-wucli publish -d
+acli publish -d
 ```
 
-You can set publish-related properties(`publish`) in the configuration file(`wu-cli-config.json`).
+You can set publish-related properties(`publish`) in the configuration file(`a-cli-config.json`).
 
 #### publish.options
 
@@ -304,7 +304,7 @@ Any configuration that needs to be used when publishing can be set in the config
 {
   "publish": {
     "config": {
-      "remote": "git@github.com:wu-cli/wu-cli.git"
+      "remote": "git@github.com:a-cli/a-cli.git"
     }
   }
 }
@@ -316,7 +316,7 @@ Run custom commands. Any executable JavaScript file in the CLI plugin directory 
 and its file name will be used as the name of the custom command.
 
 ```bash
-wucli run [script]
+acli run [script]
 ```
 
 Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
@@ -326,20 +326,20 @@ Provides a debug option, but it will not do special processing and will only pas
 
 ### Development Process
 
-1. Create a new CLI plugin through executing `wucli plugin new`
-2. Execute `wucli plugin link` to link the plugin to the plugins/ directory by the symlink
-3. Execute `wucli init` in the target project to create a configuration file (wu-cli-config.json), 
+1. Create a new CLI plugin through executing `acli plugin new`
+2. Execute `acli plugin link` to link the plugin to the plugins/ directory by the symlink
+3. Execute `acli init` in the target project to create a configuration file (a-cli-config.json), 
 and set its `name` property to the corresponding CLI plug-in name
 4. Development and debugging
-5. After the development is completed, it can be published to npm through executing `wucli plugin publish`
-6. (Optional) Execute `wucli plugin unlink` on the local CLI plugin path to remove the symlink in plugins/
-7. (Optional) Execute `wucli install` in the target project to install the CLI plugin that has been published on npm
+5. After the development is completed, it can be published to npm through executing `acli plugin publish`
+6. (Optional) Execute `acli plugin unlink` on the local CLI plugin path to remove the symlink in plugins/
+7. (Optional) Execute `acli install` in the target project to install the CLI plugin that has been published on npm
 
 ### Plugin calls the way
 
 The CLI plugin is called in the AOP mode. There are currently 2 ways to be called:
 
-* the plugin that creates a symlink in the plugins/ folder by `wucli plugin link`
+* the plugin that creates a symlink in the plugins/ folder by `acli plugin link`
 * the plugin that installs in node_modules folder of the project
 
 something important: If the above 2 ways exist for the same plugin, 
@@ -349,7 +349,7 @@ it is designed to facilitate the maintenance and upgrade of CLI plugins in the f
 ### CLI function and params
 
 CLI functions are all Common JS modules, exported as function, 
-and receive two parameters `context` and `args` injected by `wu-cli`.
+and receive two parameters `context` and `args` injected by `a-cli`.
 
 ```javascript
 /**
@@ -362,7 +362,7 @@ module.exports = function (context, args) {
   const {
     // [Console print terminal with string styling](https://github.com/HaolinHom/std-terminal-logger)
     std,
-    // [Parse process argv to object:](https://github.com/wu-cli/wu-utils#parseArgs)
+    // [Parse process argv to object:](https://github.com/a-cli/a-cli-utils#parseArgs)
     parseArgs,
   } = context.utils;
   
@@ -376,7 +376,7 @@ module.exports = function (context, args) {
   
   // Only the dev command has this attribute!
   const {
-    // Complete cli config object (wu-cli-config.json) 
+    // Complete cli config object (a-cli-config.json) 
   } = context.config;
   
   // Only publish command has this attribute!

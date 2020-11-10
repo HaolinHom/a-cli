@@ -7,10 +7,10 @@ module.exports = chalk.whiteBright(
   "templates": [
     {
       ${chalk.gray('// template name')}
-      "name": "wu-cli-template",
+      "name": "a-cli-template",
       ${chalk.gray('// template repository')}
       ${chalk.gray(`// To learn more about repo value, visit: ${chalk.blueBright('https://www.npmjs.com/package/download-git-repo')}`)}
-      "repo": "wu-cli/wu-cli-template"
+      "repo": "a-cli/a-cli-template"
     },
   ]
 }`

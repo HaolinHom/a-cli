@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { pathExtra } = require('wu-utils');
+const { pathExtra } = require('a-cli-utils');
 const std = require('std-terminal-logger');
 const getExistPath = require('../../utils/getExistPath');
 
@@ -15,7 +15,7 @@ function getActions() {
 
 async function plugin(command) {
   if (!command) {
-    return std.error(`Missing required argument 'command' (wucli plugin [command])`);
+    return std.error(`Missing required argument 'command' (acli plugin [command])`);
   }
   const actions = getActions();
   if (!actions.includes(command)) {

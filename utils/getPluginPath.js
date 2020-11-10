@@ -11,7 +11,7 @@ async function getPluginPath(pluginName) {
     throw new Error(chalk.redBright('The parameter must be a string in getPluginPath()!'));
   }
 
-	// prefer to use the plugins in the wu-cli/plugins directory, convenient to develop and debug plugins
+	// prefer to use the plugins in the a-cli/plugins directory, convenient to develop and debug plugins
   let pluginPath = path.resolve(__dirname, `../plugins/${pluginName}`);
   if (!fs.existsSync(pluginPath)) {
 		pluginPath = path.resolve(process.cwd(), `node_modules/${pluginName}`);

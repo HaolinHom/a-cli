@@ -6,7 +6,7 @@ const CONFIG = require('../dict/common/CONFIG');
 
 function validateConfig(cfg) {
   if (!cfg.name) {
-    std.error('wu-cli-config.json is a non-compliant file or missing the necessary fields');
+    std.error('a-cli-config.json is a non-compliant file or missing the necessary fields');
     return false;
   }
   return true;

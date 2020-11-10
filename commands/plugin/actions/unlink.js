@@ -4,10 +4,10 @@ const std = require('std-terminal-logger');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 
 module.exports = async function () {
-  const wuCliJson = await getPluginConfig();
+  const aCliJson = await getPluginConfig();
 
-  if (wuCliJson) {
-    const pluginPath = path.resolve(__dirname, `../../../plugins/${wuCliJson.pluginName}`);
+  if (aCliJson) {
+    const pluginPath = path.resolve(__dirname, `../../../plugins/${aCliJson.pluginName}`);
     if (fs.existsSync(pluginPath)) {
       const stats = fs.lstatSync(pluginPath);
       if (stats.isSymbolicLink()) {
@@ -15,7 +15,7 @@ module.exports = async function () {
         std.green.label('UNLINK COMPLETED')();
       }
     } else {
-      std.warn(`No plugin ${wuCliJson.pluginName} need to unlink`)
+      std.warn(`No plugin ${aCliJson.pluginName} need to unlink`)
     }
   }
 };

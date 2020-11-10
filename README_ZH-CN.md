@@ -1,12 +1,12 @@
-# wu-cli
+# a-cli
 
-wu-cli是一个前端工程开发工具，用于快速开发、构建、发布项目。
+a-cli是一个前端工程开发工具，用于快速开发、构建、发布项目。
 
 其通过将工程化相关的代码整合为CLI插件，再由全局的CLI命令进行执行，可实现前端项目与项目工程化的解耦。
 
 使用其他语言阅读：[English](./README.md) | 简体中文
 
-- [wu-cli](#wu-cli)
+- [a-cli](#a-cli)
   - [安装](#安装)
   - [命令的使用](#命令的使用)
     - [init命令](#init)
@@ -33,7 +33,7 @@ wu-cli是一个前端工程开发工具，用于快速开发、构建、发布�
 ## 安装
 
 ```bash
-npm install @wu-cli/wu-cli -g
+npm install @a-cli/a-cli -g
 ```
 
 
@@ -44,10 +44,10 @@ npm install @wu-cli/wu-cli -g
 在项目内创建一个脚手架配置文件。除此之外的所有命令的执行都依赖于该配置文件。
 
 ```bash
-wucli init
+acli init
 ```
 
-该配置文件(`wu-cli-config.json`)支持如下的这些选项:
+该配置文件(`a-cli-config.json`)支持如下的这些选项:
 
 ```json
 {
@@ -61,11 +61,11 @@ wucli init
 
 ### setting
 
-`wu-cli`有一个本地的配置文件，可以手动打开该文件(./local/setting.json)或
+`a-cli`有一个本地的配置文件，可以手动打开该文件(./local/setting.json)或
 通过setting命令快速打开文件后进行修改。
 
 ```bash
-wucli setting
+acli setting
 ```
 
 setting.json:
@@ -76,10 +76,10 @@ setting.json:
   "templates": [
     {
       // 模板名称
-      "name": "wu-cli-template",
+      "name": "a-cli-template",
       // 模板库
       // 可访问 https://www.npmjs.com/package/download-git-repo 了解更多关于repo属性的信息
-      "repo": "wu-cli/wu-cli-template"
+      "repo": "a-cli/a-cli-template"
     }
   ]
 }
@@ -88,9 +88,9 @@ setting.json:
 setting命令还提供了一个用于显示与setting.json有关的帮助内容的选项。
 
 ```bash
-wucli setting --help
+acli setting --help
 
-wucli setting -h
+acli setting -h
 ```
 
 ### plugin
@@ -98,7 +98,7 @@ wucli setting -h
 plugin命令集成了用于脚手架插件开发的相关功能，包括new、link、unlink、publish、list等。
 
 ```bash
-wucli plugin [command]
+acli plugin [command]
 ```
 
 ### plugin new
@@ -106,23 +106,23 @@ wucli plugin [command]
 新建一个脚手架插件，可以通过本地设置内的可选模板选项下载对应的插件模板作为新插件
 
 ```bash
-wucli plugin new
+acli plugin new
 ```
 
 ### plugin link
 
-创建一个从执行plugin link命令的文件夹链接到`wu-cli`下的plugins/<plugin>文件夹的符号链接。
+创建一个从执行plugin link命令的文件夹链接到`a-cli`下的plugins/<plugin>文件夹的符号链接。
 
 ```bash
-wucli plugin link
+acli plugin link
 ```
 
 ### plugin unlink
 
-移除一个从执行plugin unlink命令的文件夹链接到`wu-cli`下的plugins/<plugin>文件夹的符号链接。
+移除一个从执行plugin unlink命令的文件夹链接到`a-cli`下的plugins/<plugin>文件夹的符号链接。
 
 ```bash
-wucli plugin unlink
+acli plugin unlink
 ```
 
 ### plugin publish
@@ -130,7 +130,7 @@ wucli plugin unlink
 将插件发布到npm。
 
 ```bash
-wucli plugin publish
+acli plugin publish
 ```
 
 ### plugin list
@@ -138,7 +138,7 @@ wucli plugin publish
 获取 plugins/ 目录下的本地插件列表。
 
 ```bash
-wucli plugin list
+acli plugin list
 ```
 
 ### install
@@ -146,23 +146,23 @@ wucli plugin list
 安装已经发布到npm的脚手架插件。
 
 ```bash
-wucli install
+acli install
 ```
 
 脚手架插件作为项目依赖进行安装(npm i -S):
 
 ```bash
-wucli install --save
+acli install --save
 
-wucli install -s
+acli install -s
 ```
 
 脚手架插件作为项目开发依赖进行安装(npm i -D):
 
 ```bash
-wucli install --dev
+acli install --dev
 
-wucli install -d
+acli install -d
 ```
 
 ### dev
@@ -172,15 +172,15 @@ wucli install -d
 运行时会在项目内执行npm install。
 
 ```bash
-wucli dev
+acli dev
 ```
 
 提供了一个debug选项，可以在跳过npm install:
 
 ```bash
-wucli dev --debug
+acli dev --debug
 
-wucli dev -d
+acli dev -d
 ```
 
 ### build
@@ -190,15 +190,15 @@ wucli dev -d
 提供了一个debug选项，可以在跳过npm install:
 
 ```bash
-wucli build
+acli build
 ```
 
 build命令提供了一个debug选项，可以在跳过npm install。
 
 ```bash
-wucli build --debug
+acli build --debug
 
-wucli build -d
+acli build -d
 ```
 
 ### publish
@@ -208,18 +208,18 @@ wucli build -d
 运行时会在项目内执行npm install。
 
 ```bash
-wucli publish
+acli publish
 ```
 
 提供了一个debug选项，可以在跳过npm install:
 
 ```bash
-wucli publish --debug
+acli publish --debug
 
-wucli publish -d
+acli publish -d
 ```
 
-可以在配置文件(`wu-cli-config.json`)中设置与发布相关的属性(`publish`).
+可以在配置文件(`a-cli-config.json`)中设置与发布相关的属性(`publish`).
 
 #### publish.options
 
@@ -295,7 +295,7 @@ wucli publish -d
 {
   "publish": {
     "config": {
-      "remote": "git@github.com:wu-cli/wu-cli.git"
+      "remote": "git@github.com:a-cli/a-cli.git"
     }
   }
 }
@@ -306,7 +306,7 @@ wucli publish -d
 运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
 
 ```bash
-wucli run [script]
+acli run [script]
 ```
 
 run命令提供了一个debug选项，但不会做特殊处理，只会将其传递到自定义命令的执行文件内。
@@ -316,19 +316,19 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 
 ### 开发流程
 
-1. 通过`wucli plugin new`创建一个新的CLI插件
-2. 执行`wucli plugin link`将该插件链接到 plugins/ 目录下
-3. 在目标项目内执行`wucli init`来创建配置文件(wu-cli-config.json)，并将其`name`属性设为对应的CLI插件名称
+1. 通过`acli plugin new`创建一个新的CLI插件
+2. 执行`acli plugin link`将该插件链接到 plugins/ 目录下
+3. 在目标项目内执行`acli init`来创建配置文件(a-cli-config.json)，并将其`name`属性设为对应的CLI插件名称
 4. 开发及调试
-5. 开发完成后可通过`wucli plugin publish`将其发布到npm上
-6. (可选)在本地CLI插件路径上执行`wucli plugin unlink`将 plugins/ 内的链接移除
-7. (可选)在目标项目内执行`wucli install`将已经发布到npm上的CLI插件安装为项目开发依赖
+5. 开发完成后可通过`acli plugin publish`将其发布到npm上
+6. (可选)在本地CLI插件路径上执行`acli plugin unlink`将 plugins/ 内的链接移除
+7. (可选)在目标项目内执行`acli install`将已经发布到npm上的CLI插件安装为项目开发依赖
 
 ### 调用方式
 
 CLI插件是以AOP模式进行调用的，目前有2种被调用的方式：
 
-* 通过`wucli plugin link`命令将本地插件以symlink的方式链接到plugins/目录下的插件
+* 通过`acli plugin link`命令将本地插件以symlink的方式链接到plugins/目录下的插件
 * 安装在项目内的 node_modules 目录下的插件 
 
 这里有个需要注意的地方：同一个插件如果同时存在以上2种方式时，链接后的本地插件优先级高于安装在node_modules内的，
@@ -336,7 +336,7 @@ CLI插件是以AOP模式进行调用的，目前有2种被调用的方式：
 
 ### CLI函数及参数
 
-CLI函数都是CommonJS模块，导出为函数，接收由`wu-cli`对其注入的两个参数`context`和`args`。
+CLI函数都是CommonJS模块，导出为函数，接收由`a-cli`对其注入的两个参数`context`和`args`。
 
 ```javascript
 /**
@@ -349,7 +349,7 @@ module.exports = function (context, args) {
   const {
     // [Console print terminal with string styling](https://github.com/HaolinHom/std-terminal-logger)
     std,
-    // [Parse process argv to object:](https://github.com/wu-cli/wu-utils#parseArgs)
+    // [Parse process argv to object:](https://github.com/a-cli/a-cli-utils#parseArgs)
     parseArgs,
   } = context.utils;
   
@@ -363,7 +363,7 @@ module.exports = function (context, args) {
   
   // 仅dev命令有该属性！
   const {
-    // 完整的cli配置(wu-cli-config.json)对象
+    // 完整的cli配置(a-cli-config.json)对象
   } = context.config;
   
   // 仅publish命令有该属性！
