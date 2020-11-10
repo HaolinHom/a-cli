@@ -34,7 +34,7 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
 ## Installation
 
 ```bash
-npm install @a-cli/a-cli -g
+npm install a-cli-core -g
 ```
 
 

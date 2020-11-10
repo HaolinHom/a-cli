@@ -33,7 +33,7 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
 ## 安装
 
 ```bash
-npm install @a-cli/a-cli -g
+npm install a-cli-core -g
 ```
 
 

@@ -1,5 +1,5 @@
 {
-  "name": "a-cli",
+  "name": "a-cli-core",
   "version": "1.0.0",
   "description": "a-cli is a front-end engineering development tool",
   "main": "cli.js",
@@ -15,6 +15,7 @@
     "url": "git+https://github.com/a-cli/a-cli.git"
   },
   "keywords": [
+    "a-cli-core",
     "a-cli",
     "acli",
     "cli"
