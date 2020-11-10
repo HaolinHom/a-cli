@@ -34,7 +34,7 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
 ## Installation
 
 ```bash
-npm install wucli -g
+npm install @wu-cli/wu-cli -g
 ```
 
 

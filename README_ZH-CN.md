@@ -33,7 +33,7 @@ wu-cli是一个前端工程开发工具，用于快速开发、构建、发布�
 ## 安装
 
 ```bash
-npm install wucli -g
+npm install @wu-cli/wu-cli -g
 ```
 
 
