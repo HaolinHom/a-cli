@@ -1,7 +1,12 @@
 module.exports = {
   name: "",
-  publish: {
+  preset: {
+    switch: {
+      dev: false,
+      build: false,
+      publish: false,
+    },
     options: [],
-    config: null,
+    define: null,
   },
 };
