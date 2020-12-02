@@ -241,22 +241,17 @@ Provides a debug option, but it will not do special processing and will only pas
 The `run command` can set related preset options in the configuration file (`a-cli-config.json`) 
 and provide options for choose during runtime.
 
-All commands(include [dev](#dev), [build](#build), [publish](#publish)) run through `run command` can be turned on 
-and use preset options.
-
-* preset.switch
-
-In the switch attribute, set whether the corresponding command provides preset options as options before running.
+All commands(include [dev](#dev), [build](#build), [publish](#publish)) run through `run command` can be used 
+by configuring preset options.
 
 ```json
 // a-cli-config.json
 {
   "preset": {
-    "switch": {
-      // key value is command's file name
-      "dev": false,
-      "build": false,
-      "publish": true
+    // The executable command's file name is used as the key value
+    "publish": {          
+      "options": [],
+      "define": null
     }
   }
 }
@@ -272,20 +267,22 @@ and then the selected results are passed into the target file as parameters.
 // a-cli-config.json
 {
   "preset": {
-    "options": [
-      {
-        "name": "Test",
-        "value": "Valid json value(Default null)"
-      },
-      {
-        "name": "Pre-release",
-        "value": "Valid json value(Default null)"
-      },
-      {
-        "name": "Production",
-        "value": "Valid json value(Default null)"
-      }
-    ]
+    "publish": {
+      "options": [
+        {
+          "name": "Test",
+          "value": "Valid json value(Default null)"
+        },
+        {
+          "name": "Pre-release",
+          "value": "Valid json value(Default null)"
+        },
+        {
+          "name": "Production",
+          "value": "Valid json value(Default null)"
+        }
+      ]    
+    }
   }
 }
 ```
@@ -296,36 +293,38 @@ Support multi-level nested option configuration:
 // a-cli-config.json
 {
   "preset": {
-    "options": [
-      {
-        "name": "foo-level-1",
-        "options": [
-          {
-            "name": "foo-level-1-1",
-            "options": [
-              "you can set more options..."
-            ]
-          },
-          {
-            "name": "foo-level-1-2",
-            "value": "Valid json value(Default null)"
-          }
-        ]
-      },
-      {
-        "name": "bar-level-1",
-        "options": [
-          {
-            "name": "bar-level-1-1",
-            "value": "Valid json value(Default null)"
-          },
-          {
-            "name": "bar-level-1-2",
-            "value": "Valid json value(Default null)"
-          }
-        ]
-      }
-    ]
+    "publish": {
+      "options": [
+        {
+          "name": "foo-level-1",
+          "options": [
+            {
+              "name": "foo-level-1-1",
+              "options": [
+                "you can set more options..."
+              ]
+            },
+            {
+              "name": "foo-level-1-2",
+              "value": "Valid json value(Default null)"
+            }
+          ]
+        },
+        {
+          "name": "bar-level-1",
+          "options": [
+            {
+              "name": "bar-level-1-1",
+              "value": "Valid json value(Default null)"
+            },
+            {
+              "name": "bar-level-1-2",
+              "value": "Valid json value(Default null)"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 ```
@@ -342,8 +341,10 @@ Any configuration that needs to be used can be set in the define attribute.
 // a-cli-config.json
 {
   "preset": {
-    "define": {
-      "remote": "git@github.com:a-cli/a-cli.git"
+    "publish": {
+      "define": {
+        "remote": "git@github.com:a-cli/a-cli.git"
+      }    
     }
   }
 }

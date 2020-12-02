@@ -226,21 +226,16 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 
 run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选项(preset)并在运行时作为选项供选择。
 
-所有通过run运行的命令(包括[dev](#dev), [build](#build), [publish](#publish))都可以开启使用预设选项。
-
-* preset.switch
-
-在switch属性内设置对应命令是否在执行前提供预设选项作为选项。
+所有通过run运行的命令(包括[dev](#dev), [build](#build), [publish](#publish))都可以通过配置预设选项来使用。
 
 ```json
 // a-cli-config.json
 {
   "preset": {
-    "switch": {
-      // key值对应命令的文件名
-      "dev": false,
-      "build": false,
-      "publish": false
+    // 可执行的命令文件名作为key值
+    "publish": {
+      "options": [],
+      "define": null
     }
   }
 }
@@ -254,20 +249,22 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 // a-cli-config.json
 {
   "preset": {
-    "options": [
-      {
-        "name": "Test",
-        "value": "Valid json value(Default null)"
-      },
-  	  {
-        "name": "Pre-release",
-        "value": "Valid json value(Default null)"
-      },
-      {
-        "name": "Production",
-        "value": "Valid json value(Default null)"
-      }
-    ]
+    "publish": {
+      "options": [
+        {
+          "name": "Test",
+          "value": "Valid json value(Default null)"
+        },
+        {
+          "name": "Pre-release",
+          "value": "Valid json value(Default null)"
+        },
+        {
+          "name": "Production",
+          "value": "Valid json value(Default null)"
+        }
+      ]    
+    }
   }
 }
 ```
@@ -278,36 +275,38 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 // a-cli-config.json
 {
   "preset": {
-    "options": [
-      {
-        "name": "foo-level-1",
-        "options": [
-          {
-            "name": "foo-level-1-1",
-            "options": [
-              "you can set more options..."
-            ]
-          },
-          {
-            "name": "foo-level-1-2",
-            "value": "Valid json value(Default null)"
-          }
-        ]
-      },
-      {
-        "name": "bar-level-1",
-        "options": [
-          {
-            "name": "bar-level-1-1",
-            "value": "Valid json value(Default null)"
-          },
-          {
-            "name": "bar-level-1-2",
-            "value": "Valid json value(Default null)"
-          }
-        ]
-      }
-    ]
+    "publish": {
+      "options": [
+        {
+          "name": "foo-level-1",
+          "options": [
+            {
+              "name": "foo-level-1-1",
+              "options": [
+                "you can set more options..."
+              ]
+            },
+            {
+              "name": "foo-level-1-2",
+              "value": "Valid json value(Default null)"
+            }
+          ]
+        },
+        {
+          "name": "bar-level-1",
+          "options": [
+            {
+              "name": "bar-level-1-1",
+              "value": "Valid json value(Default null)"
+            },
+            {
+              "name": "bar-level-1-2",
+              "value": "Valid json value(Default null)"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 ```
@@ -322,8 +321,10 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 // a-cli-config.json
 {
   "preset": {
-    "define": {
-      "remote": "git@github.com:a-cli/a-cli.git"
+    "publish": {
+      "define": {
+        "remote": "git@github.com:a-cli/a-cli.git"
+      }    
     }
   }
 }
