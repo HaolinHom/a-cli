@@ -238,11 +238,18 @@ Provides a debug option, but it will not do special processing and will only pas
 
 #### preset
 
+The `run command` can set related preset options in the configuration file (`a-cli-config.json`) 
+and provide options for choose during runtime.
+
+All commands(include [dev](#dev), [build](#build), [publish](#publish)) run through `run command` can be turned on 
+and use preset options.
+
 * preset.switch
 
 In the switch attribute, set whether the corresponding command provides preset options as options before running.
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "switch": {
@@ -262,6 +269,7 @@ which are available for selection when executing the run command,
 and then the selected results are passed into the target file as parameters.
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "options": [
@@ -285,6 +293,7 @@ and then the selected results are passed into the target file as parameters.
 Support multi-level nested option configuration:
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "options": [
@@ -330,6 +339,7 @@ and it will be automatically selected as the selected option.
 Any configuration that needs to be used can be set in the define attribute.
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "define": {

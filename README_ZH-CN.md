@@ -212,8 +212,6 @@ acli publish --debug
 acli publish -d
 ```
 
-可以在配置文件(`a-cli-config.json`)中设置与发布相关的属性(`publish`).
-
 ### run
 
 运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
@@ -226,18 +224,23 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 
 #### 预设选项
 
+run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选项(preset)并在运行时作为选项供选择。
+
+所有通过run运行的命令(包括[dev](#dev), [build](#build), [publish](#publish))都可以开启使用预设选项。
+
 * preset.switch
 
 在switch属性内设置对应命令是否在执行前提供预设选项作为选项。
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "switch": {
       // key值对应命令的文件名
       "dev": false,
       "build": false,
-      "publish": true
+      "publish": false
     }
   }
 }
@@ -248,6 +251,7 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 可以将多个参数（例如系统，环境等）设置为选项，这些参数在执行命令时可供选择，之后将所选结果作为参数传递到目标文件中。
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "options": [
@@ -271,6 +275,7 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 支持多级嵌套选项配置:
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "options": [
@@ -314,6 +319,7 @@ run命令提供了一个debug选项，但不会做特殊处理，只会将其传
 可以在define属性中设置需要用到的任何定义。
 
 ```json
+// a-cli-config.json
 {
   "preset": {
     "define": {
