@@ -21,9 +21,8 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
     - [dev命令](#dev)
     - [build命令](#build)
     - [publish命令](#publish)
-      - [publish.options](#publishoptions)
-      - [publish.config](#publishconfig)
     - [run命令](#run)
+      - [预设选项](#预设选项)
   - [开发CLI插件](#开发CLI插件)
     - [开发流程](#开发流程)
     - [调用方式](#调用方式)
@@ -167,17 +166,15 @@ acli install -d
 
 ### dev
 
+> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
+
 开发项目。其运行是基于CLI插件中的`dev.js`文件，并在运行时由devServer启动。
 
-运行时会在项目内执行npm install。
+运行时会在项目内执行npm install，在debug模式时不执行。
 
 ```bash
 acli dev
-```
 
-提供了一个debug选项，可以在跳过npm install:
-
-```bash
 acli dev --debug
 
 acli dev -d
@@ -185,17 +182,15 @@ acli dev -d
 
 ### build
 
+> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
+
 构建项目代码。其运行是基于CLI插件中的`build.js`文件。
 
-提供了一个debug选项，可以在跳过npm install:
+运行时会在项目内执行npm install，在debug模式时不执行。
 
 ```bash
 acli build
-```
 
-build命令提供了一个debug选项，可以在跳过npm install。
-
-```bash
 acli build --debug
 
 acli build -d
@@ -203,17 +198,15 @@ acli build -d
 
 ### publish
 
+> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
+
 发布项目代码。其运行是基于CLI插件中的`publish.js`文件。
 
-运行时会在项目内执行npm install。
+运行时会在项目内执行npm install，在debug模式时不执行。
 
 ```bash
 acli publish
-```
 
-提供了一个debug选项，可以在跳过npm install:
-
-```bash
 acli publish --debug
 
 acli publish -d
@@ -221,13 +214,42 @@ acli publish -d
 
 可以在配置文件(`a-cli-config.json`)中设置与发布相关的属性(`publish`).
 
-#### publish.options
+### run
 
-可以将多个与发布相关的参数（例如系统，环境等）设置为选项，这些参数在执行publish命令时可供选择，之后将所选结果作为参数传递到`publish.js`文件中。
+运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
+
+```bash
+acli run [script]
+```
+
+run命令提供了一个debug选项，但不会做特殊处理，只会将其传递到自定义命令的执行文件内。
+
+#### 预设选项
+
+* preset.switch
+
+在switch属性内设置对应命令是否在执行前提供预设选项作为选项。
 
 ```json
 {
-  "publish": {
+  "preset": {
+    "switch": {
+      // key值对应命令的文件名
+      "dev": false,
+      "build": false,
+      "publish": true
+    }
+  }
+}
+```
+
+* preset.options
+
+可以将多个参数（例如系统，环境等）设置为选项，这些参数在执行命令时可供选择，之后将所选结果作为参数传递到目标文件中。
+
+```json
+{
+  "preset": {
     "options": [
       {
         "name": "Test",
@@ -250,7 +272,7 @@ acli publish -d
 
 ```json
 {
-  "publish": {
+  "preset": {
     "options": [
       {
         "name": "foo-level-1",
@@ -287,29 +309,19 @@ acli publish -d
 
 如果仅配置了一个选项，并且没有嵌套选项或只有一个子嵌套选项，则无需进行选择，它将被自动选择为所选选项。
 
-#### publish.config
+* preset.define
 
-可以在config属性中设置发布时需要使用的任何配置。
+可以在define属性中设置需要用到的任何定义。
 
 ```json
 {
-  "publish": {
-    "config": {
+  "preset": {
+    "define": {
       "remote": "git@github.com:a-cli/a-cli.git"
     }
   }
 }
 ```
-
-### run
-
-运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
-
-```bash
-acli run [script]
-```
-
-run命令提供了一个debug选项，但不会做特殊处理，只会将其传递到自定义命令的执行文件内。
 
 
 ## 开发CLI插件

@@ -22,9 +22,8 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
     - [dev command](#dev)
     - [build command](#build)
     - [publish command](#publish)
-      - [publish.options](#publishoptions)
-      - [publish.config](#publishconfig)
     - [run command](#run)
+      - [preset](#preset)
   - [Develop CLI plugin](#Develop-CLI-plugin)
     - [Development Process](#Development-Process)
     - [Plugin calls the way](#Plugin-calls-the-way)
@@ -173,17 +172,16 @@ acli install -d
 
 ### dev
 
+> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
+in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
+
 Development project. Its operation is based on the `dev.js` file in the CLI plugin and started by a dev server at runtime.
 
-During runtime, npm install will be executed in the project.
+During runtime, npm install will be executed in the project, bug not executed in debug mode.
 
 ```bash
 acli dev
-```
 
-Provides a debug option that can skip npm install:
-
-```bash
 acli dev --debug
 
 acli dev -d
@@ -191,9 +189,12 @@ acli dev -d
 
 ### build
 
+> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
+in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
+
 Building project code. Its operation is based on the `build.js` file in the CLI plugin.
 
-During runtime, npm install will be executed in the project.
+During runtime, npm install will be executed in the project, bug not executed in debug mode.
 
 ```bash
 acli build
@@ -209,32 +210,60 @@ acli build -d
 
 ### publish
 
-Publish the project code.
-Its operation is based on the `publish.js` file in the CLI plugin.
+> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
+in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
+
+Publish the project code. Its operation is based on the `publish.js` file in the CLI plugin.
+
+During runtime, npm install will be executed in the project, bug not executed in debug mode.
 
 ```bash
 acli publish
-```
 
-Provides a debug option that can skip npm install:
-
-```bash
 acli publish --debug
 
 acli publish -d
 ```
 
-You can set publish-related properties(`publish`) in the configuration file(`a-cli-config.json`).
+### run
 
-#### publish.options
+Run custom commands. Any executable JavaScript file in the CLI plugin directory can be run as a custom command, 
+and its file name will be used as the name of the custom command.
 
-Multiple publish-related parameters (such as system, environment, etc.) can be configured as options, 
-which are available for selection when executing the publish command, 
-and then the selected results are passed into the `publish.js` file as parameters.
+```bash
+acli run [script]
+```
+
+Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
+
+#### preset
+
+* preset.switch
+
+In the switch attribute, set whether the corresponding command provides preset options as options before running.
 
 ```json
 {
-  "publish": {
+  "preset": {
+    "switch": {
+      // key value is command's file name
+      "dev": false,
+      "build": false,
+      "publish": true
+    }
+  }
+}
+```
+
+* preset.options
+
+Multiple parameters (such as system, environment, etc.) can be configured as options, 
+which are available for selection when executing the run command, 
+and then the selected results are passed into the target file as parameters.
+
+```json
+{
+  "preset": {
     "options": [
       {
         "name": "Test",
@@ -257,7 +286,7 @@ Support multi-level nested option configuration:
 
 ```json
 {
-  "publish": {
+  "preset": {
     "options": [
       {
         "name": "foo-level-1",
@@ -296,30 +325,19 @@ If only one option is configured and there is no nested option or only one sub-n
 there is no need to make a selection, 
 and it will be automatically selected as the selected option.
 
-#### publish.config
+* preset.define
 
-Any configuration that needs to be used when publishing can be set in the config attribute.
+Any configuration that needs to be used can be set in the define attribute.
 
 ```json
 {
-  "publish": {
-    "config": {
+  "preset": {
+    "define": {
       "remote": "git@github.com:a-cli/a-cli.git"
     }
   }
 }
 ```
-
-### run
-
-Run custom commands. Any executable JavaScript file in the CLI plugin directory can be run as a custom command, 
-and its file name will be used as the name of the custom command.
-
-```bash
-acli run [script]
-```
-
-Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
 
 
 ## Develop CLI plugin
