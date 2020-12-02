@@ -1,15 +1,20 @@
 const path = require('path');
+const fs = require('fs');
+const { fork } = require('child_process');
 const std= require('std-terminal-logger');
+const CONFIG = require('../../dict/common/CONFIG');
+const run = require('./run');
 const getProjectConfig = require('../../utils/getProjectConfig');
 const getPluginPath = require('../../utils/getPluginPath');
-const getContext = require('../../utils/getContext');
 const getExistPath = require('../../utils/getExistPath');
-const typeOf = require('../../utils/typeOf');
 
-async function run(script, options, fnBeforeRun) {
+module.exports = async function (script, options, debugInstallDeps = false, runOnSubProcess = false) {
   if (!script) {
     return std.error(`Missing required argument 'script' (acli run [script])`);
   }
+
+  const isDebugMode = options.debug === true;
+  const configPath = path.resolve(process.cwd(), CONFIG.PROJECT_CONFIG);
 
   const config = await getProjectConfig();
   if (!config) {
@@ -21,25 +26,52 @@ async function run(script, options, fnBeforeRun) {
     return;
   }
 
-  const tagJsPath = await getExistPath(path.resolve(pluginPath, `${script}.js`));
-  if (!tagJsPath) {
+  const commandJsPath = await getExistPath(path.resolve(pluginPath, `${script}.js`));
+  if (!commandJsPath) {
     return;
   }
 
-  const runJs = require(tagJsPath);
-  if (typeof runJs === 'function') {
-    let ctx = { config };
-    if (fnBeforeRun && typeof fnBeforeRun === 'function') {
-      const ctxExtend = await fnBeforeRun(options, config);
-      if (typeOf(ctxExtend) === 'object') {
-        ctx = { ...ctxExtend, config };
-      }
-    }
-    runJs(getContext(ctx), process.argv.slice(4));
-  } else {
-    std.error('Can not find command implement script');
-    throw new Error('Can not find command implement script');
-  }
-}
+  let preRunPath = path.resolve(__dirname, `../${script}/preRun.js`);
+  preRunPath = fs.existsSync(preRunPath) ? preRunPath : null;
 
-module.exports = run;
+  const installDeps = !isDebugMode && debugInstallDeps;
+
+  if (runOnSubProcess) {
+    const forkServerPath = path.resolve(__dirname, 'forkServer.js');
+
+    const forkArguments = [
+      forkServerPath,
+      [
+        `tagPath=${commandJsPath}`,
+        `preRunPath=${preRunPath}`,
+        `configPath=${configPath}`,
+        `debug=${isDebugMode}`,
+				`installDeps=${installDeps}`,
+        `script=${script}`,
+      ],
+      { stdio: 'inherit' },
+    ];
+
+    let subProcess = fork(...forkArguments);
+
+    subProcess.on('exit', () => {
+      process.exit(0);
+    });
+
+    fs.watchFile(configPath, () => {
+      std.yellow('Detected a-cli-config.json change, devServer restarting now.');
+      subProcess.kill();
+      subProcess = fork(...forkArguments);
+    });
+  } else {
+    run(
+      commandJsPath,
+      configPath,
+      process.argv.slice(4),
+      {
+        installDeps,
+				script,
+      }
+    );
+  }
+};
