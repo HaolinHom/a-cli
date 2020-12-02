@@ -35,7 +35,6 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   preRunPath = fs.existsSync(preRunPath) ? preRunPath : null;
 
   const installDeps = !isDebugMode && debugInstallDeps;
-  const presetSwitch = ((config.preset || {}).switch || {})[script] || false;
 
   if (runOnSubProcess) {
     const forkServerPath = path.resolve(__dirname, 'forkServer.js');
@@ -47,15 +46,15 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
         `preRunPath=${preRunPath}`,
         `configPath=${configPath}`,
         `debug=${isDebugMode}`,
-        `presetSwitch=${presetSwitch}`,
-        `installDeps=${installDeps}`,
+				`installDeps=${installDeps}`,
+        `script=${script}`,
       ],
       { stdio: 'inherit' },
     ];
 
     let subProcess = fork(...forkArguments);
 
-    subProcess.on('exit', (data) => {
+    subProcess.on('exit', () => {
       process.exit(0);
     });
 
@@ -71,7 +70,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
       process.argv.slice(4),
       {
         installDeps,
-        presetSwitch,
+				script,
       }
     );
   }

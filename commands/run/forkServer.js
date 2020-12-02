@@ -11,7 +11,7 @@ const { parseArgs } = require('a-cli-utils');
     args,
     {
       installDeps: options.installDeps,
-      presetSwitch: options.presetSwitch,
+      script: options.script,
     }
   );
 })();

@@ -19,13 +19,22 @@ async function presetOptionPrompt(options, target) {
       return null;
     }
   }).filter(opt => opt);
-  const { key } = await prompt({
-    name: 'key',
-    type: 'select',
-    message: 'Please choice preset option for project:',
-    choices,
-  });
-  target.keys.push(key);
+
+	let key;
+  if (choices.length === 0) {
+  	return target;
+	} else if (choices.length === 1) {
+		key = choices[0];
+	} else {
+		const result = await prompt({
+			name: 'key',
+			type: 'select',
+			message: 'Please choice preset option for project:',
+			choices,
+		});
+		key = result.key;
+	}
+	target.keys.push(key);
 
   const tagOption = options.find(item => item.name === key || item === key);
   if (typeOf(tagOption) === 'object') {
@@ -52,7 +61,7 @@ async function getPreset(options, define) {
 
 const defaultOpts = {
   installDeps: false,
-  presetSwitch: false,
+	script: null,
 };
 
 module.exports = async function (tagJsPath, cfgPath, args, options = defaultOpts) {
@@ -66,8 +75,9 @@ module.exports = async function (tagJsPath, cfgPath, args, options = defaultOpts
       packageInstall();
     }
 
-    if (options.presetSwitch) {
-      const ctxExtend = await getPreset(config.preset.options, config.preset.define);
+    if (options.script && config.preset && config.preset[options.script]) {
+    	const scriptPreset = config.preset[options.script];
+      const ctxExtend = await getPreset(scriptPreset.options, scriptPreset.define);
       if (typeOf(ctxExtend) === 'object') {
         ctx = {
           ...ctxExtend,
