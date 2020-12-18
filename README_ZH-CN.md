@@ -51,10 +51,7 @@ acli init
 ```json
 {
   "name": "cli-plugin-name",
-  "publish": {
-    "options": [],
-    "config": null
-  }
+  "preset": {}
 }
 ```
 
@@ -100,7 +97,7 @@ plugin命令集成了用于脚手架插件开发的相关功能，包括new、li
 acli plugin [command]
 ```
 
-### plugin new
+#### plugin new
 
 新建一个脚手架插件，可以通过本地设置内的可选模板选项下载对应的插件模板作为新插件
 
@@ -108,7 +105,7 @@ acli plugin [command]
 acli plugin new
 ```
 
-### plugin link
+#### plugin link
 
 创建一个从执行plugin link命令的文件夹链接到`a-cli`下的plugins/<plugin>文件夹的符号链接。
 
@@ -116,7 +113,7 @@ acli plugin new
 acli plugin link
 ```
 
-### plugin unlink
+#### plugin unlink
 
 移除一个从执行plugin unlink命令的文件夹链接到`a-cli`下的plugins/<plugin>文件夹的符号链接。
 
@@ -124,7 +121,7 @@ acli plugin link
 acli plugin unlink
 ```
 
-### plugin publish
+#### plugin publish
 
 将插件发布到npm。
 
@@ -132,7 +129,7 @@ acli plugin unlink
 acli plugin publish
 ```
 
-### plugin list
+#### plugin list
 
 获取 plugins/ 目录下的本地插件列表。
 
@@ -339,13 +336,13 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 2. 执行`acli plugin link`将该插件链接到 plugins/ 目录下
 3. 在目标项目内执行`acli init`来创建配置文件(a-cli-config.json)，并将其`name`属性设为对应的CLI插件名称
 4. 开发及调试
-5. 开发完成后可通过`acli plugin publish`将其发布到npm上
+5. (可选)开发完成后可通过`acli plugin publish`将其发布到npm上
 6. (可选)在本地CLI插件路径上执行`acli plugin unlink`将 plugins/ 内的链接移除
 7. (可选)在目标项目内执行`acli install`将已经发布到npm上的CLI插件安装为项目开发依赖
 
 ### 调用方式
 
-CLI插件是以AOP模式进行调用的，目前有2种被调用的方式：
+CLI插件目前有2种被调用的方式：
 
 * 通过`acli plugin link`命令将本地插件以symlink的方式链接到plugins/目录下的插件
 * 安装在项目内的 node_modules 目录下的插件 
@@ -380,23 +377,21 @@ module.exports = function (context, args) {
     enquirer,
   } = context.packages;
   
-  // 仅dev命令有该属性！
+  // 完整的cli配置(a-cli-config.json)对象
   const {
-    // 完整的cli配置(a-cli-config.json)对象
+    ...something,
   } = context.config;
   
-  // 仅publish命令有该属性！
+  // 有配置`预设选项`的命令可用
   const {
-    // 发布选项
     option: {
       // 所有选定的选项名称组成的数组
       keys, 
       // 最后一个(层级)选项的值
       value,
     },
-    // 发布配置
-    config,
-  } = context.publishOptions;
+    define: {},
+  } = context.preset;
 
   // enjoy your code...
 };
