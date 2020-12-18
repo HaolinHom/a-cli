@@ -3,7 +3,7 @@ const std = require('std-terminal-logger');
 const getExistPath = require('./getExistPath');
 const typeOf = require('./typeOf');
 
-function validateWuCliJson(aCliJson) {
+function validateACliJson(aCliJson) {
 	if (!aCliJson.pluginName || !aCliJson.pluginVersion) {
 		std.error('a-cli.json is a non-compliant file or missing the necessary fields');
 		return false;
@@ -20,7 +20,7 @@ async function getPluginConfig() {
 
 	const aCliJson = require(aCliJsonPath);
 	if (typeOf(aCliJson) === 'object') {
-		return validateWuCliJson(aCliJson) ? aCliJson : undefined;
+		return validateACliJson(aCliJson) ? aCliJson : undefined;
 	} else {
 		return std.error('a-cli.json is not a json object')
 	}
