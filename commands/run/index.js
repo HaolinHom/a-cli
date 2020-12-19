@@ -34,6 +34,14 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   const installDeps = !isDebugMode && debugInstallDeps;
   const preset = typeof options.preset === 'string' ? options.preset.replace(' ', ',') : '';
 
+  process.on('unhandledRejection', (error) => {
+    if (error) {
+      std.error(error);
+    } else {
+      std.orange.label('process exit')();
+    }
+  });
+
   if (runOnSubProcess) {
     const forkServerPath = path.resolve(__dirname, 'forkServer.js');
 
