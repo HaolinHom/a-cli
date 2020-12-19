@@ -54,14 +54,16 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
 
     let subProcess = fork(...forkArguments);
 
-    subProcess.on('exit', () => {
-      process.exit(0);
+    subProcess.on('exit', (code, signal) => {
+      if (code !== null || signal !== 'SIGKILL') {
+        process.exit(0);
+      }
     });
 
     fs.watchFile(configPath, () => {
-      std.yellow('Detected a-cli-config.json change, devServer restarting now.');
-      subProcess.kill();
+      subProcess.kill('SIGKILL');
       subProcess = fork(...forkArguments);
+      std.yellow('Detected a-cli-config.json change, devServer restarting now.');
     });
   } else {
     run(
