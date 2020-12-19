@@ -32,6 +32,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   }
 
   const installDeps = !isDebugMode && debugInstallDeps;
+  const preset = typeof options.preset === 'string' ? options.preset.replace(' ', ',') : '';
 
   if (runOnSubProcess) {
     const forkServerPath = path.resolve(__dirname, 'forkServer.js');
@@ -44,6 +45,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
         `debug=${isDebugMode}`,
 				`installDeps=${installDeps}`,
         `script=${script}`,
+        `preset=${preset}`
       ],
       { stdio: 'inherit' },
     ];
@@ -69,6 +71,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
       {
         installDeps,
 				script,
+        preset: preset,
       }
     );
   }

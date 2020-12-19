@@ -12,6 +12,7 @@ const { parseArgs } = require('a-cli-utils');
     {
       installDeps: options.installDeps,
       script: options.script,
+      preset: options.preset,
     }
   );
 })();
