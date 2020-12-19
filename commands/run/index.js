@@ -31,9 +31,6 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
     return;
   }
 
-  let preRunPath = path.resolve(__dirname, `../${script}/preRun.js`);
-  preRunPath = fs.existsSync(preRunPath) ? preRunPath : null;
-
   const installDeps = !isDebugMode && debugInstallDeps;
 
   if (runOnSubProcess) {
@@ -43,7 +40,6 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
       forkServerPath,
       [
         `tagPath=${commandJsPath}`,
-        `preRunPath=${preRunPath}`,
         `configPath=${configPath}`,
         `debug=${isDebugMode}`,
 				`installDeps=${installDeps}`,
