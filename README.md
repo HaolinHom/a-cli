@@ -186,8 +186,6 @@ Command line flags:
 | --debug | -d | debug mode([dev](#dev), [build](#build) and [publish](#publish) commands in this mode, dependencies are automatically installed) |
 | --preset [keys] | / | The default key value of the preset option(When `preset[command].options` has preset options, it can skip the pre-manual selection on the command line) |
 
-Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
-
 #### preset
 
 The `run command` can set related preset options in the configuration file (`a-cli-config.js`) 
