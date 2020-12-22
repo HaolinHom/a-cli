@@ -18,11 +18,11 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
       - [plugin publish](#plugin-publish)
       - [plugin list](#plugin-list)
     - [install命令](#install)
+    - [run命令](#run)
+      - [预设选项](#预设选项)
     - [dev命令](#dev)
     - [build命令](#build)
     - [publish命令](#publish)
-    - [run命令](#run)
-      - [预设选项](#预设选项)
   - [开发CLI插件](#开发CLI插件)
     - [开发流程](#开发流程)
     - [调用方式](#调用方式)
@@ -40,19 +40,22 @@ npm install a-cli-core -g
 
 ### init
 
-在项目内创建一个脚手架配置文件。除此之外的所有命令的执行都依赖于该配置文件。
+在项目内创建一个名称为`a-cli-config`的脚手架配置文件。默认为CommonJS，亦支持JSON格式。
+其他所有命令的执行都依赖于该配置文件。
 
 ```bash
 acli init
 ```
 
-该配置文件(`a-cli-config.json`)支持如下的这些选项:
+该配置文件默认有如下的这些属性:
 
-```json
-{
-  "name": "cli-plugin-name",
-  "preset": {}
-}
+```javascript
+// a-cli-config.js
+module.exports = {
+  name: "cli-plugin-name",
+  projectName: "project-name",
+  preset: {}
+};
 ```
 
 ### setting
@@ -161,54 +164,6 @@ acli install --dev
 acli install -d
 ```
 
-### dev
-
-> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
-
-开发项目。其运行是基于CLI插件中的`dev.js`文件，并在运行时由devServer启动。
-
-运行时会在项目内执行npm install，在debug模式时不执行。
-
-```bash
-acli dev
-
-acli dev --debug
-
-acli dev -d
-```
-
-### build
-
-> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
-
-构建项目代码。其运行是基于CLI插件中的`build.js`文件。
-
-运行时会在项目内执行npm install，在debug模式时不执行。
-
-```bash
-acli build
-
-acli build --debug
-
-acli build -d
-```
-
-### publish
-
-> 该命令是对[run](#run)命令的调用，并可在配置文件(`a-cli-config.json`)中设置相关[预设选项](#预设选项)(preset)并在运行时作为选项供选择。
-
-发布项目代码。其运行是基于CLI插件中的`publish.js`文件。
-
-运行时会在项目内执行npm install，在debug模式时不执行。
-
-```bash
-acli publish
-
-acli publish --debug
-
-acli publish -d
-```
-
 ### run
 
 运行自定义命令。CLI插件目录中任何可执行的JavaScript文件都可作为自定义命令来运行，其文件名会作为自定义命令的名称。
@@ -217,95 +172,93 @@ acli publish -d
 acli run [script]
 ```
 
-run命令提供了一个debug选项，但不会做特殊处理，只会将其传递到自定义命令的执行文件内。
+命令行参数：
+
+| 选项 | 简写 | 描述 |
+|----|----|----|
+| --debug | -d | debug模式([dev](#dev)、[build](#build)与[publish](#publish)命令在该模式下会自动安装依赖) |
+| --preset [keys] | / | 预设选项的默认key值(当`preset[command].options`内有设置预设选项时，可以在命令行执行时跳过前置的人工选择) |
 
 #### 预设选项
 
-run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选项(preset)并在运行时作为选项供选择。
+run命令可以在配置文件(`a-cli-config.js`)中设置相关的预设选项(preset)并在运行时作为选项供选择。
 
 所有通过run运行的命令(包括[dev](#dev), [build](#build), [publish](#publish))都可以通过配置预设选项来使用。
 
-```json
-// a-cli-config.json
-{
-  "preset": {
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
     // 可执行的命令文件名作为key值
-    "publish": {
-      "options": [],
-      "define": null
+    publish: {
+      options: [],
+      define: null
     }
   }
-}
+};
 ```
 
 * preset.options
 
 可以将多个参数（例如系统，环境等）设置为选项，这些参数在执行命令时可供选择，之后将所选结果作为参数传递到目标文件中。
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "options": [
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [
         {
-          "name": "Test",
-          "value": "Valid json value(Default null)"
+          name: "Test",
+          value: "Valid value(Default null)"
         },
         {
-          "name": "Pre-release",
-          "value": "Valid json value(Default null)"
+          name: "Pre-release",
+          value: "Valid value(Default null)"
         },
         {
-          "name": "Production",
-          "value": "Valid json value(Default null)"
+          name: "Production",
+          value: "Valid value(Default null)"
         }
-      ]    
+      ],
+      define: null
     }
   }
-}
+};
 ```
 
 支持多级嵌套选项配置:
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "options": [
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [
         {
-          "name": "foo-level-1",
-          "options": [
+          name: "foo-level-1",
+          options: [
             {
-              "name": "foo-level-1-1",
-              "options": [
+              name: "foo-level-1-1",
+              options: [
                 "you can set more options..."
               ]
             },
             {
-              "name": "foo-level-1-2",
-              "value": "Valid json value(Default null)"
+              name: "foo-level-1-2",
+              value: "Valid value(Default null)"
             }
           ]
         },
         {
-          "name": "bar-level-1",
-          "options": [
-            {
-              "name": "bar-level-1-1",
-              "value": "Valid json value(Default null)"
-            },
-            {
-              "name": "bar-level-1-2",
-              "value": "Valid json value(Default null)"
-            }
-          ]
+          name: "bar-level-1",
+          value: "Valid value(Default null)"
         }
-      ]
+      ],
+      define: null
     }
   }
-}
+};
 ```
 
 如果仅配置了一个选项，并且没有嵌套选项或只有一个子嵌套选项，则无需进行选择，它将被自动选择为所选选项。
@@ -314,17 +267,48 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 
 可以在define属性中设置需要用到的任何定义。
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "define": {
-        "remote": "git@github.com:a-cli/a-cli.git"
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [],
+      define: {
+        remote: "git@github.com:a-cli/a-cli.git"
       }    
     }
   }
-}
+};
+```
+
+### dev
+
+> 该命令是对[run](#run)命令的封装，其用法均与[run](#run)一致。
+
+开发项目。其运行是基于CLI插件中的`dev.js`文件，并在运行时由devServer启动。
+
+```bash
+acli dev
+```
+
+### build
+
+> 该命令是对[run](#run)命令的封装，其用法均与[run](#run)一致。
+
+构建项目代码。其运行是基于CLI插件中的`build.js`文件。
+
+```bash
+acli build
+```
+
+### publish
+
+>该命令是对[run](#run)命令的封装，其用法均与[run](#run)一致。
+
+发布项目代码。其运行是基于CLI插件中的`publish.js`文件。
+
+```bash
+acli publish
 ```
 
 
@@ -334,7 +318,7 @@ run命令可以在配置文件(`a-cli-config.json`)中设置相关的预设选�
 
 1. 通过`acli plugin new`创建一个新的CLI插件
 2. 执行`acli plugin link`将该插件链接到 plugins/ 目录下
-3. 在目标项目内执行`acli init`来创建配置文件(a-cli-config.json)，并将其`name`属性设为对应的CLI插件名称
+3. 在目标项目内执行`acli init`来创建配置文件(a-cli-config.js)，并将其`name`属性设为对应的CLI插件名称
 4. 开发及调试
 5. (可选)开发完成后可通过`acli plugin publish`将其发布到npm上
 6. (可选)在本地CLI插件路径上执行`acli plugin unlink`将 plugins/ 内的链接移除
@@ -377,9 +361,9 @@ module.exports = function (context, args) {
     enquirer,
   } = context.packages;
   
-  // 完整的cli配置(a-cli-config.json)对象
+  // 完整的cli配置(a-cli-config.js)对象
   const {
-    ...something,
+    ...something
   } = context.config;
   
   // 有配置`预设选项`的命令可用
