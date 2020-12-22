@@ -33,13 +33,18 @@ module.exports = async function () {
 
   let config = requireByType(configPath, 'object') || Object.assign({}, DEFAULT_PROJECT_CONFIG);
 
+  const folderName = path.parse(currentPath).name;
+
   const { pluginName } = await prompt({
     name: 'pluginName',
     type: 'input',
     message: 'Please type the plugin name: ',
-    initial: `${path.parse(currentPath).name}-cli-plugin`,
+    initial: `${folderName}-cli-plugin`,
   });
   config.name = pluginName;
+
+  const packageJson = requireByType(path.join(currentPath, CONFIG.PACKAGE_JSON), 'object') || {};
+  config.projectName = packageJson.name || folderName;
 
   let fileData = JSON.stringify(config, null, 2);
   if (path.extname(configPath) === '.js') {

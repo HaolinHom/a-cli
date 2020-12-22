@@ -8,4 +8,5 @@ module.exports = {
     name: 'a-cli-template',
     repo: 'a-cli/a-cli-template',
   },
+  PACKAGE_JSON: 'package.json',
 };
