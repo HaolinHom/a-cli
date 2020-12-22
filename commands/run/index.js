@@ -7,6 +7,9 @@ const run = require('./run');
 const getProjectConfig = require('../../utils/getProjectConfig');
 const getPluginPath = require('../../utils/getPluginPath');
 const getExistPath = require('../../utils/getExistPath');
+const {
+  getPriorityPath,
+} = require('../../utils/common');
 
 module.exports = async function (script, options, debugInstallDeps = false, runOnSubProcess = false) {
   if (!script) {
@@ -14,9 +17,13 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   }
 
   const isDebugMode = options.debug === true;
-  const configPath = path.resolve(process.cwd(), CONFIG.PROJECT_CONFIG);
+  const currentPath = process.cwd();
+  const configPath = getPriorityPath([
+    path.join(currentPath, CONFIG.PROJECT_CONFIG),
+    path.join(currentPath, CONFIG.PROJECT_CONFIG_JSON),
+  ]);
 
-  const config = await getProjectConfig();
+  const config = await getProjectConfig(configPath);
   if (!config) {
     return;
   }
