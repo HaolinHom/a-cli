@@ -1,30 +1,39 @@
 const path = require('path');
+const fs = require('fs');
 const std = require('std-terminal-logger');
-const getExistPath = require('./getExistPath');
-const typeOf = require('./typeOf');
+const {
+  getPriorityPath,
+  requireByType,
+} = require('./common');
 const CONFIG = require('../dict/common/CONFIG');
 
 function validateConfig(cfg) {
-  if (!cfg.name) {
-    std.error('a-cli-config.json is a non-compliant file or missing the necessary fields');
-    return false;
-  }
-  return true;
+  return !!cfg.name;
 }
 
-async function getProjectConfig(cfgPath) {
+module.exports = function (cfgPath) {
   const currentPath = process.cwd();
-  const projectCfgPath = await getExistPath(cfgPath || path.resolve(currentPath, CONFIG.PROJECT_CONFIG));
-  if (!projectCfgPath) {
-    return std.error(`Can not find ${CONFIG.PROJECT_CONFIG} in ${currentPath}`);
+  let projectConfigPath = getPriorityPath([
+    path.join(currentPath, CONFIG.PROJECT_CONFIG),
+    path.join(currentPath, CONFIG.PROJECT_CONFIG_JSON),
+  ]);
+  if (cfgPath && !fs.existsSync(cfgPath)) {
+    projectConfigPath = undefined;
   }
 
-  const projectCfg = require(projectCfgPath);
-  if (typeOf(projectCfg) === 'object') {
-    return validateConfig(projectCfg) ? projectCfg : undefined;
-  } else {
-    return std.error(`${CONFIG.PROJECT_CONFIG} is not a json object`);
+  if (!projectConfigPath) {
+    return std.error(`Can not find ${CONFIG.PROJECT_CONFIG} or ${CONFIG.PROJECT_CONFIG_JSON} in ${currentPath}`);
   }
-}
 
-module.exports = getProjectConfig;
+  const projectConfig = requireByType(projectConfigPath, 'object');
+
+  if (!projectConfig) {
+    return std.error(`${CONFIG.PROJECT_CONFIG} is not a object`);
+  }
+
+  if (!validateConfig(projectConfig)) {
+    return std.error(`${projectConfigPath} is a non-compliant file or missing the necessary fields.`);
+  }
+
+  return projectConfig;
+};
