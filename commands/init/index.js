@@ -41,11 +41,14 @@ module.exports = async function () {
   });
   config.name = pluginName;
 
-  let fileContent = JSON.stringify(config, null, 2);
+  let fileData = JSON.stringify(config, null, 2);
   if (path.extname(configPath) === '.js') {
-    fileContent = `module.exports = ${fileContent}`;
+    fileData = fileData.replace(/"(\w*)":/g, function(match) {
+      return match.replace(/"/g, '');
+    });
+    fileData = `module.exports = ${fileData};`;
   }
 
-  fs.writeFileSync(configPath, fileContent, { encoding: 'utf8' });
+  fs.writeFileSync(configPath, fileData, { encoding: 'utf8' });
   std.success('Finish initial project config file.');
 };
