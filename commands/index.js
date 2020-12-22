@@ -15,15 +15,6 @@ module.exports = [
 		action: init,
 	},
 	{
-		command: 'dev',
-		options: [
-			['-d, --debug', 'dev command with [debug] mode'],
-			['--preset [keys]', 'command preset key list'],
-		],
-		description: DESCRIPTION.DEV,
-		action: dev,
-	},
-	{
 		command: 'run [script]',
 		options: [
 			['-d, --debug', 'run customize command  with [debug] mode'],
@@ -31,6 +22,15 @@ module.exports = [
 		],
 		description: DESCRIPTION.RUN,
 		action: run,
+	},
+	{
+		command: 'dev',
+		options: [
+			['-d, --debug', 'dev command with [debug] mode'],
+			['--preset [keys]', 'command preset key list'],
+		],
+		description: DESCRIPTION.DEV,
+		action: dev,
 	},
 	{
 		command: 'build',

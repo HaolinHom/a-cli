@@ -2,8 +2,8 @@ const chalk = require('chalk');
 
 module.exports = {
   INIT: chalk.keyword('crimson')('initial project with a-cli-config'),
-  DEV: chalk.keyword('darkviolet')('develop project with a-cli-config'),
-  RUN: chalk.keyword('royalblue')('run customize command'),
+	RUN: chalk.keyword('darkviolet')('run customize command'),
+  DEV: chalk.keyword('royalblue')('develop project with a-cli-config'),
   BUILD: chalk.keyword('deepskyblue')('build project with a-cli-config'),
   PUBLISH: chalk.keyword('mediumseagreen')('publish project with a-cli-config'),
   SETTING: chalk.keyword('greenyellow')('open the cli setting file'),
