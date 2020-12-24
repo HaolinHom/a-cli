@@ -1,5 +1,6 @@
 module.exports = {
   name: "",
+	projectName: "",
   preset: {
 		dev: {
 			options: [],

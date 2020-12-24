@@ -19,11 +19,11 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
       - [plugin publish](#plugin-publish)
       - [plugin list](#plugin-list)
     - [install command](#install)
+    - [run command](#run)
+      - [preset](#preset)
     - [dev command](#dev)
     - [build command](#build)
     - [publish command](#publish)
-    - [run command](#run)
-      - [preset](#preset)
   - [Develop CLI plugin](#Develop-CLI-plugin)
     - [Development Process](#Development-Process)
     - [Plugin calls the way](#Plugin-calls-the-way)
@@ -41,20 +41,23 @@ npm install a-cli-core -g
 
 ### init
 
-The init command is used to create a CLI configuration file in the project.
+Create a CLI configuration file named `a-cli-config` in the project. 
+The default is CommonJS format, which also supports JSON format.
 The execution of all other commands depends on the configuration file.
 
 ```bash
 acli init
 ```
 
-The configuration file (`a-cli-config.json`) support the options listed below:
+The configuration file has the following attributes by default:
 
-```json
-{
-  "name": "cli-plugin-name",
-  "preset": {}
-}
+```javascript
+// a-cli-config.js
+module.exports = {
+  name: "cli-plugin-name",
+  projectName: "project-name",
+  preset: {}
+};
 ```
 
 ### setting
@@ -167,61 +170,6 @@ acli install --dev
 acli install -d
 ```
 
-### dev
-
-> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
-in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
-
-Development project. Its operation is based on the `dev.js` file in the CLI plugin and started by a dev server at runtime.
-
-During runtime, npm install will be executed in the project, bug not executed in debug mode.
-
-```bash
-acli dev
-
-acli dev --debug
-
-acli dev -d
-```
-
-### build
-
-> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
-in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
-
-Building project code. Its operation is based on the `build.js` file in the CLI plugin.
-
-During runtime, npm install will be executed in the project, bug not executed in debug mode.
-
-```bash
-acli build
-```
-
-Provides a debug option that can skip npm install:
-
-```bash
-acli build --debug
-
-acli build -d
-```
-
-### publish
-
-> This command is a call to the [run](#run) command, and can set related [preset](#preset) options 
-in the configuration file (`a-cli-config.json`) and provide options for choose during runtime.
-
-Publish the project code. Its operation is based on the `publish.js` file in the CLI plugin.
-
-During runtime, npm install will be executed in the project, bug not executed in debug mode.
-
-```bash
-acli publish
-
-acli publish --debug
-
-acli publish -d
-```
-
 ### run
 
 Run custom commands. Any executable JavaScript file in the CLI plugin directory can be run as a custom command, 
@@ -231,27 +179,32 @@ and its file name will be used as the name of the custom command.
 acli run [script]
 ```
 
-Provides a debug option, but it will not do special processing and will only pass it to the execution file of the custom command.
+Command line flags:
+
+| options | short | description |
+|----|----|----|
+| --debug | -d | debug mode([dev](#dev), [build](#build) and [publish](#publish) commands in this mode, dependencies are automatically installed) |
+| --preset [keys] | / | The default key value of the preset option(When `preset[command].options` has preset options, it can skip the pre-manual selection on the command line) |
 
 #### preset
 
-The `run command` can set related preset options in the configuration file (`a-cli-config.json`) 
+The `run command` can set related preset options in the configuration file (`a-cli-config.js`) 
 and provide options for choose during runtime.
 
 All commands(include [dev](#dev), [build](#build), [publish](#publish)) run through `run command` can be used 
 by configuring preset options.
 
-```json
-// a-cli-config.json
-{
-  "preset": {
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
     // The executable command's file name is used as the key value
-    "publish": {          
-      "options": [],
-      "define": null
+    publish: {
+      options: [],
+      define: null
     }
   }
-}
+};
 ```
 
 * preset.options
@@ -260,70 +213,63 @@ Multiple parameters (such as system, environment, etc.) can be configured as opt
 which are available for selection when executing the run command, 
 and then the selected results are passed into the target file as parameters.
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "options": [
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [
         {
-          "name": "Test",
-          "value": "Valid json value(Default null)"
+          name: "Test",
+          value: "Valid value(Default null)"
         },
         {
-          "name": "Pre-release",
-          "value": "Valid json value(Default null)"
+          name: "Pre-release",
+          value: "Valid value(Default null)"
         },
         {
-          "name": "Production",
-          "value": "Valid json value(Default null)"
+          name: "Production",
+          value: "Valid value(Default null)"
         }
-      ]    
+      ],
+      define: null   
     }
   }
-}
+};
 ```
 
 Support multi-level nested option configuration:
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "options": [
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [
         {
-          "name": "foo-level-1",
-          "options": [
+          name: "foo-level-1",
+          options: [
             {
-              "name": "foo-level-1-1",
-              "options": [
+              name: "foo-level-1-1",
+              options: [
                 "you can set more options..."
               ]
             },
             {
-              "name": "foo-level-1-2",
-              "value": "Valid json value(Default null)"
+              name: "foo-level-1-2",
+              value: "Valid value(Default null)"
             }
           ]
         },
         {
-          "name": "bar-level-1",
-          "options": [
-            {
-              "name": "bar-level-1-1",
-              "value": "Valid json value(Default null)"
-            },
-            {
-              "name": "bar-level-1-2",
-              "value": "Valid json value(Default null)"
-            }
-          ]
+          name: "bar-level-1",
+          value: "Valid value(Default null)"
         }
-      ]
+      ],
+      define: null
     }
   }
-}
+};
 ```
 
 If only one option is configured and there is no nested option or only one sub-nested option, 
@@ -334,19 +280,52 @@ and it will be automatically selected as the selected option.
 
 Any configuration that needs to be used can be set in the define attribute.
 
-```json
-// a-cli-config.json
-{
-  "preset": {
-    "publish": {
-      "define": {
-        "remote": "git@github.com:a-cli/a-cli.git"
+```javascript
+// a-cli-config.js
+module.exports = {
+  preset: {
+    publish: {
+      options: [],
+      define: {
+        remote: "git@github.com:a-cli/a-cli.git"
       }    
     }
   }
-}
+};
 ```
 
+### dev
+
+> This command is an encapsulation of the [run](#run) command, 
+and its usage is consistent with the [run](#run) command.
+
+Development project. Its operation is based on the `dev.js` file in the CLI plugin and started by a dev server at runtime.
+
+```bash
+acli dev
+```
+
+### build
+
+> This command is an encapsulation of the [run](#run) command,
+and its usage is consistent with the [run](#run) command.
+
+Building project code. Its operation is based on the `build.js` file in the CLI plugin.
+
+```bash
+acli build
+```
+
+### publish
+
+> This command is an encapsulation of the [run](#run) command,
+and its usage is consistent with the [run](#run) command.
+
+Publish the project code. Its operation is based on the `publish.js` file in the CLI plugin.
+
+```bash
+acli publish
+```
 
 ## Develop CLI plugin
 
@@ -354,7 +333,7 @@ Any configuration that needs to be used can be set in the define attribute.
 
 1. Create a new CLI plugin through executing `acli plugin new`
 2. Execute `acli plugin link` to link the plugin to the plugins/ directory by the symlink
-3. Execute `acli init` in the target project to create a configuration file (a-cli-config.json), 
+3. Execute `acli init` in the target project to create a configuration file (a-cli-config.js), 
 and set its `name` property to the corresponding CLI plug-in name
 4. Development and debugging
 5. (Optional) After the development is completed, it can be published to npm through executing `acli plugin publish`
@@ -400,9 +379,9 @@ module.exports = function (context, args) {
     enquirer,
   } = context.packages;
   
-  // Complete cli config object (a-cli-config.json) 
+  // Complete cli config object (a-cli-config.js) 
   const {
-    ...something,
+    ...something
   } = context.config;
   
   // Commands for configuring `preset options` are available

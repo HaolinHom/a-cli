@@ -4,6 +4,34 @@ const typeOf = require('../../utils/typeOf');
 const getContext = require('../../utils/getContext');
 const packageInstall = require('../../utils/packageInstall');
 
+function getPresetOption(options, presetKeys) {
+  let option = {
+    keys: [],
+    value: null,
+  };
+
+  if (!Array.isArray(options) || options.length === 0) {
+    return option;
+  }
+
+  let tag;
+  let i;
+  for (i = 0; i < presetKeys.length; i++) {
+    tag = options.find(opt => opt.name === presetKeys[i]);
+    if (tag) {
+      option.keys.push(tag.name);
+      options = tag.options || [];
+      if (options.length === 0) {
+        option.value = tag.value || null;
+      }
+    } else {
+      break;
+    }
+  }
+
+  return option;
+}
+
 async function presetOptionPrompt(options, target) {
   if (!Array.isArray(options) || options.length === 0) {
     return target;
@@ -45,7 +73,7 @@ async function presetOptionPrompt(options, target) {
   return target;
 }
 
-async function getPreset(options, define) {
+async function getPreset(options, define, presetKeys) {
   let preset = {
     option: {
       keys: [],
@@ -54,7 +82,10 @@ async function getPreset(options, define) {
     define: define || null,
   };
 
-  preset.option = await presetOptionPrompt(options, preset.option);
+  preset.option = Array.isArray(presetKeys) && presetKeys.length > 0 ?
+    getPresetOption(options, presetKeys)
+    :
+    await presetOptionPrompt(options, preset.option);
 
   return { preset };
 }
@@ -77,7 +108,8 @@ module.exports = async function (tagJsPath, cfgPath, args, options = defaultOpts
 
     if (options.script && config.preset && config.preset[options.script]) {
     	const scriptPreset = config.preset[options.script];
-      const ctxExtend = await getPreset(scriptPreset.options, scriptPreset.define);
+    	const presetKeys = options.preset.length > 0 ? options.preset.split(',') : [];
+      const ctxExtend = await getPreset(scriptPreset.options, scriptPreset.define, presetKeys);
       if (typeOf(ctxExtend) === 'object') {
         ctx = {
           ...ctxExtend,

@@ -7,6 +7,9 @@ const run = require('./run');
 const getProjectConfig = require('../../utils/getProjectConfig');
 const getPluginPath = require('../../utils/getPluginPath');
 const getExistPath = require('../../utils/getExistPath');
+const {
+  getPriorityPath,
+} = require('../../utils/common');
 
 module.exports = async function (script, options, debugInstallDeps = false, runOnSubProcess = false) {
   if (!script) {
@@ -14,9 +17,13 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   }
 
   const isDebugMode = options.debug === true;
-  const configPath = path.resolve(process.cwd(), CONFIG.PROJECT_CONFIG);
+  const currentPath = process.cwd();
+  const configPath = getPriorityPath([
+    path.join(currentPath, CONFIG.PROJECT_CONFIG),
+    path.join(currentPath, CONFIG.PROJECT_CONFIG_JSON),
+  ]);
 
-  const config = await getProjectConfig();
+  const config = await getProjectConfig(configPath);
   if (!config) {
     return;
   }
@@ -31,10 +38,16 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
     return;
   }
 
-  let preRunPath = path.resolve(__dirname, `../${script}/preRun.js`);
-  preRunPath = fs.existsSync(preRunPath) ? preRunPath : null;
-
   const installDeps = !isDebugMode && debugInstallDeps;
+  const preset = typeof options.preset === 'string' ? options.preset.replace(' ', ',') : '';
+
+  process.on('unhandledRejection', (error) => {
+    if (error) {
+      std.error(error);
+    } else {
+      std.orange.label('process exit')();
+    }
+  });
 
   if (runOnSubProcess) {
     const forkServerPath = path.resolve(__dirname, 'forkServer.js');
@@ -43,25 +56,27 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
       forkServerPath,
       [
         `tagPath=${commandJsPath}`,
-        `preRunPath=${preRunPath}`,
         `configPath=${configPath}`,
         `debug=${isDebugMode}`,
 				`installDeps=${installDeps}`,
         `script=${script}`,
+        `preset=${preset}`
       ],
       { stdio: 'inherit' },
     ];
 
     let subProcess = fork(...forkArguments);
 
-    subProcess.on('exit', () => {
-      process.exit(0);
+    subProcess.on('exit', (code, signal) => {
+      if (code !== null || signal !== 'SIGKILL') {
+        process.exit(0);
+      }
     });
 
     fs.watchFile(configPath, () => {
-      std.yellow('Detected a-cli-config.json change, devServer restarting now.');
-      subProcess.kill();
+      subProcess.kill('SIGKILL');
       subProcess = fork(...forkArguments);
+      std.yellow('Detected a-cli-config.json change, devServer restarting now.');
     });
   } else {
     run(
@@ -71,6 +86,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
       {
         installDeps,
 				script,
+        preset: preset,
       }
     );
   }
