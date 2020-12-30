@@ -2,8 +2,8 @@ const run = require('./run');
 const { parseArgs } = require('a-cli-utils');
 
 (async function () {
-  const args = process.argv.slice(2);
-  const options = parseArgs(args);
+  const args = process.argv.slice(8);
+  const options = parseArgs(process.argv);
 
   run(
     options.tagPath,

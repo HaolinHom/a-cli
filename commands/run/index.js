@@ -60,7 +60,8 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
         `debug=${isDebugMode}`,
 				`installDeps=${installDeps}`,
         `script=${script}`,
-        `preset=${preset}`
+        `preset=${preset}`,
+        ...process.argv.slice(4),
       ],
       { stdio: 'inherit' },
     ];
