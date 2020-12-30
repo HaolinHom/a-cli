@@ -1,6 +1,6 @@
 {
   "name": "a-cli-core",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "a-cli is a front-end engineering development tool",
   "main": "cli.js",
   "bin": {
@@ -28,11 +28,11 @@
   "homepage": "https://github.com/a-cli/a-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
-    "commander": "^6.1.0",
+    "commander": "^6.1.1",
     "download-git-repo": "^3.0.2",
     "enquirer": "^2.3.6",
     "open": "^7.2.1",
-    "ora": "^5.1.0",
+    "ora": "^5.2.0",
     "std-terminal-logger": "^1.0.0",
     "a-cli-utils": "0.3.1"
   }
