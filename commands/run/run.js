@@ -32,7 +32,7 @@ function getPresetOption(options, presetKeys) {
   return option;
 }
 
-async function presetOptionPrompt(options, target) {
+async function presetOptionPrompt({ options, message }, target) {
   if (!Array.isArray(options) || options.length === 0) {
     return target;
   }
@@ -57,7 +57,7 @@ async function presetOptionPrompt(options, target) {
 		const result = await prompt({
 			name: 'key',
 			type: 'select',
-			message: 'Please choice preset option for project:',
+			message: message || 'Please choice preset option for project:',
 			choices,
 		});
 		key = result.key;
@@ -67,13 +67,14 @@ async function presetOptionPrompt(options, target) {
   const tagOption = options.find(item => item.name === key || item === key);
   if (typeOf(tagOption) === 'object') {
     target.value = tagOption.value || target.value || null;
-    return await presetOptionPrompt(tagOption.options, target);
+    return await presetOptionPrompt(tagOption, target);
   }
 
   return target;
 }
 
-async function getPreset(options, define, presetKeys) {
+async function getPreset(scriptPreset, presetKeys) {
+	const { options, define } = scriptPreset;
   let preset = {
     option: {
       keys: [],
@@ -85,7 +86,7 @@ async function getPreset(options, define, presetKeys) {
   preset.option = Array.isArray(presetKeys) && presetKeys.length > 0 ?
     getPresetOption(options, presetKeys)
     :
-    await presetOptionPrompt(options, preset.option);
+    await presetOptionPrompt(scriptPreset, preset.option);
 
   return { preset };
 }
@@ -109,7 +110,7 @@ module.exports = async function (tagJsPath, cfgPath, args, options = defaultOpts
     if (options.script && config.preset && config.preset[options.script]) {
     	const scriptPreset = config.preset[options.script];
     	const presetKeys = options.preset.length > 0 ? options.preset.split(',') : [];
-      const ctxExtend = await getPreset(scriptPreset.options, scriptPreset.define, presetKeys);
+      const ctxExtend = await getPreset(scriptPreset, presetKeys);
       if (typeOf(ctxExtend) === 'object') {
         ctx = {
           ...ctxExtend,
