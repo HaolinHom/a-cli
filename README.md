@@ -201,13 +201,14 @@ module.exports = {
     // The executable command's file name is used as the key value
     publish: {
       options: [],
+			message: null,
       define: null
     }
   }
 };
 ```
 
-* preset.options
+* preset.options {array}
 
 Multiple parameters (such as system, environment, etc.) can be configured as options, 
 which are available for selection when executing the run command, 
@@ -276,7 +277,13 @@ If only one option is configured and there is no nested option or only one sub-n
 there is no need to make a selection, 
 and it will be automatically selected as the selected option.
 
-* preset.define
+* preset.message {string}
+
+When there is the `message` attribute at the same level as the `options` attribute, 
+the value of `message` will be used as the prompt when the user selects the preset options.
+If it is not set, the default is `Please choice preset option for project:`.
+
+* preset.define {object}
 
 Any configuration that needs to be used can be set in the define attribute.
 

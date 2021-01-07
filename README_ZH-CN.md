@@ -192,13 +192,14 @@ module.exports = {
     // 可执行的命令文件名作为key值
     publish: {
       options: [],
+			message: null,
       define: null
     }
   }
 };
 ```
 
-* preset.options
+* preset.options {array}
 
 可以将多个参数（例如系统，环境等）设置为选项，这些参数在执行命令时可供选择，之后将所选结果作为参数传递到目标文件中。
 
@@ -263,7 +264,12 @@ module.exports = {
 
 如果仅配置了一个选项，并且没有嵌套选项或只有一个子嵌套选项，则无需进行选择，它将被自动选择为所选选项。
 
-* preset.define
+* preset.message {string}
+
+当与`options`属性存在同级的`message`属性时，会在用户选择预设选项的时候，将`message`的值作为提示语。
+未设置时默认为`Please choice preset option for project:`。
+
+* preset.define {object}
 
 可以在define属性中设置需要用到的任何定义。
 
