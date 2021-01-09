@@ -201,7 +201,7 @@ module.exports = {
     // The executable command's file name is used as the key value
     publish: {
       options: [],
-			message: null,
+      message: null,
       define: null
     }
   }

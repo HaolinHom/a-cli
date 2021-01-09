@@ -192,7 +192,7 @@ module.exports = {
     // 可执行的命令文件名作为key值
     publish: {
       options: [],
-			message: null,
+      message: null,
       define: null
     }
   }
