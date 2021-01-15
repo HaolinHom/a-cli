@@ -9,4 +9,6 @@ module.exports = {
     repo: 'a-cli/a-cli-template',
   },
   PACKAGE_JSON: 'package.json',
+  DEFAULT_SETTING: 'setting.js',
+  DEFAULT_SETTING_JSON: 'setting.json',
 };
