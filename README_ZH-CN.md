@@ -60,36 +60,26 @@ module.exports = {
 
 ### setting
 
-`a-cli`有一个本地的配置文件，可以手动打开该文件(./local/setting.json)或
-通过setting命令快速打开文件后进行修改。
+`a-cli`会生成一个本地的配置文件(local/setting.js)，可以通过setting命令快速打开文件(如果不存在会自动创建)后进行修改。
 
 ```bash
 acli setting
 ```
 
-setting.json:
-
-```
-{
+```javascript
+// setting.js:
+module.exports = {
   // 将自定义模板添加到此数组
-  "templates": [
+  templates: [
     {
       // 模板名称
-      "name": "a-cli-template",
+      name: "a-cli-template",
       // 模板库
       // 可访问 https://www.npmjs.com/package/download-git-repo 了解更多关于repo属性的信息
-      "repo": "a-cli/a-cli-template"
+      repo: "a-cli/a-cli-template"
     }
   ]
-}
-```
-
-setting命令还提供了一个用于显示与setting.json有关的帮助内容的选项。
-
-```bash
-acli setting --help
-
-acli setting -h
+};
 ```
 
 ### plugin

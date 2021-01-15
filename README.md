@@ -62,36 +62,27 @@ module.exports = {
 
 ### setting
 
-`a-cli` has a local configuration file, 
-you can open the file manually (./local/setting.json) or quickly open the file through the setting command to modify it.
+`a-cli` will generate a local configuration file (local/setting.js),
+You can quickly open the file through the setting command (it will be created automatically if it does not exist) and then modify it.
 
 ```bash
 acli setting
 ```
 
-setting.json:
-
-```
-{
+```javascript
+// setting.js:
+module.exports = {
   // Add custom templates to this array
-  "templates": [
+  templates: [
     {
       // template name
-      "name": "a-cli-template",
+      name: "a-cli-template",
       // template repository
       // To learn more about repo value, visit: https://www.npmjs.com/package/download-git-repo
-      "repo": "a-cli/a-cli-template"
+      repo: "a-cli/a-cli-template"
     }
   ]
-}
-```
-
-The setting command also provides an option to display help content related to setting.json.
-
-```bash
-acli setting --help
-
-acli setting -h
+};
 ```
 
 ### plugin
