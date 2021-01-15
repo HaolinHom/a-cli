@@ -15,5 +15,6 @@ yarn-error.log*
 # Dependencies
 /node_modules
 
-# a-cli plugins
+# a-cli
 /plugins
+/local
