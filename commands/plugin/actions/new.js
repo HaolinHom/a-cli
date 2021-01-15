@@ -5,9 +5,9 @@ const { prompt } = require('enquirer');
 const ora = require('ora');
 const download = require('download-git-repo');
 const CONFIG = require('../../../dict/common/CONFIG');
-const getExistPath = require('../../../utils/getExistPath');
 const typeOf = require('../../../utils/typeOf');
 const DEFAULT_PLUGIN_CONFIG = require('../../../dict/common/DEFAULT_PLUGIN_CONFIG');
+const settingUtils = require('../../setting/utils');
 
 function templateFilter(item) {
   return (
@@ -18,23 +18,21 @@ function templateFilter(item) {
 }
 
 async function getTemplate(defaultTemplate = CONFIG.DEFAULT_TEMPLATE) {
-  const settingPath = await getExistPath(path.resolve(__dirname, '../../../local/setting.json'));
-  if (settingPath) {
-    const setting = require(settingPath);
-    if (typeOf(setting) === 'object' && Array.isArray(setting.templates)) {
-      let _templates = setting.templates.filter(templateFilter);
-      const len = _templates.length;
-      if (len > 1) {
-        const { templateName } = await prompt({
-          name: 'templateName',
-          type: 'select',
-          message: 'Please select the cli plugin template that you want: ',
-          choices: _templates.map(item => item.name),
-        });
-        return _templates.find(item => item.name === templateName);
-      } else if (len === 1) {
-        return _templates[0];
-      }
+  const setting = settingUtils.getSetting();
+
+  if (typeOf(setting) === 'object' && Array.isArray(setting.templates)) {
+    let _templates = setting.templates.filter(templateFilter);
+    const len = _templates.length;
+    if (len > 1) {
+      const { templateName } = await prompt({
+        name: 'templateName',
+        type: 'select',
+        message: 'Please select the cli plugin template that you want: ',
+        choices: _templates.map(item => item.name),
+      });
+      return _templates.find(item => item.name === templateName);
+    } else if (len === 1) {
+      return _templates[0];
     }
   }
 

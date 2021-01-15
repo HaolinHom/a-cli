@@ -1,11 +1,11 @@
 const path = require('path');
-const fs = require('fs');
 const std = require('std-terminal-logger');
 const { prompt } = require('enquirer');
 const {
   getPriorityPath,
   requireByType,
 } = require('../../utils/common');
+const { objectGenerateCjsFile } = require('../../utils/cjsFile');
 const DEFAULT_PROJECT_CONFIG = require('../../dict/common/DEFAULT_PROJECT_CONFIG');
 const CONFIG = require('../../dict/common/CONFIG');
 
@@ -46,14 +46,7 @@ module.exports = async function () {
   const packageJson = requireByType(path.join(currentPath, CONFIG.PACKAGE_JSON), 'object') || {};
   config.projectName = packageJson.name || folderName;
 
-  let fileData = JSON.stringify(config, null, 2);
-  if (path.extname(configPath) === '.js') {
-    fileData = fileData.replace(/"(\w*)":/g, function(match) {
-      return match.replace(/"/g, '');
-    });
-    fileData = `module.exports = ${fileData};`;
-  }
+  objectGenerateCjsFile(config, configPath);
 
-  fs.writeFileSync(configPath, fileData, { encoding: 'utf8' });
   std.success('Finish initial project config file.');
 };

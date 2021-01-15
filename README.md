@@ -62,36 +62,27 @@ module.exports = {
 
 ### setting
 
-`a-cli` has a local configuration file, 
-you can open the file manually (./local/setting.json) or quickly open the file through the setting command to modify it.
+`a-cli` will generate a local configuration file (local/setting.js),
+You can quickly open the file through the setting command (it will be created automatically if it does not exist) and then modify it.
 
 ```bash
 acli setting
 ```
 
-setting.json:
-
-```
-{
+```javascript
+// setting.js:
+module.exports = {
   // Add custom templates to this array
-  "templates": [
+  templates: [
     {
       // template name
-      "name": "a-cli-template",
+      name: "a-cli-template",
       // template repository
       // To learn more about repo value, visit: https://www.npmjs.com/package/download-git-repo
-      "repo": "a-cli/a-cli-template"
+      repo: "a-cli/a-cli-template"
     }
   ]
-}
-```
-
-The setting command also provides an option to display help content related to setting.json.
-
-```bash
-acli setting --help
-
-acli setting -h
+};
 ```
 
 ### plugin
@@ -201,13 +192,14 @@ module.exports = {
     // The executable command's file name is used as the key value
     publish: {
       options: [],
+      message: null,
       define: null
     }
   }
 };
 ```
 
-* preset.options
+* preset.options {array}
 
 Multiple parameters (such as system, environment, etc.) can be configured as options, 
 which are available for selection when executing the run command, 
@@ -276,7 +268,13 @@ If only one option is configured and there is no nested option or only one sub-n
 there is no need to make a selection, 
 and it will be automatically selected as the selected option.
 
-* preset.define
+* preset.message {string}
+
+When there is the `message` attribute at the same level as the `options` attribute, 
+the value of `message` will be used as the prompt when the user selects the preset options.
+If it is not set, the default is `Please choice preset option for project:`.
+
+* preset.define {object}
 
 Any configuration that needs to be used can be set in the define attribute.
 
