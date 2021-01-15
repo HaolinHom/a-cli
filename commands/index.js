@@ -52,7 +52,6 @@ module.exports = [
 	},
 	{
 		command: 'setting',
-		option: ['-h, --help', 'print setting help information'],
 		description: DESCRIPTION.SETTING,
 		action: setting,
 	},
