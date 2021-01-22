@@ -17,8 +17,6 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   }
 
   const isDebugMode = options.debug === true;
-  const args = process.argv.slice(isDebugMode ? 4 : 3);
-
   const currentPath = process.cwd();
   const configPath = getPriorityPath([
     path.join(currentPath, CONFIG.PROJECT_CONFIG),
@@ -63,7 +61,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
 				`installDeps=${installDeps}`,
         `script=${script}`,
         `preset=${preset}`,
-        ...args,
+        ...process.argv.slice(4),
       ],
       { stdio: 'inherit' },
     ];
@@ -85,7 +83,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
     run(
       commandJsPath,
       configPath,
-      args,
+      process.argv.slice(4),
       {
         installDeps,
 				script,
