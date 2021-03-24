@@ -3,7 +3,7 @@ const path = require('path');
 const {
   pathExtra,
   fsExtra,
-} = require('a-cli-utils');
+} = require('hey-yoo-utils');
 const { requireByType } = require('./common');
 
 function objectGenerateCjsFile (object, filePath) {
