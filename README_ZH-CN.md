@@ -28,13 +28,11 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
     - [调用方式](#调用方式)
     - [CLI函数及参数](#CLI函数及参数)
 
-
 ## 安装
 
 ```bash
 npm install a-cli-core -g
 ```
-
 
 ## 命令的使用
 
@@ -306,7 +304,6 @@ acli build
 ```bash
 acli publish
 ```
-
 
 ## 开发CLI插件
 

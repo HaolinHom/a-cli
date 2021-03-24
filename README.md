@@ -29,13 +29,11 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
     - [Plugin calls the way](#Plugin-calls-the-way)
     - [CLI function and params](#CLI-function-and-params)
 
-
 ## Installation
 
 ```bash
 npm install a-cli-core -g
 ```
-
 
 ## Command usage
 
