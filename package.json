@@ -28,12 +28,12 @@
   "homepage": "https://github.com/a-cli/a-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
-    "commander": "^6.1.1",
+    "commander": "^7.2.0",
     "download-git-repo": "^3.0.2",
     "enquirer": "^2.3.6",
-    "hey-yoo-utils": "^0.1.0",
-    "open": "^7.3.1",
-    "ora": "^5.2.0",
+    "hey-yoo-utils": "^0.1.1",
+    "open": "^8.0.4",
+    "ora": "^5.4.0",
     "std-terminal-logger": "^1.0.0"
   }
 }
