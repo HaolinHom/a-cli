@@ -41,7 +41,7 @@ module.exports = async function (script, options, debugInstallDeps = false, runO
   }
 
   const installDeps = !isDebugMode && debugInstallDeps;
-  const preset = typeof options.preset === 'string' ? options.preset.replace(' ', ',') : '';
+  const preset = typeof options.preset === 'string' ? options.preset.replace(/\s+/g, ',') : '';
 
   process.on('unhandledRejection', (error) => {
     if (error) {
