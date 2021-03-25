@@ -1,5 +1,5 @@
 const path = require('path');
-const { fsExtra }  = require('a-cli-utils');
+const { fsExtra }  = require('hey-yoo-utils');
 const CONFIG = require('../../dict/common/CONFIG');
 const { getPriorityPath } = require('../../utils/common');
 const {

@@ -29,13 +29,11 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
     - [Plugin calls the way](#Plugin-calls-the-way)
     - [CLI function and params](#CLI-function-and-params)
 
-
 ## Installation
 
 ```bash
 npm install a-cli-core -g
 ```
-
 
 ## Command usage
 
@@ -191,88 +189,75 @@ module.exports = {
   preset: {
     // The executable command's file name is used as the key value
     publish: {
-      options: [],
-      message: null,
+      steps: [],
       define: null
     }
   }
 };
 ```
 
-* preset.options {array}
+* preset.steps {array}
 
-Multiple parameters (such as system, environment, etc.) can be configured as options, 
-which are available for selection when executing the run command, 
-and then the selected results are passed into the target file as parameters.
+Each step takes an options object, that implements the following interface:
 
-```javascript
-// a-cli-config.js
-module.exports = {
-  preset: {
-    publish: {
-      options: [
-        {
-          name: "Test",
-          value: "Valid value(Default null)"
-        },
-        {
-          name: "Pre-release",
-          value: "Valid value(Default null)"
-        },
-        {
-          name: "Production",
-          value: "Valid value(Default null)"
-        }
-      ],
-      define: null   
-    }
-  }
-};
-```
+| Property | Required | Type | Description |
+| ---- | ---- | ---- | ---- |
+| type | yes | string | step type, include "Input", "Select", "Confirm", "Toggle", "Numeral", "Password" |
+| message | yes | string | The message to display in the terminal |
+| initial | no | string | The default value |
 
-Support multi-level nested option configuration:
+You can combine various steps as needed.
+It will execute in order, and then the results are passed into the target file as parameters.
+For example:
 
 ```javascript
 // a-cli-config.js
 module.exports = {
   preset: {
     publish: {
-      options: [
+      steps: [
         {
-          name: "foo-level-1",
-          options: [
-            {
-              name: "foo-level-1-1",
-              options: [
-                "you can set more options..."
-              ]
-            },
-            {
-              name: "foo-level-1-2",
-              value: "Valid value(Default null)"
-            }
-          ]
+          type: 'Input',
+          message: 'Please type something:'
         },
         {
-          name: "bar-level-1",
-          value: "Valid value(Default null)"
-        }
+          type: 'Select',
+          message: 'Please choose dev env:',
+          choices: [
+            'test',
+            'pre',
+            'prd',
+          ],
+        },
+        {
+          type: 'Select',
+          message: 'Please choose dev env:',
+          choices: [
+            { name: 'test env', value: 'test' },
+            { name: 'pre env', value: 'pre' },
+            { name: 'prd env', value: 'prd' },
+          ],
+        },
+        {
+          type: 'Confirm',
+          message: 'Do you confirm:',
+        },
+        {
+          type: 'Toggle',
+          message: 'Do you want to use prosy:',
+          enabled: 'Yes',
+          disabled: 'No',
+        },
+        {
+          type: 'Password',
+          message: 'Please enter your password:',
+        },
       ],
       define: null
     }
   }
 };
 ```
-
-If only one option is configured and there is no nested option or only one sub-nested option, 
-there is no need to make a selection, 
-and it will be automatically selected as the selected option.
-
-* preset.message {string}
-
-When there is the `message` attribute at the same level as the `options` attribute, 
-the value of `message` will be used as the prompt when the user selects the preset options.
-If it is not set, the default is `Please choice preset option for project:`.
 
 * preset.define {object}
 
@@ -291,6 +276,10 @@ module.exports = {
   }
 };
 ```
+
+* preset.options(To be deprecated)
+
+We recommend to use `steps` instead of `options`. It will not support in the feature. 
 
 ### dev
 
@@ -382,15 +371,12 @@ module.exports = function (context, args) {
     ...something
   } = context.config;
   
-  // Commands for configuring `preset options` are available
+  // Commands for configuring `preset` are available
   const {
-    option: {
-      // An array of all selected option names
-      keys, 
-      // The value of the last (level) option
-      value,
-    },
-    define,
+    // preset steps value
+    steps: [],
+    // preset define value
+    define: {},
   } = context.preset;
 
   // enjoy your code...

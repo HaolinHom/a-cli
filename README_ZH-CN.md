@@ -28,13 +28,11 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
     - [调用方式](#调用方式)
     - [CLI函数及参数](#CLI函数及参数)
 
-
 ## 安装
 
 ```bash
 npm install a-cli-core -g
 ```
-
 
 ## 命令的使用
 
@@ -181,83 +179,73 @@ module.exports = {
   preset: {
     // 可执行的命令文件名作为key值
     publish: {
-      options: [],
-      message: null,
+      steps: [],
       define: null
     }
   }
 };
 ```
 
-* preset.options {array}
+* preset.steps {array}
 
-可以将多个参数（例如系统，环境等）设置为选项，这些参数在执行命令时可供选择，之后将所选结果作为参数传递到目标文件中。
+每个步骤都采用一个配置对象，该对象实现以下接口：
+
+| 属性 | 必需 | Type | Description |
+| ---- | ---- | ---- | ---- |
+| type | 是 | string | step类型，包括 "Input"、"Select"、"Confirm"、"Toggle"、"Numeral"与"Password"。 |
+| message | 是 | string | 显示在终端中的消息 |
+| initial | 否 | string | 默认值 |
+
+可以组合多种`steps`，它将按顺序执行。例如：
 
 ```javascript
 // a-cli-config.js
 module.exports = {
   preset: {
     publish: {
-      options: [
+      steps: [
         {
-          name: "Test",
-          value: "Valid value(Default null)"
+          type: 'Input',
+          message: 'Please type something:'
         },
         {
-          name: "Pre-release",
-          value: "Valid value(Default null)"
+          type: 'Select',
+          message: 'Please choose dev env:',
+          choices: [
+            'test',
+            'pre',
+            'prd',
+          ],
         },
         {
-          name: "Production",
-          value: "Valid value(Default null)"
-        }
+          type: 'Select',
+          message: 'Please choose dev env:',
+          choices: [
+            { name: 'test env', value: 'test' },
+            { name: 'pre env', value: 'pre' },
+            { name: 'prd env', value: 'prd' },
+          ],
+        },
+        {
+          type: 'Confirm',
+          message: 'Do you confirm:',
+        },
+        {
+          type: 'Toggle',
+          message: 'Do you want to use prosy:',
+          enabled: 'Yes',
+          disabled: 'No',
+        },
+        {
+          type: 'Password',
+          message: 'Please enter your password:',
+        },
       ],
       define: null
     }
   }
 };
 ```
-
-支持多级嵌套选项配置:
-
-```javascript
-// a-cli-config.js
-module.exports = {
-  preset: {
-    publish: {
-      options: [
-        {
-          name: "foo-level-1",
-          options: [
-            {
-              name: "foo-level-1-1",
-              options: [
-                "you can set more options..."
-              ]
-            },
-            {
-              name: "foo-level-1-2",
-              value: "Valid value(Default null)"
-            }
-          ]
-        },
-        {
-          name: "bar-level-1",
-          value: "Valid value(Default null)"
-        }
-      ],
-      define: null
-    }
-  }
-};
-```
-
-如果仅配置了一个选项，并且没有嵌套选项或只有一个子嵌套选项，则无需进行选择，它将被自动选择为所选选项。
-
-* preset.message {string}
-
-当与`options`属性存在同级的`message`属性时，会在用户选择预设选项的时候，将`message`的值作为提示语。
-未设置时默认为`Please choice preset option for project:`。
 
 * preset.define {object}
 
@@ -276,6 +264,10 @@ module.exports = {
   }
 };
 ```
+
+* preset.options(待弃用)
+
+推荐使用`steps`代替`options`，未来将不对其提供支持。
 
 ### dev
 
@@ -306,7 +298,6 @@ acli build
 ```bash
 acli publish
 ```
-
 
 ## 开发CLI插件
 
@@ -362,14 +353,11 @@ module.exports = function (context, args) {
     ...something
   } = context.config;
   
-  // 有配置`预设选项`的命令可用
+  // 有配置`预设`的命令可用
   const {
-    option: {
-      // 所有选定的选项名称组成的数组
-      keys, 
-      // 最后一个(层级)选项的值
-      value,
-    },
+    // 预设步骤返回值
+    steps: [],
+    // 预设定义返回值
     define: {},
   } = context.preset;
 

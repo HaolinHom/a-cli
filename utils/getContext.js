@@ -1,4 +1,4 @@
-const { parseArgs } = require('a-cli-utils');
+const { common } = require('hey-yoo-utils');
 const chalk = require('chalk');
 const std = require('std-terminal-logger');
 const enquirer = require('enquirer');
@@ -11,7 +11,7 @@ function getContext(ctx) {
   let context = {
     utils: {
       std,
-      parseArgs,
+      parseArgs: common.parseArgs,
     },
     packages: {
       chalk,

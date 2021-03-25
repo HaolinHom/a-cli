@@ -3,7 +3,7 @@
 'use strict';
 
 const { Command } = require('commander');
-const { batchRegCommand } = require('a-cli-utils');
+const batchRegCommand = require('./utils/batchRegCommand');
 const chalk = require('chalk');
 const packageJson = require('./package.json');
 const cliCommands = require('./commands');
