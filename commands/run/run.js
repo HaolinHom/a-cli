@@ -17,7 +17,6 @@ async function getPreset(scriptPreset, presetKeys) {
     // TODO: will remove in next feature
     preset.option = await resolvePresetOptions(scriptPreset, presetKeys);
   }
-  console.log(JSON.stringify(preset, null, 2));
 
   return { preset };
 }
