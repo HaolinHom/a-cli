@@ -1,92 +1,23 @@
 const std = require('std-terminal-logger');
-const { prompt } = require('enquirer');
+const resolvePresetSteps = require('./preset/steps');
+const resolvePresetOptions = require('./preset/options');
 const typeOf = require('../../utils/typeOf');
 const getContext = require('../../utils/getContext');
 const packageInstall = require('../../utils/packageInstall');
 
-function getPresetOption(options, presetKeys) {
-  let option = {
-    keys: [],
-    value: null,
-  };
-
-  if (!Array.isArray(options) || options.length === 0) {
-    return option;
-  }
-
-  let tag;
-  let i;
-  for (i = 0; i < presetKeys.length; i++) {
-    tag = options.find(opt => opt.name === presetKeys[i]);
-    if (tag) {
-      option.keys.push(tag.name);
-      options = tag.options || [];
-      if (options.length === 0) {
-        option.value = tag.value || null;
-      }
-    } else {
-      break;
-    }
-  }
-
-  return option;
-}
-
-async function presetOptionPrompt({ options, message }, target) {
-  if (!Array.isArray(options) || options.length === 0) {
-    return target;
-  }
-
-  const choices = options.map((opt) => {
-    const type = typeOf(opt);
-    if (type === 'string') {
-      return opt;
-    } else if (type === 'object' && opt.name) {
-      return opt.name;
-    } else {
-      return null;
-    }
-  }).filter(opt => opt);
-
-	let key;
-  if (choices.length === 0) {
-  	return target;
-	} else if (choices.length === 1) {
-		key = choices[0];
-	} else {
-		const result = await prompt({
-			name: 'key',
-			type: 'select',
-			message: message || 'Please choice preset option for project:',
-			choices,
-		});
-		key = result.key;
-	}
-	target.keys.push(key);
-
-  const tagOption = options.find(item => item.name === key || item === key);
-  if (typeOf(tagOption) === 'object') {
-    target.value = tagOption.value || target.value || null;
-    return await presetOptionPrompt(tagOption, target);
-  }
-
-  return target;
-}
-
 async function getPreset(scriptPreset, presetKeys) {
-	const { options, define } = scriptPreset;
   let preset = {
-    option: {
-      keys: [],
-      value: null,
-    },
-    define: define || null,
+    steps: [],
+    define: scriptPreset.define || null,
   };
 
-  preset.option = Array.isArray(presetKeys) && presetKeys.length > 0 ?
-    getPresetOption(options, presetKeys)
-    :
-    await presetOptionPrompt(scriptPreset, preset.option);
+  if (scriptPreset.hasOwnProperty('steps') && Array.isArray(scriptPreset.steps)) {
+    preset.steps = await resolvePresetSteps(scriptPreset.steps, presetKeys);
+  } else {
+    // TODO: will remove in next feature
+    preset.option = await resolvePresetOptions(scriptPreset, presetKeys);
+  }
+  console.log(JSON.stringify(preset, null, 2));
 
   return { preset };
 }
