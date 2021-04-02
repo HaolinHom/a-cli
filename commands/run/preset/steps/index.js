@@ -1,33 +1,28 @@
 const { prompt } = require('enquirer');
-const { common: { typeOf } } = require('hey-yoo-utils');
 const {
-  TYPE_INPUT,
-  TYPE_SELECT,
-  TYPE_CONFIRM,
-  TYPE_TOGGLE,
-  TYPE_NUMBER,
-  TYPE_PASSWORD,
+  matchStepKey,
+  stepAdapter,
+} = require('./utils');
+const {
   ALLOW_TYPES,
 } = require('./config');
 
-function matchStepKey(step, key) {
-  switch (step.type) {
-    case TYPE_INPUT:
-    case TYPE_PASSWORD:
-      return key;
-    case TYPE_SELECT:
-      return step.choices.find((item) => {
-        const type = typeOf(item);
-        return (type === 'string' && item === key) || (type === 'object' && item.name === key);
-      });
-    case TYPE_CONFIRM:
-    case TYPE_TOGGLE:
-      return key === 'true';
-    case TYPE_NUMBER:
-      return Number(key);
-    default:
-      return undefined;
+async function stepsPrompt(steps, prev, accumulate = []) {
+  let step = steps.shift();
+  if (step) {
+    step = stepAdapter(step, prev, accumulate);
+    if (!step.name) {
+      step.name = 'STEP_NAME';
+    }
+    const result = await prompt(step);
+    const value = result[step.name];
+    prev = value;
+    accumulate.push(value);
+    if (steps.length > 0) {
+      return await stepsPrompt(steps, prev, accumulate);
+    }
   }
+  return accumulate;
 }
 
 async function resolvePresetSteps(steps, presetKeys) {
@@ -41,9 +36,7 @@ async function resolvePresetSteps(steps, presetKeys) {
     presetKeys.forEach((key) => {
       let step = steps.shift();
       if (step && typeof step.type === 'string') {
-        step.type.replace(/\b(\w)(\w*)/g, function($0, $1, $2) {
-          return $1.toUpperCase() + $2.toLowerCase();
-        });
+        step.type = step.type.toLowerCase();
         if (ALLOW_TYPES.includes(step.type)) {
           presetSteps.push(matchStepKey(step, key));
         }
@@ -52,11 +45,8 @@ async function resolvePresetSteps(steps, presetKeys) {
   }
 
   if (steps.length > 0) {
-    steps.forEach((item, index) => {
-      item.name = `step_${index}`;
-    });
-    const result = await prompt(steps);
-    presetSteps = presetSteps.concat(Object.values(result));
+    const promptResult = await stepsPrompt(steps);
+    presetSteps = presetSteps.concat(promptResult);
   }
 
   return presetSteps;
