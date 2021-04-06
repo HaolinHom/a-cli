@@ -14,10 +14,15 @@ async function stepsPrompt(steps, prev, accumulate = []) {
     if (!step.name) {
       step.name = 'STEP_NAME';
     }
-    const result = await prompt(step);
-    const value = result[step.name];
+
+    let value = null;
+    if (!step.skip) {
+      const result = await prompt(step);
+      value = result[step.name];
+    }
     prev = value;
     accumulate.push(value);
+
     if (steps.length > 0) {
       return await stepsPrompt(steps, prev, accumulate);
     }

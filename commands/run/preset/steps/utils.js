@@ -1,10 +1,8 @@
-const {
-  runFunc,
-  typeOf,
-} = require('hey-yoo-utils/common');
+const { runFunc } = require('hey-yoo-utils/common');
 const {
   TYPE_INPUT,
   TYPE_SELECT,
+  TYPE_MULTI_SELECT,
   TYPE_TOGGLE,
   TYPE_NUMBER,
   TYPE_PASSWORD,
@@ -17,6 +15,8 @@ function getDefaultMessage(stepType) {
       return 'Please enter content:';
     case TYPE_SELECT:
       return 'Please choose one:';
+    case TYPE_MULTI_SELECT:
+      return 'Please use space button choose some:';
     case TYPE_TOGGLE:
       return 'Please choose one:';
     case TYPE_NUMBER:
@@ -68,12 +68,9 @@ module.exports.matchStepKey = function (step, key) {
   switch (step.type) {
     case TYPE_INPUT:
     case TYPE_PASSWORD:
-      return key;
     case TYPE_SELECT:
-      return step.choices.find((item) => {
-        const type = typeOf(item);
-        return (type === 'string' && item === key) || (type === 'object' && item.name === key);
-      });
+    case TYPE_MULTI_SELECT:
+      return key;
     case TYPE_CONFIRM:
     case TYPE_TOGGLE:
       return key === 'true';
