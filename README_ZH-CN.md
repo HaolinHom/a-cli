@@ -192,7 +192,7 @@ module.exports = {
 
 | 属性 | 必需 | Type | Description |
 | ---- | ---- | ---- | ---- |
-| type | 是 | string | step类型，包括 "Input"、"Select"、"Confirm"、"Toggle"、"Numeral"与"Password"。 |
+| type | 是 | string | step类型，包括 "input"、"select"、"multiselect"、"toggle"、"numeral"与"password"。 |
 | message | 是 | string | 显示在终端中的消息 |
 | initial | 否 | string | 默认值 |
 
@@ -205,11 +205,11 @@ module.exports = {
     publish: {
       steps: [
         {
-          type: 'Input',
+          type: 'input',
           message: 'Please type something:'
         },
         {
-          type: 'Select',
+          type: 'select',
           message: 'Please choose dev env:',
           choices: [
             'test',
@@ -218,26 +218,27 @@ module.exports = {
           ],
         },
         {
-          type: 'Select',
-          message: 'Please choose dev env:',
+          type: 'multiselect',
+          message: 'Please choose some:',
           choices: [
-            { name: 'test env', value: 'test' },
-            { name: 'pre env', value: 'pre' },
-            { name: 'prd env', value: 'prd' },
+            'moduleA',
+            'moduleB',
+            'moduleC',
+            'moduleD',
           ],
         },
         {
-          type: 'Confirm',
-          message: 'Do you confirm:',
-        },
-        {
-          type: 'Toggle',
-          message: 'Do you want to use prosy:',
+          type: 'toggle',
+          message: 'Do you want to use proxy:',
           enabled: 'Yes',
           disabled: 'No',
         },
         {
-          type: 'Password',
+          type: 'numeral',
+          message: 'Please enter a number:',
+        },
+        {
+          type: 'password',
           message: 'Please enter your password:',
         },
       ],

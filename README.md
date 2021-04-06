@@ -202,7 +202,7 @@ Each step takes an options object, that implements the following interface:
 
 | Property | Required | Type | Description |
 | ---- | ---- | ---- | ---- |
-| type | yes | string | step type, include "Input", "Select", "Confirm", "Toggle", "Numeral", "Password" |
+| type | yes | string | step type, include "input", "select", "multiselect", "toggle", "numeral", "password" |
 | message | yes | string | The message to display in the terminal |
 | initial | no | string | The default value |
 
@@ -217,11 +217,11 @@ module.exports = {
     publish: {
       steps: [
         {
-          type: 'Input',
+          type: 'input',
           message: 'Please type something:'
         },
         {
-          type: 'Select',
+          type: 'select',
           message: 'Please choose dev env:',
           choices: [
             'test',
@@ -230,26 +230,27 @@ module.exports = {
           ],
         },
         {
-          type: 'Select',
-          message: 'Please choose dev env:',
+          type: 'multiselect',
+          message: 'Please choose some:',
           choices: [
-            { name: 'test env', value: 'test' },
-            { name: 'pre env', value: 'pre' },
-            { name: 'prd env', value: 'prd' },
+            'moduleA',
+            'moduleB',
+            'moduleC',
+            'moduleD',
           ],
         },
         {
-          type: 'Confirm',
-          message: 'Do you confirm:',
-        },
-        {
-          type: 'Toggle',
-          message: 'Do you want to use prosy:',
+          type: 'toggle',
+          message: 'Do you want to use proxy:',
           enabled: 'Yes',
           disabled: 'No',
         },
         {
-          type: 'Password',
+          type: 'numeral',
+          message: 'Please enter a number:',
+        },
+        {
+          type: 'password',
           message: 'Please enter your password:',
         },
       ],
