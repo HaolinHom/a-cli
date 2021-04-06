@@ -1,7 +1,7 @@
 const std = require('std-terminal-logger');
 const resolvePresetSteps = require('./preset/steps');
 const resolvePresetOptions = require('./preset/options');
-const typeOf = require('../../utils/typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 const getContext = require('../../utils/getContext');
 const packageInstall = require('../../utils/packageInstall');
 

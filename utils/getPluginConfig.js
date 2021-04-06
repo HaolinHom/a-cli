@@ -1,7 +1,7 @@
 const path = require('path');
 const std = require('std-terminal-logger');
 const getExistPath = require('./getExistPath');
-const typeOf = require('./typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 
 function validateACliJson(aCliJson) {
 	if (!aCliJson.pluginName || !aCliJson.pluginVersion) {

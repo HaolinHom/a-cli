@@ -5,7 +5,7 @@ const { prompt } = require('enquirer');
 const ora = require('ora');
 const download = require('download-git-repo');
 const CONFIG = require('../../../dict/common/CONFIG');
-const typeOf = require('../../../utils/typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 const DEFAULT_PLUGIN_CONFIG = require('../../../dict/common/DEFAULT_PLUGIN_CONFIG');
 const settingUtils = require('../../setting/utils');
 
