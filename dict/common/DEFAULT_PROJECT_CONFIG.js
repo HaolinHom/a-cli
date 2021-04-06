@@ -10,9 +10,5 @@ module.exports = {
       steps: [],
 			define: null,
 		},
-		publish: {
-			steps: [],
-			define: null,
-		},
   },
 };

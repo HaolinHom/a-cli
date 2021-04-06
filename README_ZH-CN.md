@@ -1,6 +1,6 @@
 # a-cli
 
-a-cli是一个前端工程开发工具，用于快速开发、构建、发布项目。
+a-cli是一个前端工程开发工具，用于快速开发、构建项目。
 
 其通过将工程化相关的代码整合为CLI插件，再由全局的CLI命令进行执行，可实现前端项目与项目工程化的解耦。
 
@@ -22,7 +22,6 @@ a-cli是一个前端工程开发工具，用于快速开发、构建、发布项
       - [预设选项](#预设选项)
     - [dev命令](#dev)
     - [build命令](#build)
-    - [publish命令](#publish)
   - [开发CLI插件](#开发CLI插件)
     - [开发流程](#开发流程)
     - [调用方式](#调用方式)
@@ -164,21 +163,21 @@ acli run [script]
 
 | 选项 | 简写 | 描述 |
 |----|----|----|
-| --debug | -d | debug模式([dev](#dev)、[build](#build)与[publish](#publish)命令在该模式下会自动安装依赖) |
+| --debug | -d | debug模式([dev](#dev)与[build](#build)命令在该模式下会自动安装依赖) |
 | --preset [keys] | / | 预设选项的默认key值(当`preset[command].options`内有设置预设选项时，可以在命令行执行时跳过前置的人工选择) |
 
 #### 预设选项
 
 run命令可以在配置文件(`a-cli-config.js`)中设置相关的预设选项(preset)并在运行时作为选项供选择。
 
-所有通过run运行的命令(包括[dev](#dev), [build](#build), [publish](#publish))都可以通过配置预设选项来使用。
+所有通过run运行的命令(包括[dev](#dev)与[build](#build))都可以通过配置预设选项来使用。
 
 ```javascript
 // a-cli-config.js
 module.exports = {
   preset: {
     // 可执行的命令文件名作为key值
-    publish: {
+    dev: {
       steps: [],
       define: null
     }
@@ -202,7 +201,7 @@ module.exports = {
 // a-cli-config.js
 module.exports = {
   preset: {
-    publish: {
+    dev: {
       steps: [
         {
           type: 'input',
@@ -256,7 +255,7 @@ module.exports = {
 // a-cli-config.js
 module.exports = {
   preset: {
-    publish: {
+    dev: {
       options: [],
       define: {
         remote: "git@github.com:a-cli/a-cli.git"
@@ -290,15 +289,6 @@ acli dev
 acli build
 ```
 
-### publish
-
->该命令是对[run](#run)命令的封装，其用法均与[run](#run)一致。
-
-发布项目代码。其运行是基于CLI插件中的`publish.js`文件。
-
-```bash
-acli publish
-```
 
 ## 开发CLI插件
 

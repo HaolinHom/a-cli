@@ -2,7 +2,6 @@ const init = require('./init');
 const dev = require('./dev');
 const run = require('./run');
 const build = require('./build');
-const publish = require('./publish');
 const setting = require('./setting');
 const plugin = require('./plugin');
 const install = require('./install');
@@ -40,15 +39,6 @@ module.exports = [
 		],
 		description: DESCRIPTION.BUILD,
 		action: build,
-	},
-	{
-		command: 'publish',
-		options: [
-			['-d, --debug', 'publish command with [debug] mode'],
-			['--preset [keys]', 'command preset key list'],
-		],
-		description: DESCRIPTION.PUBLISH,
-		action: publish,
 	},
 	{
 		command: 'setting',
