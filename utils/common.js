@@ -1,5 +1,5 @@
 const fs = require('fs');
-const typeOf = require('./typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 
 module.exports.getPriorityPath = function (pathList) {
   if (!Array.isArray(pathList) || pathList.length === 0) {

@@ -4,7 +4,7 @@ const path = require('path');
 const std = require('std-terminal-logger');
 const ora = require('ora');
 const { prompt } = require('enquirer');
-const typeOf = require('../../../utils/typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 const CONFIG = require('../../../dict/common/CONFIG');
 const getPluginConfig = require('../../../utils/getPluginConfig');
 

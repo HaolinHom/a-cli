@@ -1,6 +1,6 @@
 {
   "name": "a-cli-core",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "a-cli is a front-end engineering development tool",
   "main": "cli.js",
   "bin": {

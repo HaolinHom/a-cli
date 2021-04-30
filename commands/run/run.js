@@ -1,7 +1,7 @@
 const std = require('std-terminal-logger');
 const resolvePresetSteps = require('./preset/steps');
 const resolvePresetOptions = require('./preset/options');
-const typeOf = require('../../utils/typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 const getContext = require('../../utils/getContext');
 const packageInstall = require('../../utils/packageInstall');
 
@@ -19,6 +19,25 @@ async function getPreset(scriptPreset, presetKeys) {
   }
 
   return { preset };
+}
+
+function presetAdepter(preset) {
+  if (typeof preset !== 'string' || preset.length === 0) {
+    return [];
+  }
+
+  const arrayMatch = preset.match(/\[.*?]/);
+  const isMatch = Array.isArray(arrayMatch) && arrayMatch[0];
+  if (isMatch) {
+    preset = preset.replace(arrayMatch[0], '_MATCH_PLACEHOLDER_');
+  }
+
+  let presetKeys = preset.split(',');
+  if (isMatch) {
+    presetKeys[presetKeys.indexOf('_MATCH_PLACEHOLDER_')] = arrayMatch[0].replace('[', '').replace(']', '').split(',');
+  }
+
+  return presetKeys;
 }
 
 const defaultOpts = {
@@ -39,8 +58,7 @@ module.exports = async function (tagJsPath, cfgPath, args, options = defaultOpts
 
     if (options.script && config.preset && config.preset[options.script]) {
     	const scriptPreset = config.preset[options.script];
-    	const presetKeys = options.preset.length > 0 ? options.preset.split(',') : [];
-      const ctxExtend = await getPreset(scriptPreset, presetKeys);
+      const ctxExtend = await getPreset(scriptPreset, presetAdepter(options.preset));
       if (typeOf(ctxExtend) === 'object') {
         ctx = {
           ...ctxExtend,

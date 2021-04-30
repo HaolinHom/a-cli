@@ -1,5 +1,5 @@
 const { prompt } = require('enquirer');
-const typeOf = require('../../../../utils/typeOf');
+const { typeOf } = require('hey-yoo-utils/common');
 
 function getPresetOption(options, presetKeys) {
   let option = {

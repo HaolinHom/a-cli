@@ -1,6 +1,6 @@
 # a-cli
 
-a-cli is a front-end engineering development tool for rapid development, build, and publish projects.
+a-cli is a front-end engineering development tool for rapid development and build projects.
 
 It can realize the decoupling of front-end projects and project engineering by 
 integrating engineering-related codes into CLI plugin, and then executing them by global CLI commands.
@@ -23,7 +23,6 @@ Read this in other languages: English | [简体中文](./README_ZH-CN.md)
       - [preset](#preset)
     - [dev command](#dev)
     - [build command](#build)
-    - [publish command](#publish)
   - [Develop CLI plugin](#Develop-CLI-plugin)
     - [Development Process](#Development-Process)
     - [Plugin calls the way](#Plugin-calls-the-way)
@@ -172,7 +171,7 @@ Command line flags:
 
 | options | short | description |
 |----|----|----|
-| --debug | -d | debug mode([dev](#dev), [build](#build) and [publish](#publish) commands in this mode, dependencies are automatically installed) |
+| --debug | -d | debug mode([dev](#dev), [build](#build) commands in this mode, dependencies are automatically installed) |
 | --preset [keys] | / | The default key value of the preset option(When `preset[command].options` has preset options, it can skip the pre-manual selection on the command line) |
 
 #### preset
@@ -180,7 +179,7 @@ Command line flags:
 The `run command` can set related preset options in the configuration file (`a-cli-config.js`) 
 and provide options for choose during runtime.
 
-All commands(include [dev](#dev), [build](#build), [publish](#publish)) run through `run command` can be used 
+All commands(include [dev](#dev), [build](#build)) run through `run command` can be used 
 by configuring preset options.
 
 ```javascript
@@ -188,7 +187,7 @@ by configuring preset options.
 module.exports = {
   preset: {
     // The executable command's file name is used as the key value
-    publish: {
+    dev: {
       steps: [],
       define: null
     }
@@ -202,7 +201,7 @@ Each step takes an options object, that implements the following interface:
 
 | Property | Required | Type | Description |
 | ---- | ---- | ---- | ---- |
-| type | yes | string | step type, include "Input", "Select", "Confirm", "Toggle", "Numeral", "Password" |
+| type | yes | string | step type, include "input", "select", "multiselect", "toggle", "numeral", "password" |
 | message | yes | string | The message to display in the terminal |
 | initial | no | string | The default value |
 
@@ -214,14 +213,14 @@ For example:
 // a-cli-config.js
 module.exports = {
   preset: {
-    publish: {
+    dev: {
       steps: [
         {
-          type: 'Input',
+          type: 'input',
           message: 'Please type something:'
         },
         {
-          type: 'Select',
+          type: 'select',
           message: 'Please choose dev env:',
           choices: [
             'test',
@@ -230,26 +229,27 @@ module.exports = {
           ],
         },
         {
-          type: 'Select',
-          message: 'Please choose dev env:',
+          type: 'multiselect',
+          message: 'Please choose some:',
           choices: [
-            { name: 'test env', value: 'test' },
-            { name: 'pre env', value: 'pre' },
-            { name: 'prd env', value: 'prd' },
+            'moduleA',
+            'moduleB',
+            'moduleC',
+            'moduleD',
           ],
         },
         {
-          type: 'Confirm',
-          message: 'Do you confirm:',
-        },
-        {
-          type: 'Toggle',
-          message: 'Do you want to use prosy:',
+          type: 'toggle',
+          message: 'Do you want to use proxy:',
           enabled: 'Yes',
           disabled: 'No',
         },
         {
-          type: 'Password',
+          type: 'numeral',
+          message: 'Please enter a number:',
+        },
+        {
+          type: 'password',
           message: 'Please enter your password:',
         },
       ],
@@ -267,7 +267,7 @@ Any configuration that needs to be used can be set in the define attribute.
 // a-cli-config.js
 module.exports = {
   preset: {
-    publish: {
+    dev: {
       options: [],
       define: {
         remote: "git@github.com:a-cli/a-cli.git"
@@ -303,16 +303,6 @@ Building project code. Its operation is based on the `build.js` file in the CLI 
 acli build
 ```
 
-### publish
-
-> This command is an encapsulation of the [run](#run) command,
-and its usage is consistent with the [run](#run) command.
-
-Publish the project code. Its operation is based on the `publish.js` file in the CLI plugin.
-
-```bash
-acli publish
-```
 
 ## Develop CLI plugin
 

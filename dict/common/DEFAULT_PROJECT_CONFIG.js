@@ -3,15 +3,11 @@ module.exports = {
 	projectName: "",
   preset: {
 		dev: {
-			options: [],
+      steps: [],
 			define: null,
 		},
 		build: {
-			options: [],
-			define: null,
-		},
-		publish: {
-			options: [],
+      steps: [],
 			define: null,
 		},
   },
