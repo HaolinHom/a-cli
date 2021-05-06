@@ -1,39 +1,38 @@
 {
-  "name": "a-cli-core",
-  "version": "1.5.0",
-  "description": "a-cli is a front-end engineering development tool",
+  "name": "hey-yoo",
+  "version": "1.0.0",
+  "description": "hey-yoo is a front-end engineering development tool.",
   "main": "cli.js",
   "bin": {
-    "acli": "index.js"
+    "hey": "index.js"
   },
   "engines": {
-    "node": ">=12.0.0",
+    "node": ">=14.0.0",
     "npm": ">=6.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a-cli/a-cli.git"
+    "url": "git+https://github.com/hey-yoo/hey-yoo.git"
   },
   "keywords": [
-    "a-cli-core",
-    "a-cli",
-    "acli",
+    "hey-yoo",
+    "hey",
     "cli"
   ],
   "author": "Haolin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/a-cli/a-cli/issues"
+    "url": "https://github.com/hey-yoo/hey-yoo/issues"
   },
-  "homepage": "https://github.com/a-cli/a-cli#readme",
+  "homepage": "https://github.com/hey-yoo/hey-yoo#readme",
   "dependencies": {
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "commander": "^7.2.0",
     "download-git-repo": "^3.0.2",
-    "enquirer": "^2.3.6",
     "hey-yoo-utils": "^0.1.2",
-    "open": "^8.0.4",
+    "open": "^8.0.7",
     "ora": "^5.4.0",
+    "prompts": "^2.4.1",
     "std-terminal-logger": "^1.0.0"
   }
 }
