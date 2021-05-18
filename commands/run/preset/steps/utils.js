@@ -71,7 +71,6 @@ module.exports.matchStepKey = function (step, key) {
     case TYPE_SELECT:
     case TYPE_MULTI_SELECT:
       return key;
-    case TYPE_CONFIRM:
     case TYPE_TOGGLE:
       return key === 'true';
     case TYPE_NUMBER:

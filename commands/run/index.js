@@ -11,7 +11,7 @@ const {
   getPriorityPath,
 } = require('../../utils/common');
 
-module.exports = async function (script, options, debugInstallDeps = false, runOnSubProcess = false) {
+module.exports = async function (script, options, commandObj, debugInstallDeps = false, runOnSubProcess = false) {
   if (!script) {
     return std.error(`Missing required argument 'script' (acli run [script])`);
   }

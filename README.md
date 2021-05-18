@@ -201,7 +201,7 @@ Each step takes an options object, that implements the following interface:
 
 | Property | Required | Type | Description |
 | ---- | ---- | ---- | ---- |
-| type | yes | string | step type, include "input", "select", "multiselect", "toggle", "numeral", "password" |
+| type | yes | string | step type, include "input", "select", "multiselect", "toggle", "number", "password" |
 | message | yes | string | The message to display in the terminal |
 | initial | no | string | The default value |
 
