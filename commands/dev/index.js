@@ -1,7 +1,7 @@
 const run = require('../run');
 
-module.exports = function (options) {
+module.exports = function (options, commandObj) {
   const debugInstallDependencies = true;
   const runOnSubProcess = true;
-  run('dev', options, debugInstallDependencies, runOnSubProcess);
+  run('dev', options, commandObj, debugInstallDependencies, runOnSubProcess);
 };
