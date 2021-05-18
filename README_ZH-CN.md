@@ -191,7 +191,7 @@ module.exports = {
 
 | 属性 | 必需 | Type | Description |
 | ---- | ---- | ---- | ---- |
-| type | 是 | string | step类型，包括 "input"、"select"、"multiselect"、"toggle"、"numeral"与"password"。 |
+| type | 是 | string | step类型，包括 "input"、"select"、"multiselect"、"toggle"、"number"与"password"。 |
 | message | 是 | string | 显示在终端中的消息 |
 | initial | 否 | string | 默认值 |
 
