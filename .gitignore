@@ -15,6 +15,5 @@ yarn-error.log*
 # Dependencies
 /node_modules
 
-# a-cli
-/plugins
+# hey-yoo
 /local
