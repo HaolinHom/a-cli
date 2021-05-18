@@ -32,6 +32,7 @@
     "hey-yoo-utils": "^0.1.2",
     "open": "^8.0.7",
     "ora": "^5.4.0",
+    "ow": "^0.23.0",
     "prompts": "^2.4.1",
     "std-terminal-logger": "^1.0.0"
   }
