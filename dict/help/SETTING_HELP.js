@@ -10,7 +10,7 @@ module.exports = chalk.whiteBright(
       "name": "a-cli-template",
       ${chalk.gray('// template repository')}
       ${chalk.gray(`// To learn more about repo value, visit: ${chalk.blueBright('https://www.npmjs.com/package/download-git-repo')}`)}
-      "repo": "a-cli/a-cli-template"
+      "repo": "HaolinHom/a-cli-template"
     },
   ]
 }`

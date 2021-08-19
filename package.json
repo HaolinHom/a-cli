@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a-cli/a-cli.git"
+    "url": "git+https://github.com/HaolinHom/a-cli.git"
   },
   "keywords": [
     "a-cli-core",
@@ -23,9 +23,9 @@
   "author": "Haolin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/a-cli/a-cli/issues"
+    "url": "https://github.com/HaolinHom/a-cli/issues"
   },
-  "homepage": "https://github.com/a-cli/a-cli#readme",
+  "homepage": "https://github.com/HaolinHom/a-cli#readme",
   "dependencies": {
     "chalk": "^4.1.1",
     "commander": "^7.2.0",

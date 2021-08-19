@@ -6,7 +6,7 @@ module.exports = {
   PLUGIN_CONFIG: 'a-cli.json',
   DEFAULT_TEMPLATE: {
     name: 'a-cli-template',
-    repo: 'a-cli/a-cli-template',
+    repo: 'HaolinHom/a-cli-template',
   },
   PACKAGE_JSON: 'package.json',
   DEFAULT_SETTING: 'setting.js',

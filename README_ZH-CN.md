@@ -73,7 +73,7 @@ module.exports = {
       name: "a-cli-template",
       // 模板库
       // 可访问 https://www.npmjs.com/package/download-git-repo 了解更多关于repo属性的信息
-      repo: "a-cli/a-cli-template"
+      repo: "HaolinHom/a-cli-template"
     }
   ]
 };

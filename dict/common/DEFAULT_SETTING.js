@@ -6,7 +6,7 @@ module.exports = {
       name: 'a-cli-template',
       // template repository
       // To learn more about repo value, visit: https://www.npmjs.com/package/download-git-repo
-      repo: 'a-cli/a-cli-template'
+      repo: 'HaolinHom/a-cli-template'
     },
   ],
 };
